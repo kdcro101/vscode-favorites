@@ -1,0 +1,17 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+    "favorites.resources": [
+        "node_modules"
+    ],
+    "favorites.sortDirection": "DESC",
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        // "out": true,
+        "node_modules": true,
+        ".vscode": true
+    },
+}

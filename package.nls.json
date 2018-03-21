@@ -1,0 +1,9 @@
+{
+    "command.favorites.addtofavorites": "Add to Favorites",
+    "command.favorites.addtofavoritesGroup": "Add to Favorites group",
+    "command.favorites.deletefavorite": "Delete favorite",
+    "command.favorites.sort": "Toggle sort",
+    "command.favorites.collapse": "Collapse all",
+    "command.favorites.group.create": "Create group",
+    "command.favorites.group.delete": "Delete group"
+}

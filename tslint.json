@@ -1,0 +1,47 @@
+{
+    "extends": "tslint:recommended",
+    "rules": {
+        "directive-selector": [
+            false,
+            "attribute",
+            "foo",
+            "camelCase"
+        ],
+        "component-selector": [
+            false,
+            "element",
+            "foo",
+            "kebab-case"
+        ],
+        "quotemark": [
+            true,
+            "double"
+        ],
+        "no-console": [
+            false,
+            "debug",
+            "info",
+            "time",
+            "timeEnd",
+            "trace"
+        ],
+        "no-inferrable-types": [
+            false,
+            "ignore-params"
+        ],
+        "no-input-rename": false,
+        "import-spacing": false,
+        "no-output-on-prefix": false,
+        "no-output-rename": false,
+        "object-literal-sort-keys": false,
+        "max-line-length": [
+            true,
+            140
+        ],
+        "interface-name": false,
+        "angular-whitespace": [
+            false
+        ],
+        "no-consecutive-blank-lines": true
+    }
+}
