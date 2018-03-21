@@ -1,8 +1,6 @@
 // Place your settings in this file to overwrite default and user settings.
 {
-    "favorites.resources": [
-        "node_modules"
-    ],
+    "favorites.resources": [],
     "favorites.sortDirection": "DESC",
     "files.exclude": {
         "**/.git": true,
@@ -14,4 +12,11 @@
         "node_modules": true,
         ".vscode": true
     },
+    "favorites.groupsFirst": true,
+    "favorites.root": [
+        {
+            "type": "Directory",
+            "name": "node_modules"
+        }
+    ],
 }
