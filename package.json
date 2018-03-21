@@ -1,0 +1,180 @@
+{
+    "name": "favorites",
+    "displayName": "Favorites",
+    "description": "Extension provides ability to add files and directories to favorites enabling quick access. Time saver for complex projects.",
+    "version": "0.0.5",
+    "categories": [
+        "Other"
+    ],
+    "keywords": [
+        "bookmarks",
+        "favorites",
+        "add to favorites",
+        "favorite files",
+        "favorite directory"
+    ],
+    "publisher": "kdcro101",
+    "engines": {
+        "vscode": "^1.19.0"
+    },
+    "scripts": {
+        "vscode:prepublish": "tsc -p ./",
+        "compile": "tsc -watch -p ./",
+        "watch": "tsc -watch -p ./",
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "translate": "gulp"
+    },
+    "icon": "images/icon.png",
+    "bugs": {
+        "url": "https://github.com/kdcro101/vscode-favorite-items/issues"
+    },
+    "homepage": "https://github.com/kdcro101/vscode-favorite-items/blob/master/README.md",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/kdcro101/vscode-favorite-items.git"
+    },
+    "activationEvents": [
+        "onCommand:favorites.addToFavorites",
+        "onView:favorites"
+    ],
+    "license": "GPL-3.0",
+    "main": "./out/",
+    "contributes": {
+        "configuration": {
+            "type": "object",
+            "title": "Favorite-items configuration",
+            "properties": {
+                "favorites.resources": {
+                    "type": "array",
+                    "default": [],
+                    "description": "compatibility"
+                },
+                "favorites.root": {
+                    "type": "array",
+                    "default": [],
+                    "description": "Groups and favorites"
+                },
+                "favorites.groupsFirst": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Display favorite groups before (above) favorite files and directories"
+                },
+                "favorites.sortDirection": {
+                    "type": "string",
+                    "enum": [
+                        "ASC",
+                        "DESC"
+                    ],
+                    "default": "ASC",
+                    "description": "Specify an order for all favorites"
+                }
+            }
+        },
+        "views": {
+            "explorer": [{
+                "id": "favorites",
+                "name": "Favorites"
+            }]
+        },
+        "menus": {
+            "explorer/context": [{
+                    "command": "favorites.addToFavorites",
+                    "group": "favorites"
+                },
+                {
+                    "command": "favorites.addToFavoritesGroup",
+                    "group": "favorites"
+                }
+            ],
+            "view/title": [{
+                    "command": "favorites.collapse",
+                    "when": "view == favorites",
+                    "group": "navigation@3"
+                },
+                {
+                    "command": "favorites.nav.sort.az",
+                    "when": "view == favorites && sort==DESC",
+                    "group": "navigation@2"
+                },
+                {
+                    "command": "favorites.nav.sort.za",
+                    "when": "view == favorites && sort==ASC",
+                    "group": "navigation@2"
+                },
+                {
+                    "command": "favorites.group.create",
+                    "when": "view == favorites",
+                    "group": "navigation@1"
+                }
+            ],
+            "view/item/context": [{
+                "command": "favorites.deleteFavorite",
+                "when": "view == favorites && viewItem == FAVORITE",
+                "group": "operation"
+            }]
+        },
+        "commands": [{
+                "command": "favorites.nav.sort.az",
+                "title": "%command.favorites.sort%",
+                "icon": {
+                    "dark": "images/sort_dark_za.svg",
+                    "light": "images/sort_light_za.svg"
+                }
+            },
+            {
+                "command": "favorites.nav.sort.za",
+                "title": "%command.favorites.sort%",
+                "icon": {
+                    "dark": "images/sort_dark_az.svg",
+                    "light": "images/sort_light_az.svg"
+                }
+            },
+            {
+                "command": "favorites.collapse",
+                "title": "%command.favorites.collapse%",
+                "icon": {
+                    "dark": "images/collapse_dark.svg",
+                    "light": "images/collapse_light.svg"
+                }
+            },
+            {
+                "command": "favorites.addToFavorites",
+                "title": "%command.favorites.addtofavorites%"
+            },
+            {
+                "command": "favorites.addToFavoritesGroup",
+                "title": "%command.favorites.addtofavoritesGroup%"
+            },
+            {
+                "command": "favorites.deleteFavorite",
+                "title": "%command.favorites.deletefavorite%"
+            },
+            {
+                "command": "favorites.group.create",
+                "title": "%command.favorites.group.create%",
+                "icon": {
+                    "dark": "images/add_dark.svg",
+                    "light": "images/add_light.svg"
+                }
+            },
+            {
+                "command": "favorites.group.delete",
+                "title": "%command.favorites.group.delete%"
+            }
+        ]
+    },
+    "devDependencies": {
+        "@types/nconf": "0.0.37",
+        "@types/node": "^9.4.7",
+        "del": "^3.0.0",
+        "gulp": "^3.9.1",
+        "gulp-rename": "^1.2.2",
+        "tslint": "^5.9.1",
+        "typescript": "^2.7.2",
+        "vscode": "^1.1.13",
+        "vscode-nls-dev": "^2.1.6"
+    },
+    "dependencies": {
+        "nconf": "^0.10.0"
+    }
+}
