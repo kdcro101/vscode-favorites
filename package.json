@@ -108,10 +108,21 @@
                 }
             ],
             "view/item/context": [{
-                "command": "favorites.deleteFavorite",
-                "when": "view == favorites && viewItem == FAVORITE",
-                "group": "operation"
-            }]
+                    "command": "favorites.deleteFavorite",
+                    "when": "view == favorites && viewItem == FAVORITE",
+                    "group": "operation"
+                },
+                {
+                    "command": "favorites.group.delete",
+                    "when": "view == favorites && viewItem == FAVORITE_GROUP",
+                    "group": "operation"
+                },
+                {
+                    "command": "favorites.group.item.delete",
+                    "when": "view == favorites && viewItem == FAVORITE_GROUP_ITEM",
+                    "group": "operation"
+                }
+            ]
         },
         "commands": [{
                 "command": "favorites.nav.sort.az",
@@ -160,6 +171,10 @@
             {
                 "command": "favorites.group.delete",
                 "title": "%command.favorites.group.delete%"
+            },
+            {
+                "command": "favorites.group.item.delete",
+                "title": "%command.favorites.group.item.delete%"
             }
         ]
     },
