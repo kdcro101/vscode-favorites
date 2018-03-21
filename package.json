@@ -2,7 +2,7 @@
     "name": "favorites",
     "displayName": "Favorites",
     "description": "Extension provides ability to add files and directories to favorites enabling quick access. Time saver for complex projects.",
-    "version": "0.0.5",
+    "version": "0.1.0",
     "categories": [
         "Other"
     ],
@@ -71,13 +71,16 @@
             }
         },
         "views": {
-            "explorer": [{
-                "id": "favorites",
-                "name": "Favorites"
-            }]
+            "explorer": [
+                {
+                    "id": "favorites",
+                    "name": "Favorites"
+                }
+            ]
         },
         "menus": {
-            "explorer/context": [{
+            "explorer/context": [
+                {
                     "command": "favorites.addToFavorites",
                     "group": "favorites"
                 },
@@ -86,7 +89,8 @@
                     "group": "favorites"
                 }
             ],
-            "view/title": [{
+            "view/title": [
+                {
                     "command": "favorites.collapse",
                     "when": "view == favorites",
                     "group": "navigation@3"
@@ -107,7 +111,8 @@
                     "group": "navigation@1"
                 }
             ],
-            "view/item/context": [{
+            "view/item/context": [
+                {
                     "command": "favorites.deleteFavorite",
                     "when": "view == favorites && viewItem == FAVORITE",
                     "group": "operation"
@@ -124,7 +129,8 @@
                 }
             ]
         },
-        "commands": [{
+        "commands": [
+            {
                 "command": "favorites.nav.sort.az",
                 "title": "%command.favorites.sort%",
                 "icon": {
