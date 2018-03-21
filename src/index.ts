@@ -10,6 +10,8 @@ import {
     collapse,
     createGroup,
     deleteFavorite,
+    deleteGroup,
+    deleteGroupItem,
     setSortAsc,
     setSortDesc,
 } from "./command/index.";
@@ -57,6 +59,8 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(collapse(provider));
     context.subscriptions.push(createGroup());
     context.subscriptions.push(addToFavoritesGroup(provider));
+    context.subscriptions.push(deleteGroup(provider));
+    context.subscriptions.push(deleteGroupItem(provider));
 }
 
 // this method is called when your extension is deactivated

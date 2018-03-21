@@ -110,10 +110,17 @@ export function createGroup() {
         });
     });
 }
-export function deleteGroup() {
+export function deleteGroup(dataProvider: DataProvider) {
     return vscode.commands.registerCommand("favorites.group.delete", (value: ViewItem) => {
 
         favorites.removeGroup(value.resourceName);
+
+    });
+}
+export function deleteGroupItem(dataProvider: DataProvider) {
+    return vscode.commands.registerCommand("favorites.group.item.delete", (value: ViewItem) => {
+
+        favorites.removePathFromGroup(value.groupName, value.resourceName);
 
     });
 }

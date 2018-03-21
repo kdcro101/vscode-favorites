@@ -59,18 +59,18 @@ class Favorites {
                         resolve();
                         return;
                     }
-                    const rPath = workspace.isMultiRootWorkspace() ? itemPath : itemPath.substr(workspace.getSingleRootPath().length + 1);
+                    const rPath = itemPath;
                     const index = all.findIndex((i) => i.name === groupName && i.type === ResourceType.Group);
                     const oPaths = all[index].contents ? all[index].contents : [];
 
-                    if (oPaths.find((i) => i === rPath)) {
+                    if (!oPaths.find((i) => i === rPath)) {
                         resolve();
                         return;
                     }
 
-                    const newPaths = oPaths.concat([rPath]);
+                    const newPaths = oPaths.filter((i) => i !== rPath);
 
-                    all[index].contents = newPaths;
+                    all[index].contents = newPaths.filter((i) => i.trim() !== "");
 
                     return workspace.save("root", all);
 
@@ -313,7 +313,11 @@ class Favorites {
                     Promise.all(contents.map((i) => this.viewItemForPath(i)))
                         .then((views) => {
 
-                            resolve(views);
+                            resolve(views.map((i) => {
+
+                                i.groupName = name;
+                                return i;
+                            }));
 
                         })
                         .catch((e) => {
