@@ -13,10 +13,5 @@
         ".vscode": true
     },
     "favorites.groupsFirst": true,
-    "favorites.root": [
-        {
-            "type": "Directory",
-            "name": "node_modules"
-        }
-    ],
+    "favorites.root": [],
 }

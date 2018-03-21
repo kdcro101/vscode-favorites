@@ -1,3 +1,7 @@
+## 0.1.3 | 2018.03.20
+
+Reduce extension size 
+
 ## 0.1.2 | 2018.03.20
 
 Update minimum engine to `^1.13.0`

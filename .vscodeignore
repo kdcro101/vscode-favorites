@@ -3,8 +3,10 @@
 out/test/**
 test/**
 src/**
+preview/**
 **/*.map
 .gitignore
 tsconfig.json
 .jsbeautifyrc
 .editorconfig
+tslint.json
