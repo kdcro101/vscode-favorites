@@ -6,7 +6,7 @@ Extension provides ability to add files and directories to favorites enabling qu
 You can create groups of favorite items and with files and folders.
 Time saver for complex projects.
 
-![](https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/images/preview.gif)
+![](https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/preview.gif)
 
 ## Install
 
