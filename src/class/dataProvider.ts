@@ -2,8 +2,6 @@ import * as fs from "fs";
 import * as path from "path";
 import * as vscode from "vscode";
 
-import { FileStat } from "../enum";
-import { Item } from "../model";
 import { ResourceType } from "../types";
 import { FilesystemResource, StoredResource } from "../types/index";
 import favorites from "./favorites";
@@ -201,90 +199,6 @@ export class DataProvider implements vscode.TreeDataProvider<ViewItem> {
                 }).catch((e) => {
                     reject(e);
                 });
-        });
-    }
-    private getChildrenViewItems(filePath: string): Thenable<ViewItem[]> {
-        const sort = vscode.workspace.getConfiguration("favorites").get("sortDirection") as string;
-
-        return new Promise<ViewItem[]>((resolve, reject) => {
-            fs.readdir(workspace.pathResolve(filePath), (err, files) => {
-                if (err) {
-                    return resolve([]);
-                }
-
-                this.sortViewItems(files.map((f) => path.join(filePath, f)), sort);
-                // .then((data) => this.data2ViewItem(data, "ViewItemChild"))
-                // .then(resolve);
-            });
-        });
-    }
-
-    private getSortedFavoriteViewItems(): Thenable<string[]> {
-        const ViewItems = workspace.get("ViewItems");
-        const sort = vscode.workspace.getConfiguration("favorites").get("sortDirection") as string;
-
-        return this.sortViewItems(ViewItems, sort).then((res) => res.map((r) => r.filePath));
-    }
-
-    private sortViewItems(ViewItems: string[], sort: string): Thenable<Item[]> {
-        return Promise.all(ViewItems.map((r) => this.getViewItemStat(r))).then((ViewItemStats) => {
-            const isAsc = sort === "ASC";
-
-            const dirs = ViewItemStats.filter((i) => i.stat === FileStat.DIRECTORY);
-            const files = ViewItemStats.filter((i) => i.stat === FileStat.FILE);
-
-            const dirsAZ = dirs.sort((a, b) => {
-                const aBasename = path.basename(a.filePath).toLocaleLowerCase();
-                const bBasename = path.basename(b.filePath).toLocaleLowerCase();
-                if (aBasename < bBasename) { return -1; }
-                if (aBasename === bBasename) { return 0; }
-                if (aBasename > bBasename) { return 1; }
-            });
-
-            const filesAZ = files.sort((a, b) => {
-                const aBasename = path.basename(a.filePath).toLocaleLowerCase();
-                const bBasename = path.basename(b.filePath).toLocaleLowerCase();
-                if (aBasename < bBasename) { return -1; }
-                if (aBasename === bBasename) { return 0; }
-                if (aBasename > bBasename) { return 1; }
-
-            });
-
-            if (isAsc) {
-                return dirsAZ.concat(filesAZ);
-            } else {
-                return dirsAZ.reverse().concat(filesAZ.reverse());
-            }
-
-        });
-    }
-
-    private getViewItemStat(filePath: string): Thenable<Item> {
-        return new Promise((resolve) => {
-            fs.stat(workspace.pathResolve(filePath), (err, stat: fs.Stats) => {
-                if (err) {
-                    return resolve({
-                        filePath,
-                        stat: FileStat.NEITHER,
-                    });
-                }
-                if (stat.isDirectory()) {
-                    return resolve({
-                        filePath,
-                        stat: FileStat.DIRECTORY,
-                    });
-                }
-                if (stat.isFile()) {
-                    return resolve({
-                        filePath,
-                        stat: FileStat.FILE,
-                    });
-                }
-                return resolve({
-                    filePath,
-                    stat: FileStat.NEITHER,
-                });
-            });
         });
     }
 
