@@ -18,11 +18,11 @@ Open Visual Studio Code press CTRL+p and type or copy and paste:
 ## Configuration
 `favorites.groupsFirst` : boolean
 
-If set to true groups will be listed before directories and files, if false, groups will appear after directories and files.
+If set to true, groups will be listed before directories and files, if false, groups will appear after directories and files.
 
 ## Usage
 
-To add active (opened and focused in editor) to favorites, press `CTRL+ALT+F`
+To add active (opened and focused in editor) file to favorites, press `CTRL+ALT+F`
 
 ### Adding to favorites
 Right-click item in File explorer and select `Add to favorites`.
