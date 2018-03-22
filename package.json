@@ -2,7 +2,7 @@
     "name": "favorites",
     "displayName": "Favorites",
     "description": "Extension provides ability to add files and directories to favorites enabling quick access. Time saver for complex projects.",
-    "version": "0.1.6",
+    "version": "0.1.7",
     "categories": [
         "Other"
     ],
@@ -44,12 +44,14 @@
     "license": "GPL-3.0",
     "main": "./out/",
     "contributes": {
-        "keybindings": [{
-            "command": "favorites.add.current",
-            "key": "ctrl+alt+f",
-            "mac": "cmd+alt+f",
-            "when": "editorTextFocus"
-        }],
+        "keybindings": [
+            {
+                "command": "favorites.add.current",
+                "key": "ctrl+alt+f",
+                "mac": "cmd+alt+f",
+                "when": "editorTextFocus"
+            }
+        ],
         "configuration": {
             "type": "object",
             "title": "Favorite-items configuration",
@@ -81,13 +83,16 @@
             }
         },
         "views": {
-            "explorer": [{
-                "id": "favorites",
-                "name": "Favorites"
-            }]
+            "explorer": [
+                {
+                    "id": "favorites",
+                    "name": "Favorites"
+                }
+            ]
         },
         "menus": {
-            "explorer/context": [{
+            "explorer/context": [
+                {
                     "command": "favorites.addToFavorites",
                     "group": "favorites"
                 },
@@ -96,7 +101,8 @@
                     "group": "favorites"
                 }
             ],
-            "view/title": [{
+            "view/title": [
+                {
                     "command": "favorites.collapse",
                     "when": "view == favorites",
                     "group": "navigation@3"
@@ -117,7 +123,8 @@
                     "group": "navigation@1"
                 }
             ],
-            "view/item/context": [{
+            "view/item/context": [
+                {
                     "command": "favorites.deleteFavorite",
                     "when": "view == favorites && viewItem == FAVORITE",
                     "group": "operation"
@@ -134,7 +141,8 @@
                 }
             ]
         },
-        "commands": [{
+        "commands": [
+            {
                 "command": "favorites.nav.sort.az",
                 "title": "%command.favorites.sort%",
                 "icon": {
