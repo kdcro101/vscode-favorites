@@ -14,7 +14,7 @@ import {
     deleteGroupItem,
     setSortAsc,
     setSortDesc,
-} from "./command/index.";
+} from "./command/index";
 
 declare var global: any;
 
