@@ -124,3 +124,15 @@ export function deleteGroupItem(dataProvider: DataProvider) {
 
     });
 }
+export function addCurrentFile(dataProvider: DataProvider) {
+    return vscode.commands.registerCommand("favorites.add.current", (value: any) => {
+        const fsPath = vscode.window.activeTextEditor.document.fileName;
+        favorites.addPath(fsPath)
+        .then((result) => {
+            vscode.window.showInformationMessage(`${fsPath} added to favorites`);
+         })
+        .catch((e) => {
+            console.log(e);
+         });
+    });
+}
