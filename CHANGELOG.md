@@ -1,3 +1,7 @@
+## 0.1.8 | 2018.03.22
+
+Fixed `delete item` menu showing on file system item
+
 ## 0.1.4 | 2018.03.21
 
 ## 0.1.3 | 2018.03.21
