@@ -310,7 +310,7 @@ class Favorites {
 
                     const contents = sortDirection === "ASC" ? contentsAZ : contentsAZ.reverse();
 
-                    Promise.all(contents.map((i) => this.viewItemForPath(i)))
+                    Promise.all(contents.map((i) => this.viewItemForPath(i, "FAVORITE_GROUP_ITEM")))
                         .then((views) => {
 
                             resolve(views.map((i) => {
@@ -330,7 +330,7 @@ class Favorites {
                 });
         });
     }
-    public viewItemForPath(fsPath: string): Promise<ViewItem> {
+    public viewItemForPath(fsPath: string, context: string): Promise<ViewItem> {
         return new Promise((resolve, reject) => {
             const enablePreview = vscode.workspace.getConfiguration("workbench.editor").get("enablePreview") as boolean;
             Promise.all([this.identify(fsPath)])
@@ -343,7 +343,7 @@ class Favorites {
                                 path.basename(fsPath),
                                 vscode.TreeItemCollapsibleState.None,
                                 fsPath,
-                                "FAVORITE_GROUP_ITEM",
+                                context,
                                 fsPath,
                                 ResourceType.File
                                 , null,
@@ -359,7 +359,7 @@ class Favorites {
                                 path.basename(fsPath),
                                 vscode.TreeItemCollapsibleState.Collapsed,
                                 fsPath,
-                                "FAVORITE_GROUP_ITEM",
+                                context,
                                 fsPath,
                                 ResourceType.Directory
                                 , null);
