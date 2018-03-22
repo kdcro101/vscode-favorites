@@ -24,9 +24,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.24748737"
-     inkscape:cx="-227.32655"
-     inkscape:cy="220.81873"
+     inkscape:zoom="0.175"
+     inkscape:cx="1667.6038"
+     inkscape:cy="854.76885"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -58,11 +58,19 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
+    <rect
+       style="fill:#333333;fill-opacity:1;stroke:none"
+       id="rect3764"
+       width="3342.8572"
+       height="2925.7144"
+       x="2662.8572"
+       y="-856.20935" />
     <g
-       id="g3764"
+       id="g3772"
        inkscape:export-filename="/exec/vscode-favorite-items/images/icon.png"
        inkscape:export-xdpi="20.950001"
-       inkscape:export-ydpi="20.950001">
+       inkscape:export-ydpi="20.950001"
+       transform="translate(434.28572,-268.57143)">
       <rect
          y="-316.20926"
          x="-1935.2327"
@@ -86,7 +94,7 @@
          sodipodi:cx="-1440"
          sodipodi:sides="5"
          id="path2991"
-         style="fill:#ec407a;fill-opacity:1;stroke:#86113c;stroke-width:85.86367053;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         style="fill:none;stroke:#ec407a;stroke-width:86.77817535;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
          sodipodi:type="star" />
     </g>
   </g>

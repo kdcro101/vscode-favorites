@@ -6,5 +6,6 @@
     "command.favorites.collapse": "Collapse all",
     "command.favorites.group.create": "Create group",
     "command.favorites.group.delete": "Delete group",
-    "command.favorites.group.item.delete": "Delete item"
+    "command.favorites.group.item.delete": "Delete item",
+    "command.favorites.add.current": "Add active document to favorites"
 }
