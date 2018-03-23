@@ -47,11 +47,15 @@ export function activate(context: vscode.ExtensionContext) {
 
     const provider = new DataProvider(context);
 
-    vscode.window.registerTreeDataProvider("favorites", provider);
+    const view = vscode.window.registerTreeDataProvider("favorites", provider);
 
     vscode.workspace.onDidChangeConfiguration(() => {
         provider.refresh();
     }, this, context.subscriptions);
+
+    vscode.window.onDidChangeActiveTextEditor((e: vscode.TextEditor) => {
+        console.log(e.document.uri.fsPath);
+    });
 
     context.subscriptions.push(addToFavorites(provider));
     context.subscriptions.push(deleteFavorite(provider));
