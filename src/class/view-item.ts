@@ -12,7 +12,7 @@ export class ViewItem extends vscode.TreeItem {
         public contextValue: string,
         public resourceName: string,
         public resourceType: ResourceType,
-        public icon?: string | vscode.Uri | { light: string | vscode.Uri; dark: string | vscode.Uri } | vscode.ThemeIcon,
+        public icon?: string | vscode.Uri | { light: string | vscode.Uri; dark: string | vscode.Uri },
         public command?: vscode.Command,
     ) {
         super(label, collapsibleState);

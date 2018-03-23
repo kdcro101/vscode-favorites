@@ -1,17 +1,17 @@
 {
     "name": "favorites",
     "displayName": "Favorites",
-    "description": "Extension provides ability to add files and directories to favorites enabling quick access. Time saver for complex projects.",
-    "version": "0.1.8",
+    "description": "Extension provides ability to add files and directories to favorites enabling quick access. You can create groups of directories and files. Time saver for complex projects.",
+    "version": "0.1.9",
     "categories": [
         "Other"
     ],
     "keywords": [
         "bookmarks",
         "favorites",
-        "add to favorites",
+        "groups",
         "favorite files",
-        "favorite directory"
+        "favorite directories"
     ],
     "publisher": "kdcro101",
     "engines": {
@@ -208,7 +208,7 @@
         "gulp-rename": "^1.2.2",
         "tslint": "^5.9.1",
         "typescript": "^2.7.2",
-        "vscode": "^1.1.14",
+        "vscode": "^1.1.13",
         "vscode-nls-dev": "^2.1.6"
     },
     "dependencies": {
