@@ -4,7 +4,7 @@
 [![Rating](https://img.shields.io/vscode-marketplace/r/kdcro101.favorites.svg)](https://marketplace.visualstudio.com/items?itemName=kdcro101.favorites.svg)
 
 Extension provides ability to add files and directories to favorites enabling quick access.
-You can create groups of favorite items and with files and folders.
+You can create groups of favorite items with files and folders.
 Time saver for complex projects.
 
 ![](https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/preview.gif)
