@@ -2,7 +2,7 @@
     "name": "favorites",
     "displayName": "Favorites",
     "description": "Extension provides ability to add files and directories to favorites enabling quick access. You can create groups of directories and files. Time saver for complex projects.",
-    "version": "0.1.10",
+    "version": "1.0.0",
     "categories": [
         "Other"
     ],
@@ -127,7 +127,6 @@
                     "when": "view == favorites",
                     "group": "navigation@0"
                 }
-
             ],
             "view/item/context": [
                 {

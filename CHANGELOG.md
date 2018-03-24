@@ -1,4 +1,4 @@
-## 0.2.0 | 2018.03.24
+## 1.0.0 | 2018.03.24
 
 Added option to delete everything
 
