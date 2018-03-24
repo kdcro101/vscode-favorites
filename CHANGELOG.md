@@ -1,3 +1,7 @@
+## 0.2.0 | 2018.03.24
+
+Added option to delete everything
+
 ## 0.1.8 | 2018.03.22
 
 Fixed `delete item` menu showing on file system item

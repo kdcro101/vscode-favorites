@@ -35,7 +35,8 @@ Click on folder icon on Favorites view title, type unique name and press enter
 Right-click group item in Favorites view and select `Delete group`
 ### Delete item in favorites group
 Right-click item inside group in Favorites view and select `Delete item`
-
+### Delete everything 
+Click on trash bin icon on Favorites view title, type "yes" to confirm
 
 ## LICENSE
 

@@ -28,7 +28,7 @@ export class DataProvider implements vscode.TreeDataProvider<ViewItem> {
     public getChildren(item?: ViewItem): Thenable<ViewItem[]> {
         return new Promise((resolve, reject) => {
 
-            if (this.returnEmpty) {
+            if (this.returnEmpty && !item) {
                 resolve([]);
             }
 

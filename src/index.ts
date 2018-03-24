@@ -4,7 +4,7 @@ import * as vscode from "vscode";
 
 import { DataProvider } from "./class/dataProvider";
 import workspace from "./class/workspace";
-import { addCurrentFile } from "./command/index";
+import { addCurrentFile, deleteAllFavorites } from "./command/index";
 import {
     addToFavorites,
     addToFavoritesGroup,
@@ -67,6 +67,7 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(deleteGroup(provider));
     context.subscriptions.push(deleteGroupItem(provider));
     context.subscriptions.push(addCurrentFile(provider));
+    context.subscriptions.push(deleteAllFavorites(provider));
 }
 
 // this method is called when your extension is deactivated

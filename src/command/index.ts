@@ -128,11 +128,32 @@ export function addCurrentFile(dataProvider: DataProvider) {
     return vscode.commands.registerCommand("favorites.add.current", (value: any) => {
         const fsPath = vscode.window.activeTextEditor.document.fileName;
         favorites.addPath(fsPath)
-        .then((result) => {
-            vscode.window.showInformationMessage(`${fsPath} added to favorites`);
-         })
-        .catch((e) => {
-            console.log(e);
-         });
+            .then((result) => {
+                vscode.window.showInformationMessage(`${fsPath} added to favorites`);
+            })
+            .catch((e) => {
+                console.log(e);
+            });
+    });
+}
+export function deleteAllFavorites(dataProvider: DataProvider) {
+    return vscode.commands.registerCommand("favorites.delete.all", (value: any) => {
+
+        vscode.window.showInputBox({
+            prompt: "Do you want to delete ALL favorites (including groups)?",
+            placeHolder: "type 'yes' to delete everything",
+        })
+            .then((val) => {
+                if (val === "yes") {
+                    workspace.save("root", [])
+                        .then(() => {
+                            vscode.window.showInformationMessage(`Everything is deleted`);
+
+                        });
+
+                }
+            });
+        //
+
     });
 }

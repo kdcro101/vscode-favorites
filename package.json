@@ -2,7 +2,7 @@
     "name": "favorites",
     "displayName": "Favorites",
     "description": "Extension provides ability to add files and directories to favorites enabling quick access. You can create groups of directories and files. Time saver for complex projects.",
-    "version": "0.1.9",
+    "version": "0.1.10",
     "categories": [
         "Other"
     ],
@@ -121,7 +121,13 @@
                     "command": "favorites.group.create",
                     "when": "view == favorites",
                     "group": "navigation@1"
+                },
+                {
+                    "command": "favorites.delete.all",
+                    "when": "view == favorites",
+                    "group": "navigation@0"
                 }
+
             ],
             "view/item/context": [
                 {
@@ -184,6 +190,14 @@
                 "icon": {
                     "dark": "images/add_dark.svg",
                     "light": "images/add_light.svg"
+                }
+            },
+            {
+                "command": "favorites.delete.all",
+                "title": "Delete everything",
+                "icon": {
+                    "dark": "images/delete_all_dark.svg",
+                    "light": "images/delete_all_light.svg"
                 }
             },
             {
