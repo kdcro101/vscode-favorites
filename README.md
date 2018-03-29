@@ -20,7 +20,7 @@ Open Visual Studio Code press CTRL+p and type or copy and paste:
 `favorites.groupsFirst` : boolean
 - If set to `true`, groups will be listed before directories and files, if `false`, groups will appear after directories and files.
 
-`favorites.sortDirection ` : string (`ASC` or `DESC`)
+`favorites.sortDirection ` : string, `ASC` or `DESC`
 
 ## Usage
 
