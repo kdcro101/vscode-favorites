@@ -140,6 +140,11 @@
                     "group": "operation"
                 },
                 {
+                    "command": "favorites.group.subgroup.create",
+                    "when": "view == favorites && viewItem == FAVORITE_GROUP",
+                    "group": "operation"
+                },
+                {
                     "command": "favorites.group.item.delete",
                     "when": "view == favorites && viewItem == FAVORITE_GROUP_ITEM",
                     "group": "operation"
@@ -202,6 +207,10 @@
             {
                 "command": "favorites.group.delete",
                 "title": "%command.favorites.group.delete%"
+            },
+            {
+                "command": "favorites.group.subgroup.create",
+                "title": "Create subgroup"
             },
             {
                 "command": "favorites.group.item.delete",

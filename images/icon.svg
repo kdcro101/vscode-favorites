@@ -14,7 +14,10 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.5 r10040"
-   sodipodi:docname="ic_favorite_black_48px.svg">
+   sodipodi:docname="icon.svg"
+   inkscape:export-filename="/exec/vscode-favorite-items/images/icon.png"
+   inkscape:export-xdpi="219.42999"
+   inkscape:export-ydpi="219.42999">
   <metadata
      id="metadata12">
     <rdf:RDF>
@@ -43,7 +46,7 @@
      id="namedview8"
      showgrid="false"
      inkscape:zoom="4.9166667"
-     inkscape:cx="-8.7457622"
+     inkscape:cx="-42.101694"
      inkscape:cy="-21.18328"
      inkscape:window-x="25"
      inkscape:window-y="0"
@@ -56,22 +59,21 @@
      fill="none"
      id="path4" />
   <g
-     id="g3753"
-     transform="translate(-28.372881,-2.7457627)"
+     id="g3763"
      inkscape:export-filename="/exec/vscode-favorite-items/images/icon-small.png"
      inkscape:export-xdpi="41.139999"
      inkscape:export-ydpi="41.139999">
     <rect
-       y="15.025424"
-       x="-37.59322"
+       y="12.279661"
+       x="-65.966103"
        height="52.5"
        width="52.5"
        id="rect3751"
        style="fill:none;stroke:none" />
     <path
        inkscape:connector-curvature="0"
-       style="fill:#e53935;fill-opacity:1"
+       style="fill:#ec407a;fill-opacity:1"
        id="path6"
-       d="m -11.34322,64.212925 -3.625,-3.3 c -12.875,-11.674999 -21.375,-19.375 -21.375,-28.825 0,-7.700001 6.05,-13.750001 13.75,-13.750001 4.35,0 8.525,2.025 11.25,5.225001 2.7250003,-3.200001 6.9000003,-5.225001 11.25000034,-5.225001 7.69999896,0 13.74999966,6.05 13.74999966,13.750001 0,9.45 -8.4999997,17.150001 -21.3749997,28.85 l -3.6250003,3.275 z" />
+       d="m -39.716101,61.467162 -3.625,-3.3 c -12.875,-11.674999 -21.375,-19.375 -21.375,-28.825 0,-7.700001 6.05,-13.750001 13.75,-13.750001 4.35,0 8.525,2.025 11.25,5.225001 2.725,-3.200001 6.9,-5.225001 11.25,-5.225001 7.699999,0 13.75,6.05 13.75,13.750001 0,9.45 -8.5,17.150001 -21.375,28.85 l -3.625,3.275 z" />
   </g>
 </svg>
