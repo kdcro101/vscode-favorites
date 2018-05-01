@@ -42,6 +42,7 @@
         "angular-whitespace": [
             false
         ],
-        "no-consecutive-blank-lines": true
+        "no-consecutive-blank-lines": true,
+        "member-access":false
     }
 }

@@ -4,18 +4,7 @@ import * as vscode from "vscode";
 
 import { DataProvider } from "./class/dataProvider";
 import workspace from "./class/workspace";
-import { addCurrentFile, deleteAllFavorites } from "./command/index";
-import {
-    addToFavorites,
-    addToFavoritesGroup,
-    collapse,
-    createGroup,
-    deleteFavorite,
-    deleteGroup,
-    deleteGroupItem,
-    setSortAsc,
-    setSortDesc,
-} from "./command/index";
+import { Commands } from "./command";
 
 declare var global: any;
 
@@ -57,17 +46,8 @@ export function activate(context: vscode.ExtensionContext) {
         console.log(e.document.uri.fsPath);
     });
 
-    context.subscriptions.push(addToFavorites(provider));
-    context.subscriptions.push(deleteFavorite(provider));
-    context.subscriptions.push(setSortAsc(provider));
-    context.subscriptions.push(setSortDesc(provider));
-    context.subscriptions.push(collapse(provider));
-    context.subscriptions.push(createGroup());
-    context.subscriptions.push(addToFavoritesGroup(provider));
-    context.subscriptions.push(deleteGroup(provider));
-    context.subscriptions.push(deleteGroupItem(provider));
-    context.subscriptions.push(addCurrentFile(provider));
-    context.subscriptions.push(deleteAllFavorites(provider));
+    const c = new Commands(context, provider);
+
 }
 
 // this method is called when your extension is deactivated
