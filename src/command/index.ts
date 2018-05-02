@@ -3,13 +3,13 @@ import * as path from "path";
 
 import * as vscode from "vscode";
 import { DataProvider } from "../class/dataProvider";
-import favorites from "../class/favorites";
+import { Favorites } from "../class/favorites";
 import { ViewItem } from "../class/view-item";
 import workspace from "../class/workspace";
 import { ResourceType, StoredResource } from "../types/index";
 
 export class Commands {
-    constructor(private context: vscode.ExtensionContext, provider: DataProvider) {
+    constructor(private context: vscode.ExtensionContext, provider: DataProvider, private favorites: Favorites) {
         context.subscriptions.push(this.addToFavorites(provider));
         context.subscriptions.push(this.deleteFavorite(provider));
         context.subscriptions.push(this.setSortAsc(provider));
@@ -29,15 +29,15 @@ export class Commands {
             (value: ViewItem) => {
 
                 vscode.window.showInputBox({ prompt: "Enter subgroup name" })
-                .then((name) => {
-                    console.log(name);
-                    if (!name || name.trim().length === 0) {
-                        return;
-                    }
-                    const tname = name.trim();
-                    vscode.window.showWarningMessage(tname);
+                    .then((name) => {
+                        console.log(name);
+                        if (!name || name.trim().length === 0) {
+                            return;
+                        }
+                        const tname = name.trim();
+                        this.favorites.addGroup(value.id, tname);
 
-                });
+                    });
 
             });
     }
@@ -48,7 +48,7 @@ export class Commands {
             }
 
             const itemPath = fileUri.fsPath;
-            favorites.addPath(itemPath);
+            this.favorites.addPathToGroup(null, itemPath);
         });
     }
     addToFavoritesGroup = (dataProvider: DataProvider) => {
@@ -57,20 +57,21 @@ export class Commands {
                 return vscode.window.showWarningMessage("You have to call this extension from explorer");
             }
 
-            favorites.get()
+            this.favorites.generateGroupQuickPickList()
                 .then((result) => {
 
-                    const names = result.filter((i) => i.type === ResourceType.Group);
-                    if (names.length === 0) {
+                    if (result.length === 0) {
                         vscode.window.showWarningMessage("No group definition found. Create group first.");
                         return;
                     }
-                    vscode.window.showQuickPick(names.map((i) => i.name))
-                        .then((groupName) => {
-                            console.log(groupName);
+                    vscode.window.showQuickPick(result)
+                        .then((pickedItem) => {
+                            if (pickedItem == null) {
+                                // canceled
+                                return;
+                            }
                             const itemPath = fileUri.fsPath;
-                            favorites.addPathToGroup(groupName, itemPath);
-
+                            this.favorites.addPathToGroup(pickedItem.id, itemPath);
                         });
 
                 })
@@ -95,11 +96,12 @@ export class Commands {
         });
     }
     deleteFavorite = (dataProvider: DataProvider) => {
-        return vscode.commands.registerCommand("favorites.deleteFavorite", (value: ViewItem) => {
+        return vscode.commands.registerCommand("favorites.deleteFavorite",
+            (value: ViewItem) => {
 
-            favorites.removePath(value.resourceName);
-            dataProvider.refresh();
-        });
+                this.favorites.removeResource(value.id);
+                dataProvider.refresh();
+            });
     }
     setSortAsc = (dataProvider: DataProvider) => {
         return vscode.commands.registerCommand("favorites.nav.sort.az", (value: ViewItem) => {
@@ -128,29 +130,27 @@ export class Commands {
                     return;
                 }
                 const tname = name.trim();
-                favorites.addGroup(tname);
+                this.favorites.addGroup(null, tname);
 
             });
         });
     }
     deleteGroup = (dataProvider: DataProvider) => {
-        return vscode.commands.registerCommand("favorites.group.delete", (value: ViewItem) => {
-
-            favorites.removeGroup(value.resourceName);
-
-        });
+        return vscode.commands.registerCommand("favorites.group.delete",
+            (value: ViewItem) => {
+                this.favorites.removeResource(value.id);
+            });
     }
     deleteGroupItem = (dataProvider: DataProvider) => {
-        return vscode.commands.registerCommand("favorites.group.item.delete", (value: ViewItem) => {
-
-            favorites.removePathFromGroup(value.groupName, value.resourceName);
-
-        });
+        return vscode.commands.registerCommand("favorites.group.item.delete",
+            (value: ViewItem) => {
+                this.favorites.removeResource(value.id);
+            });
     }
     addCurrentFile = (dataProvider: DataProvider) => {
         return vscode.commands.registerCommand("favorites.add.current", (value: any) => {
             const fsPath = vscode.window.activeTextEditor.document.fileName;
-            favorites.addPath(fsPath)
+            this.favorites.addPathToGroup(null, fsPath)
                 .then((result) => {
                     vscode.window.showInformationMessage(`${fsPath} added to favorites`);
                 })

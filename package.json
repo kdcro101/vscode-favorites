@@ -223,6 +223,8 @@
         ]
     },
     "devDependencies": {
+        "@types/lodash": "^4.14.108",
+        "@types/lodash-es": "^4.17.0",
         "@types/nconf": "0.0.37",
         "@types/node": "^9.4.7",
         "del": "^3.0.0",
@@ -234,6 +236,8 @@
         "vscode-nls-dev": "^2.1.6"
     },
     "dependencies": {
+        "lodash": "^4.17.10",
+        "lodash-es": "^4.17.10",
         "nconf": "^0.10.0"
     }
 }

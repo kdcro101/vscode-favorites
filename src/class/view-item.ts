@@ -14,6 +14,8 @@ export class ViewItem extends vscode.TreeItem {
         public resourceType: ResourceType,
         public icon?: string | vscode.Uri | { light: string | vscode.Uri; dark: string | vscode.Uri },
         public command?: vscode.Command,
+        public id?: string,
+        public parentId?: string,
     ) {
         super(label, collapsibleState);
 

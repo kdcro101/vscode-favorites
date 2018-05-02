@@ -8,7 +8,7 @@
 <!-- <img align="left" width="48" height="48" src="https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/images/icon-small.png"> -->
 
 Extension provides ability to add files and directories to favorites enabling quick access.
-You can create groups of favorite items with files and folders.
+You can create groups (and subgroups) of favorite items with files and folders.
 Time saver for complex projects.
 
 ![](https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/preview.gif)
@@ -32,10 +32,14 @@ To add active (opened and focused in editor) file to favorites, press `CTRL+ALT+
 
 ### Adding to favorites
 Right-click item in File explorer and select `Add to favorites`.
+### Adding to favorites group or subgroup
+Right-click item in File explorer and select `Add to favorites group`, then select group from list.
 ### Removing from favorites
 Right-click item in Favorites view and select `Delete favorite`
 ### Create favorites group
 Click on folder icon on Favorites view title, type unique name and press enter
+### Create favorites subgroup
+Right-click on group item and choose "Create subgroup"
 ### Delete favorites group
 Right-click group item in Favorites view and select `Delete group`
 ### Delete item in favorites group
