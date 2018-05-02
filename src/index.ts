@@ -3,6 +3,7 @@
 import * as vscode from "vscode";
 
 import { DataProvider } from "./class/dataProvider";
+import { Favorites } from "./class/favorites";
 import workspace from "./class/workspace";
 import { Commands } from "./command";
 
@@ -34,7 +35,8 @@ export function activate(context: vscode.ExtensionContext) {
         provider.refresh();
     });
 
-    const provider = new DataProvider(context);
+    const favorites = new Favorites(context);
+    const provider = new DataProvider(context, favorites);
 
     const view = vscode.window.registerTreeDataProvider("favorites", provider);
 
@@ -46,7 +48,7 @@ export function activate(context: vscode.ExtensionContext) {
         console.log(e.document.uri.fsPath);
     });
 
-    const c = new Commands(context, provider);
+    const c = new Commands(context, provider, favorites);
 
 }
 

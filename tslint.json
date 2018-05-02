@@ -43,6 +43,11 @@
             false
         ],
         "no-consecutive-blank-lines": true,
-        "member-access":false
+        "member-access": false,
+        "variable-name": false,
+        "semicolon": [
+            true,
+            "always"
+        ]
     }
 }

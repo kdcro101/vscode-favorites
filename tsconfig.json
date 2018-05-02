@@ -1,8 +1,13 @@
 {
     "compilerOptions": {
+        "target": "es5",
+        "outDir": "./out",
+        "moduleResolution": "node",
         "module": "commonjs",
-        "target": "es2015",
-        "outDir": "out",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "allowSyntheticDefaultImports": true,
+        "allowJs": true,
         "lib": [
             "es2017"
         ],

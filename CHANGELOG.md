@@ -1,3 +1,8 @@
+## 1.2.0 | 2018.05.02
+
+Added subgroup support
+
+
 ## 1.0.3 | 2018.03.30
 
 Icon change

@@ -1,3 +1,5 @@
+import { QuickPickItem } from "vscode";
+
 export enum ResourceType {
     File = "File",
     Group = "Group",
@@ -6,8 +8,10 @@ export enum ResourceType {
 }
 
 export interface StoredResource {
+    id?: string;
     name: string;
     type: ResourceType;
+    parent_id?: string;
     contents?: string[];
 
 }
@@ -15,4 +19,8 @@ export interface StoredResource {
 export interface FilesystemResource {
     path: string;
     type: ResourceType;
+}
+
+export interface GroupQuickPick extends QuickPickItem {
+    id: string;
 }
