@@ -44,10 +44,6 @@ export function activate(context: vscode.ExtensionContext) {
         provider.refresh();
     }, this, context.subscriptions);
 
-    vscode.window.onDidChangeActiveTextEditor((e: vscode.TextEditor) => {
-        console.log(e.document.uri.fsPath);
-    });
-
     const c = new Commands(context, provider, favorites);
 
 }

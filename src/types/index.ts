@@ -13,7 +13,7 @@ export interface StoredResource {
     type: ResourceType;
     parent_id?: string;
     contents?: string[];
-
+    label?: string;
 }
 
 export interface FilesystemResource {
