@@ -2,7 +2,7 @@
     "name": "favorites",
     "displayName": "Favorites",
     "description": "Provides ability to add files and directories to favorites enabling quick access. You can create groups of directories and files. Time saver for complex projects.",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "categories": [
         "Other"
     ],
