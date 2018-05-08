@@ -1,3 +1,8 @@
+## 1.3.1 | 2018.05.08
+
+- Minor bugs
+- README update
+
 ## 1.3.0 | 2018.05.08
 
 - renaming group
