@@ -72,14 +72,28 @@ export class Commands {
         return vscode.commands.registerCommand("filesystem.create.file",
             // tslint:disable-next-line:no-empty
             (value: ViewItem) => {
-
+                this.filesystem.createFile(value)
+                    .then((result) => {
+                        this.providers.refresh();
+                    })
+                    .catch((e) => {
+                        this.providers.refresh();
+                        console.log(e);
+                    });
             });
     }
     public fsCreateDirectory = () => {
-        return vscode.commands.registerCommand("filesystem.create.directroy",
+        return vscode.commands.registerCommand("filesystem.create.directory",
             // tslint:disable-next-line:no-empty
             (value: ViewItem) => {
-
+                this.filesystem.createDirectory(value)
+                    .then((result) => {
+                        this.providers.refresh();
+                    })
+                    .catch((e) => {
+                        this.providers.refresh();
+                        console.log(e);
+                    });
             });
     }
     public fsCopy = () => {
@@ -93,13 +107,25 @@ export class Commands {
         return vscode.commands.registerCommand("filesystem.cut",
             // tslint:disable-next-line:no-empty
             (value: ViewItem) => {
-
+                this.clipboard.cut(value);
             });
     }
     public fsPaste = () => {
         return vscode.commands.registerCommand("filesystem.paste",
             // tslint:disable-next-line:no-empty
             (value: ViewItem) => {
+                const state = this.clipboard.get();
+                if ( state == null) {
+                    return;
+                }
+                switch (state.operation) {
+                    case "copy":
+                    this.filesystem.copy(state.item, value);
+                    break;
+                    case "cut":
+                    this.filesystem.move(state.item, value);
+                    break;
+                }
 
             });
     }
