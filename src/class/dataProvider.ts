@@ -119,7 +119,7 @@ export class DataProvider implements vscode.TreeDataProvider<ViewItem> {
                             fsItems = dirsAZ.reverse().concat(filesAZ.reverse());
                         }
 
-                        Promise.all(fsItems.map((i) => this.favorites.viewItemForPath(i.path, "FILE_SYSTEM")))
+                        Promise.all(fsItems.map((i) => this.favorites.viewItemForPath(i.path)))
                             .then((views) => {
                                 resolve(views);
                                 return;

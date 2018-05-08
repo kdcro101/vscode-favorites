@@ -170,73 +170,188 @@
             "view/item/context": [
                 {
                     "command": "favorites.deleteFavorite",
-                    "when": "view == favorites && viewItem == FAVORITE",
-                    "group": "operation"
-                },
-                {
-                    "command": "favorites.alias.modify",
-                    "when": "view == favorites && viewItem == FAVORITE",
-                    "group": "operation"
-                },
-                {
-                    "command": "favorites.alias.remove",
-                    "when": "view == favorites && viewItem == FAVORITE",
-                    "group": "operation"
-                },
-                {
-                    "command": "favorites.group.delete",
-                    "when": "view == favorites && viewItem == FAVORITE_GROUP",
-                    "group": "operation"
-                },
-                {
-                    "command": "favorites.group.rename",
-                    "when": "view == favorites && viewItem == FAVORITE_GROUP",
-                    "group": "operation"
-                },
-                {
-                    "command": "favorites.group.subgroup.create",
-                    "when": "view == favorites && viewItem == FAVORITE_GROUP",
-                    "group": "operation"
-                },
-                {
-                    "command": "favorites.group.item.delete",
-                    "when": "view == favorites && viewItem == FAVORITE_GROUP_ITEM",
+                    "when": "viewItem == FAVORITE_FILE",
                     "group": "operation"
                 },
                 {
                     "command": "favorites.deleteFavorite",
-                    "when": "view == favoritesActivity && viewItem == FAVORITE",
+                    "when": "viewItem == FAVORITE_DIRECTORY",
                     "group": "operation"
                 },
                 {
                     "command": "favorites.alias.modify",
-                    "when": "view == favoritesActivity && viewItem == FAVORITE",
+                    "when": "viewItem == FAVORITE_FILE",
+                    "group": "operation"
+                },
+                {
+                    "command": "favorites.alias.modify",
+                    "when": "viewItem == FAVORITE_DIRECTORY",
                     "group": "operation"
                 },
                 {
                     "command": "favorites.alias.remove",
-                    "when": "view == favoritesActivity && viewItem == FAVORITE",
+                    "when": "viewItem == FAVORITE_FILE",
+                    "group": "operation"
+                },
+                {
+                    "command": "favorites.alias.remove",
+                    "when": "viewItem == FAVORITE_DIRECTORY",
                     "group": "operation"
                 },
                 {
                     "command": "favorites.group.delete",
-                    "when": "view == favoritesActivity && viewItem == FAVORITE_GROUP",
+                    "when": "viewItem == FAVORITE_GROUP",
                     "group": "operation"
                 },
                 {
                     "command": "favorites.group.rename",
-                    "when": "view == favoritesActivity && viewItem == FAVORITE_GROUP",
+                    "when": "viewItem == FAVORITE_GROUP",
                     "group": "operation"
                 },
                 {
                     "command": "favorites.group.subgroup.create",
-                    "when": "view == favoritesActivity && viewItem == FAVORITE_GROUP",
+                    "when": "viewItem == FAVORITE_GROUP",
                     "group": "operation"
                 },
                 {
-                    "command": "favorites.group.item.delete",
-                    "when": "view == favoritesActivity && viewItem == FAVORITE_GROUP_ITEM",
-                    "group": "operation"
+                    "command": "filesystem.create.file",
+                    "when": "viewItem == FS_DIRECTORY",
+                    "group": "1_modification"
+                },
+                {
+                    "command": "filesystem.create.directory",
+                    "when": "viewItem == FS_DIRECTORY",
+                    "group": "1_modification"
+                },
+                {
+                    "command": "filesystem.duplicate",
+                    "when": "viewItem == FS_DIRECTORY",
+                    "group": "1_modification"
+                },
+                {
+                    "command": "filesystem.copy",
+                    "when": "viewItem == FS_DIRECTORY",
+                    "group": "9_cutcopypaste"
+                },
+                {
+                    "command": "filesystem.cut",
+                    "when": "viewItem == FS_DIRECTORY",
+                    "group": "9_cutcopypaste"
+                },
+                {
+                    "command": "filesystem.paste",
+                    "when": "viewItem == FS_DIRECTORY",
+                    "group": "9_cutcopypaste"
+                },
+                {
+                    "command": "filesystem.delete",
+                    "when": "viewItem == FS_DIRECTORY",
+                    "group": "7_modification"
+                },
+                {
+                    "command": "filesystem.rename",
+                    "when": "viewItem == FS_DIRECTORY",
+                    "group": "7_modification"
+                },
+                {
+                    "command": "filesystem.duplicate",
+                    "when": "viewItem == FS_FILE",
+                    "group": "1_modification"
+                },
+                {
+                    "command": "filesystem.copy",
+                    "when": "viewItem == FS_FILE",
+                    "group": "9_cutcopypaste"
+                },
+                {
+                    "command": "filesystem.cut",
+                    "when": "viewItem == FS_FILE",
+                    "group": "9_cutcopypaste"
+                },
+                {
+                    "command": "filesystem.paste",
+                    "when": "viewItem == FS_FILE",
+                    "group": "9_cutcopypaste"
+                },
+                {
+                    "command": "filesystem.delete",
+                    "when": "viewItem == FS_FILE",
+                    "group": "7_modification"
+                },
+                {
+                    "command": "filesystem.rename",
+                    "when": "viewItem == FS_FILE",
+                    "group": "7_modification"
+                },
+                {
+                    "command": "filesystem.duplicate",
+                    "when": "viewItem == FAVORITE_FILE",
+                    "group": "1_modification"
+                },
+                {
+                    "command": "filesystem.copy",
+                    "when": "viewItem == FAVORITE_FILE",
+                    "group": "9_cutcopypaste"
+                },
+                {
+                    "command": "filesystem.cut",
+                    "when": "viewItem == FAVORITE_FILE",
+                    "group": "9_cutcopypaste"
+                },
+                {
+                    "command": "filesystem.paste",
+                    "when": "viewItem == FAVORITE_FILE",
+                    "group": "9_cutcopypaste"
+                },
+                {
+                    "command": "filesystem.delete",
+                    "when": "viewItem == FAVORITE_FILE",
+                    "group": "7_modification"
+                },
+                {
+                    "command": "filesystem.rename",
+                    "when": "viewItem == FAVORITE_FILE",
+                    "group": "7_modification"
+                },
+                {
+                    "command": "filesystem.create.file",
+                    "when": "viewItem == FAVORITE_DIRECTORY",
+                    "group": "1_modification"
+                },
+                {
+                    "command": "filesystem.create.directory",
+                    "when": "viewItem == FAVORITE_DIRECTORY",
+                    "group": "1_modification"
+                },
+                {
+                    "command": "filesystem.duplicate",
+                    "when": "viewItem == FAVORITE_DIRECTORY",
+                    "group": "1_modification"
+                },
+                {
+                    "command": "filesystem.copy",
+                    "when": "viewItem == FAVORITE_DIRECTORY",
+                    "group": "9_cutcopypaste"
+                },
+                {
+                    "command": "filesystem.cut",
+                    "when": "viewItem == FAVORITE_DIRECTORY",
+                    "group": "9_cutcopypaste"
+                },
+                {
+                    "command": "filesystem.paste",
+                    "when": "viewItem == FAVORITE_DIRECTORY",
+                    "group": "9_cutcopypaste"
+                },
+                {
+                    "command": "filesystem.delete",
+                    "when": "viewItem == FAVORITE_DIRECTORY",
+                    "group": "7_modification"
+                },
+                {
+                    "command": "filesystem.rename",
+                    "when": "viewItem == FAVORITE_DIRECTORY",
+                    "group": "7_modification"
                 }
             ]
         },
@@ -328,10 +443,43 @@
             {
                 "command": "favorites.add.current",
                 "title": "%command.favorites.add.current%"
+            },
+            {
+                "command": "filesystem.create.file",
+                "title": "Create file"
+            },
+            {
+                "command": "filesystem.create.directory",
+                "title": "Create directory"
+            },
+            {
+                "command": "filesystem.copy",
+                "title": "Copy"
+            },
+            {
+                "command": "filesystem.cut",
+                "title": "Cut"
+            },
+            {
+                "command": "filesystem.paste",
+                "title": "Paste"
+            },
+            {
+                "command": "filesystem.delete",
+                "title": "Delete"
+            },
+            {
+                "command": "filesystem.rename",
+                "title": "Rename"
+            },
+            {
+                "command": "filesystem.duplicate",
+                "title": "Duplicate"
             }
         ]
     },
     "devDependencies": {
+        "@types/fs-extra": "^5.0.2",
         "@types/lodash": "^4.14.108",
         "@types/lodash-es": "^4.17.0",
         "@types/nconf": "0.0.37",
@@ -345,6 +493,7 @@
         "vscode-nls-dev": "^2.1.6"
     },
     "dependencies": {
+        "fs-extra": "^6.0.0",
         "lodash": "^4.17.10",
         "lodash-es": "^4.17.10",
         "nconf": "^0.10.0"

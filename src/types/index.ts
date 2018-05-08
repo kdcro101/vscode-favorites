@@ -1,11 +1,12 @@
 import { QuickPickItem } from "vscode";
 import { DataProvider } from "../class/dataProvider";
+import { ViewItem } from "../class/view-item";
 
 export enum ResourceType {
     File = "File",
     Group = "Group",
     Directory = "Directory",
-    GroupItem = "GroupItem",
+
 }
 
 export interface StoredResource {
@@ -15,6 +16,7 @@ export interface StoredResource {
     parent_id?: string;
     contents?: string[];
     label?: string;
+    workspacePath?: string;
 }
 
 export interface FilesystemResource {
@@ -30,4 +32,9 @@ export interface TreeProviders {
     explorer: DataProvider;
     activity: DataProvider;
     refresh: () => void;
+}
+
+export interface ClipboardBuffer {
+    item: ViewItem;
+    operation: "copy" | "cut";
 }

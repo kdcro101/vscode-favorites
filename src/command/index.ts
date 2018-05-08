@@ -2,13 +2,17 @@ import * as fs from "fs";
 import * as path from "path";
 
 import * as vscode from "vscode";
+import { Clipboard } from "../class/clipboard";
 import { DataProvider } from "../class/dataProvider";
 import { Favorites } from "../class/favorites";
+import { FilesystemUtils } from "../class/filesystem";
 import { ViewItem } from "../class/view-item";
 import workspace from "../class/workspace";
 import { ResourceType, StoredResource, TreeProviders } from "../types/index";
 
 export class Commands {
+    private clipboard = new Clipboard();
+    private filesystem = new FilesystemUtils();
     constructor(
         private context: vscode.ExtensionContext,
         public providers: TreeProviders,
@@ -26,10 +30,106 @@ export class Commands {
         context.subscriptions.push(this.deleteGroupItem());
         context.subscriptions.push(this.addCurrentFile());
         context.subscriptions.push(this.deleteAllFavorites());
-        context.subscriptions.push(this.addSubgroup());
+        context.subscriptions.push(this.groupSubgroupAdd());
         context.subscriptions.push(this.groupRename());
         context.subscriptions.push(this.aliasModify());
         context.subscriptions.push(this.aliasRemove());
+
+        context.subscriptions.push(this.fsCopy());
+        context.subscriptions.push(this.fsCut());
+        context.subscriptions.push(this.fsPaste());
+        context.subscriptions.push(this.fsCreateDirectory());
+        context.subscriptions.push(this.fsCreateFile());
+        context.subscriptions.push(this.fsDuplicate());
+        context.subscriptions.push(this.fsDelete());
+        context.subscriptions.push(this.fsRename());
+    }
+
+    //  "command": "filesystem.create",
+    //         "title": "Create file here..."
+    //     },
+    //     {
+    //         "command": "filesystem.copy",
+    //         "title": "Copy"
+    //     },
+    //     {
+    //         "command": "filesystem.cut",
+    //         "title": "Cut"
+    //     },
+    //     {
+    //         "command": "filesystem.paste",
+    //         "title": "Paste"
+    //     },
+    //     {
+    //         "command": "filesystem.delete",
+    //         "title": "Delete"
+    //     },
+    //     {
+    //         "command": "filesystem.rename",
+    //         "title": "Rename"
+    //     }
+    public fsCreateFile = () => {
+        return vscode.commands.registerCommand("filesystem.create.file",
+            // tslint:disable-next-line:no-empty
+            (value: ViewItem) => {
+
+            });
+    }
+    public fsCreateDirectory = () => {
+        return vscode.commands.registerCommand("filesystem.create.directroy",
+            // tslint:disable-next-line:no-empty
+            (value: ViewItem) => {
+
+            });
+    }
+    public fsCopy = () => {
+        return vscode.commands.registerCommand("filesystem.copy",
+            // tslint:disable-next-line:no-empty
+            (value: ViewItem) => {
+                this.clipboard.copy(value);
+            });
+    }
+    public fsCut = () => {
+        return vscode.commands.registerCommand("filesystem.cut",
+            // tslint:disable-next-line:no-empty
+            (value: ViewItem) => {
+
+            });
+    }
+    public fsPaste = () => {
+        return vscode.commands.registerCommand("filesystem.paste",
+            // tslint:disable-next-line:no-empty
+            (value: ViewItem) => {
+
+            });
+    }
+    public fsDelete = () => {
+        return vscode.commands.registerCommand("filesystem.delete",
+            // tslint:disable-next-line:no-empty
+            (value: ViewItem) => {
+
+            });
+    }
+    public fsRename = () => {
+        return vscode.commands.registerCommand("filesystem.rename",
+            // tslint:disable-next-line:no-empty
+            (value: ViewItem) => {
+
+            });
+    }
+    public fsDuplicate = () => {
+        return vscode.commands.registerCommand("filesystem.duplicate",
+            // tslint:disable-next-line:no-empty
+            (value: ViewItem) => {
+                this.filesystem.duplicate(value)
+                .then((result) => {
+                    this.providers.refresh();
+                 })
+                .catch((e) => {
+                    this.providers.refresh();
+                    console.log(e);
+                });
+            });
     }
     public aliasRemove = () => {
         return vscode.commands.registerCommand("favorites.alias.remove",
@@ -88,7 +188,7 @@ export class Commands {
             });
 
     }
-    addSubgroup = () => {
+    public groupSubgroupAdd = () => {
         return vscode.commands.registerCommand("favorites.group.subgroup.create",
             (value: ViewItem) => {
 
