@@ -165,11 +165,11 @@ export class Commands {
         return vscode.commands.registerCommand("favorites.collapse.activity", (v) => {
 
             this.providers.activity.returnEmpty = true;
-            this.providers.refresh();
+            this.providers.activity.refresh();
 
             setTimeout(() => {
                 this.providers.activity.returnEmpty = false;
-                this.providers.refresh();
+                this.providers.activity.refresh();
 
             }, 400);
 
@@ -245,14 +245,14 @@ export class Commands {
         return vscode.commands.registerCommand("favorites.delete.all", (value: any) => {
 
             vscode.window.showInputBox({
-                prompt: "Do you want to delete ALL favorites (including groups)?",
-                placeHolder: "type 'yes' to delete everything",
+                prompt: "Do you want to remove ALL favorites (including groups)?",
+                placeHolder: "type 'yes' to remove everything",
             })
                 .then((val) => {
                     if (val === "yes") {
                         workspace.save("root", [])
                             .then(() => {
-                                vscode.window.showInformationMessage(`Everything is deleted`);
+                                vscode.window.showInformationMessage(`All favorites are removed`);
 
                             });
 
