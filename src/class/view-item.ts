@@ -16,11 +16,13 @@ export class ViewItem extends vscode.TreeItem {
         public command?: vscode.Command,
         public id?: string,
         public parentId?: string,
+        public tooltipText?: string,
     ) {
         super(label, collapsibleState);
 
         this.resourceUri = vscode.Uri.file(value);
         this.tooltip = value;
         this.iconPath = icon;
+        this.tooltip = tooltipText;
     }
 }

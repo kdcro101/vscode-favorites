@@ -1,4 +1,5 @@
 import { QuickPickItem } from "vscode";
+import { DataProvider } from "../class/dataProvider";
 
 export enum ResourceType {
     File = "File",
@@ -23,4 +24,10 @@ export interface FilesystemResource {
 
 export interface GroupQuickPick extends QuickPickItem {
     id: string;
+}
+
+export interface TreeProviders {
+    explorer: DataProvider;
+    activity: DataProvider;
+    refresh: () => void;
 }

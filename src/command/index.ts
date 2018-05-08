@@ -6,25 +6,89 @@ import { DataProvider } from "../class/dataProvider";
 import { Favorites } from "../class/favorites";
 import { ViewItem } from "../class/view-item";
 import workspace from "../class/workspace";
-import { ResourceType, StoredResource } from "../types/index";
+import { ResourceType, StoredResource, TreeProviders } from "../types/index";
 
 export class Commands {
-    constructor(private context: vscode.ExtensionContext, provider: DataProvider, private favorites: Favorites) {
-        context.subscriptions.push(this.addToFavorites(provider));
-        context.subscriptions.push(this.deleteFavorite(provider));
-        context.subscriptions.push(this.setSortAsc(provider));
-        context.subscriptions.push(this.setSortDesc(provider));
-        context.subscriptions.push(this.collapse(provider));
+    constructor(
+        private context: vscode.ExtensionContext,
+        public providers: TreeProviders,
+        private favorites: Favorites,
+    ) {
+        context.subscriptions.push(this.addToFavorites());
+        context.subscriptions.push(this.deleteFavorite());
+        context.subscriptions.push(this.setSortAsc());
+        context.subscriptions.push(this.setSortDesc());
+        context.subscriptions.push(this.collapse());
+        context.subscriptions.push(this.collapseActivityView());
         context.subscriptions.push(this.createGroup());
-        context.subscriptions.push(this.addToFavoritesGroup(provider));
-        context.subscriptions.push(this.deleteGroup(provider));
-        context.subscriptions.push(this.deleteGroupItem(provider));
-        context.subscriptions.push(this.addCurrentFile(provider));
-        context.subscriptions.push(this.deleteAllFavorites(provider));
-        context.subscriptions.push(this.addSubgroup(provider));
+        context.subscriptions.push(this.addToFavoritesGroup());
+        context.subscriptions.push(this.deleteGroup());
+        context.subscriptions.push(this.deleteGroupItem());
+        context.subscriptions.push(this.addCurrentFile());
+        context.subscriptions.push(this.deleteAllFavorites());
+        context.subscriptions.push(this.addSubgroup());
+        context.subscriptions.push(this.groupRename());
+        context.subscriptions.push(this.aliasModify());
+        context.subscriptions.push(this.aliasRemove());
     }
+    public aliasRemove = () => {
+        return vscode.commands.registerCommand("favorites.alias.remove",
+            (value: ViewItem) => {
 
-    addSubgroup = (dataProvider: DataProvider) => {
+                this.favorites.labelModify(value.id, null)
+                    .then((result) => {
+                        this.providers.refresh();
+                    })
+                    .catch((e) => {
+                        console.log(e);
+                    });
+
+            });
+
+    }
+    public aliasModify = () => {
+        return vscode.commands.registerCommand("favorites.alias.modify",
+            (value: ViewItem) => {
+
+                this.favorites.get()
+                    .then((result) => {
+                        const item = result.find((r) => r.id === value.id);
+                        const oldVal = (item != null && item.label != null) ? item.label : "";
+                        vscode.window.showInputBox({ prompt: "Enter alias", value: oldVal })
+                            .then((name) => {
+                                if (!name || name.trim().length === 0) {
+                                    return;
+                                }
+                                const tname = name.trim();
+                                this.favorites.labelModify(value.id, tname);
+                                this.providers.refresh();
+                            });
+
+                    })
+                    .catch((e) => {
+                        console.log(e);
+                    });
+
+            });
+
+    }
+    public groupRename = () => {
+        return vscode.commands.registerCommand("favorites.group.rename",
+            (value: ViewItem) => {
+                vscode.window.showInputBox({ prompt: "Enter new group name" })
+                    .then((name) => {
+                        if (!name || name.trim().length === 0) {
+                            return;
+                        }
+                        const tname = name.trim();
+                        this.favorites.groupRename(value.id, tname);
+                        this.providers.refresh();
+                    });
+
+            });
+
+    }
+    addSubgroup = () => {
         return vscode.commands.registerCommand("favorites.group.subgroup.create",
             (value: ViewItem) => {
 
@@ -41,7 +105,7 @@ export class Commands {
 
             });
     }
-    addToFavorites = (dataProvider: DataProvider) => {
+    addToFavorites = () => {
         return vscode.commands.registerCommand("favorites.addToFavorites", (fileUri?: vscode.Uri) => {
             if (!fileUri) {
                 return vscode.window.showWarningMessage("You have to call this extension from explorer");
@@ -51,7 +115,7 @@ export class Commands {
             this.favorites.addPathToGroup(null, itemPath);
         });
     }
-    addToFavoritesGroup = (dataProvider: DataProvider) => {
+    addToFavoritesGroup = () => {
         return vscode.commands.registerCommand("favorites.addToFavoritesGroup", (fileUri?: vscode.Uri) => {
             if (!fileUri) {
                 return vscode.window.showWarningMessage("You have to call this extension from explorer");
@@ -81,29 +145,47 @@ export class Commands {
 
         });
     }
-    collapse = (dataProvider: DataProvider) => {
-        return vscode.commands.registerCommand("favorites.collapse", (value: ViewItem) => {
+    collapse = () => {
+        return vscode.commands.registerCommand("favorites.collapse", (v) => {
 
-            dataProvider.returnEmpty = true;
-            dataProvider.refresh();
+            this.providers.explorer.returnEmpty = true;
+            this.providers.refresh();
 
             setTimeout(() => {
-                dataProvider.returnEmpty = false;
-                dataProvider.refresh();
+                this.providers.explorer.returnEmpty = false;
+                this.providers.refresh();
 
             }, 400);
 
+            console.log(v);
+
         });
     }
-    deleteFavorite = (dataProvider: DataProvider) => {
+    collapseActivityView = () => {
+        return vscode.commands.registerCommand("favorites.collapse.activity", (v) => {
+
+            this.providers.activity.returnEmpty = true;
+            this.providers.refresh();
+
+            setTimeout(() => {
+                this.providers.activity.returnEmpty = false;
+                this.providers.refresh();
+
+            }, 400);
+
+            console.log(v);
+
+        });
+    }
+    deleteFavorite = () => {
         return vscode.commands.registerCommand("favorites.deleteFavorite",
             (value: ViewItem) => {
 
                 this.favorites.removeResource(value.id);
-                dataProvider.refresh();
+                this.providers.refresh();
             });
     }
-    setSortAsc = (dataProvider: DataProvider) => {
+    setSortAsc = () => {
         return vscode.commands.registerCommand("favorites.nav.sort.az", (value: ViewItem) => {
             const config = vscode.workspace.getConfiguration("favorites");
 
@@ -112,7 +194,7 @@ export class Commands {
 
         });
     }
-    setSortDesc = (dataProvider: DataProvider) => {
+    setSortDesc = () => {
         return vscode.commands.registerCommand("favorites.nav.sort.za", (value: ViewItem) => {
             const config = vscode.workspace.getConfiguration("favorites");
 
@@ -135,19 +217,19 @@ export class Commands {
             });
         });
     }
-    deleteGroup = (dataProvider: DataProvider) => {
+    deleteGroup = () => {
         return vscode.commands.registerCommand("favorites.group.delete",
             (value: ViewItem) => {
                 this.favorites.removeResource(value.id);
             });
     }
-    deleteGroupItem = (dataProvider: DataProvider) => {
+    deleteGroupItem = () => {
         return vscode.commands.registerCommand("favorites.group.item.delete",
             (value: ViewItem) => {
                 this.favorites.removeResource(value.id);
             });
     }
-    addCurrentFile = (dataProvider: DataProvider) => {
+    addCurrentFile = () => {
         return vscode.commands.registerCommand("favorites.add.current", (value: any) => {
             const fsPath = vscode.window.activeTextEditor.document.fileName;
             this.favorites.addPathToGroup(null, fsPath)
@@ -159,7 +241,7 @@ export class Commands {
                 });
         });
     }
-    deleteAllFavorites = (dataProvider: DataProvider) => {
+    deleteAllFavorites = () => {
         return vscode.commands.registerCommand("favorites.delete.all", (value: any) => {
 
             vscode.window.showInputBox({

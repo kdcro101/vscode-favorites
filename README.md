@@ -13,6 +13,12 @@ Time saver for complex projects.
 
 ![](https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/preview.gif)
 
+## NEW 2018/05/08
+
+- favorite items can have alias (custom display label)
+- groups can be renamed
+- favorites can be accesed via activity bar
+
 ## Install
 
 Open Visual Studio Code press CTRL+p and type or copy and paste:
