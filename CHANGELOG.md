@@ -1,61 +1,62 @@
 ## 1.3.1 | 2018.05.08
 
-- Minor bugs
-- README update
+- minor bugs
+- mEADME update
 
 ## 1.3.0 | 2018.05.08
 
 - renaming group
-- alias for favorite items (custom display name)
+- alias for favorite items (custom label)
 - activity bar contribution
 - minimum vscode version = 1.23.0
 
 ## 1.2.1 | 2018.05.07
 
-Minor bugs
+- minor bugs
 
 ## 1.2.0 | 2018.05.02
 
-Added subgroup support
+- added subgroup support
 
 
 ## 1.0.3 | 2018.03.30
 
-Icon change
+- icon change
 
 ## 1.0.2 | 2018.03.29
 
-Minor bugs + README
+- minor bugs
+- README
 
 ## 1.0.0 | 2018.03.24
 
-Added option to delete everything
+- added option to delete everything
 
 ## 0.1.8 | 2018.03.22
 
-Fixed `delete item` menu showing on file system item
+- fixed `delete item` menu showing on file system item
 
 ## 0.1.4 | 2018.03.21
 
 ## 0.1.3 | 2018.03.21
 
-Reduce extension size 
+- reduce extension size 
 
 ## 0.1.2 | 2018.03.20
 
-Update minimum engine to `^1.13.0`
+- update minimum engine to `^1.13.0`
 
 ## 0.1.1 | 2018.03.19
 
-Fixed badges link
+- fixed badges link
 
 ## 0.1.0 | 2018.03.19
 
-Added ability to group favorites
+- added ability to group favorites
 
 
 ## 0.0.5 | 2018.03.19
 
-Initial commit
+- initial commit
 - collapse function 
 - fixed sorting
