@@ -17,6 +17,7 @@ export class FilesystemUtils {
                 value: base,
             }).then((val) => {
                 if (val == null || val.trim() === "") {
+                    resolve();
                     return;
                 }
                 if (val === base) {
@@ -90,14 +91,99 @@ export class FilesystemUtils {
                 fs.move(aPath, newPath, {
                     overwrite: true,
                 }).then((result) => {
-                    vscode.window.showInformationMessage(`Duplication successful`);
                     resolve();
                 }).catch((e) => {
-                    vscode.window.showErrorMessage(`Error duplicating ${base}`);
+                    vscode.window.showErrorMessage(`Error renaming ${base}`);
                     reject(e);
                 });
 
             });
+        });
+    }
+    public createFile(item: ViewItem) {
+        return new Promise((resolve, reject) => {
+            const aPath = item.value;
+            let newPath: string = null;
+            let newName: string = null;
+
+            vscode.window.showInputBox({
+                prompt: "Enter file name",
+                placeHolder: "Type file name",
+            }).then((val) => {
+                if (val == null || val.trim() === "") {
+                    resolve();
+                    return;
+                }
+                newName = val;
+                newPath = path.join(aPath, val);
+                return fs.pathExists(newPath);
+            }).then((b) => {
+
+                if (b === true) {
+                    vscode.window.showWarningMessage("File exists");
+                    reject("exists");
+                    return;
+                }
+
+                fs.createFile(newPath)
+                    .then((result) => {
+                        resolve();
+                    })
+                    .catch((e) => {
+                        vscode.window.showErrorMessage(`Error creating file ${newName}`);
+                        reject(e);
+                    });
+
+            });
+
+        });
+    }
+    public createDirectory(item: ViewItem) {
+        return new Promise((resolve, reject) => {
+            const aPath = item.value;
+            let newPath: string = null;
+            let newName: string = null;
+
+            vscode.window.showInputBox({
+                prompt: "Enter directory name",
+                placeHolder: "Type directory name",
+            }).then((val) => {
+                if (val == null || val.trim() === "") {
+                    resolve();
+                    return;
+                }
+                newName = val;
+                newPath = path.join(aPath, val);
+                return fs.pathExists(newPath);
+            }).then((b) => {
+
+                if (b === true) {
+                    vscode.window.showWarningMessage("Directory exists");
+                    reject("exists");
+                    return;
+                }
+
+                fs.ensureDir(newPath)
+                    .then((result) => {
+                        resolve();
+                    })
+                    .catch((e) => {
+                        vscode.window.showErrorMessage(`Error creating directory ${newName}`);
+                        reject(e);
+                    });
+
+            });
+
+        });
+    }
+    public copy(clipboardItem: ViewItem, destination: ViewItem) {
+        return new Promise((resolve, reject) => {
+
+        });
+    }
+    public move(clipboardItem: ViewItem, destination: ViewItem) {
+        return new Promise((resolve, reject) => {
+
         });
     }
 
