@@ -17,7 +17,7 @@ Time saver for complex projects.
 - groups can be renamed
 - favorites can be accesed via activity bar
 
-![](https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/preview.gif)
+![](https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/preview-promo.gif)
 
 ## Install
 
