@@ -26,7 +26,7 @@ export class Favorites {
                 const addChildren = (lastDepth: number, parentId: string) => {
                     const children = all.filter((i) => i.type === ResourceType.Group && i.parent_id === parentId);
                     const paddingLen: number = lastDepth + 1;
-                    const padding = "".padStart(paddingLen, "—");
+                    const padding = "".padStart(paddingLen * 3, " ") + "▹ ";
 
                     children.forEach((c, i) => {
                         const label = `${padding} ${c.name}`;
@@ -92,8 +92,8 @@ export class Favorites {
                 this.get(),
             ]).then((result) => {
                 all = result[0];
-
-                const rPath = workspace.isMultiRootWorkspace() ? itemPath : itemPath.substr(workspace.getSingleRootPath().length + 1);
+                const isMultiRoot = workspace.isMultiRootWorkspace();
+                const rPath = isMultiRoot ? itemPath : itemPath.substr(workspace.getSingleRootPath().length + 1);
                 const groupContents = all.filter((i) => i.parent_id === groupId);
                 const hasPath = groupContents.filter((i) => i.type !== ResourceType.Group && i.name === itemPath);
 
@@ -256,35 +256,47 @@ export class Favorites {
     public get(): Promise<StoredResource[]> {
         return new Promise((resolve, reject) => {
             const resources = workspace.get("root") as StoredResource[];
-            const shouldConvert: boolean = resources.find((i) => i.id == null) == null ? false : true;
+            const shouldAddId: boolean = resources.find((i) => i.id == null) == null ? false : true;
+            const shouldConvertPath: boolean = resources.filter((i) => {
+                return (i.type === ResourceType.Directory || i.type === ResourceType.File) && i.workspacePath == null;
+            }).length === 0 ? false : true;
 
-            if (shouldConvert === false) {
+            if (shouldAddId === false && shouldConvertPath === false) {
                 resolve(resources);
                 return;
             }
 
             const proms: Array<Promise<any>> = [];
-            resources.forEach((e, i) => {
-                resources[i].id = this.generateId();
-                if (e.contents != null && e.contents.length > 0) {
-                    e.contents.forEach((c, ci) => {
+            if (shouldAddId) {
+                resources.forEach((e, i) => {
+                    resources[i].id = this.generateId();
+                    if (e.contents != null && e.contents.length > 0) {
+                        e.contents.forEach((c, ci) => {
 
-                        proms.push(this.identify(c)
-                            .then((t) => {
-                                const ce: StoredResource = {
-                                    id: this.generateId(),
-                                    name: c,
-                                    parent_id: resources[i].id,
-                                    type: t,
-                                };
-                                resources.push(ce);
+                            proms.push(this.identify(c)
+                                .then((t) => {
+                                    const ce: StoredResource = {
+                                        id: this.generateId(),
+                                        name: c,
+                                        parent_id: resources[i].id,
+                                        type: t,
+                                    };
+                                    resources.push(ce);
 
-                            }));
-                    });
+                                }));
+                        });
 
-                    delete resources[i].contents;
-                }
-            });
+                        delete resources[i].contents;
+                    }
+                });
+            }
+            if (shouldConvertPath) {
+                resources.forEach((e, i) => {
+                    if (e.type === ResourceType.Directory || e.type === ResourceType.File) {
+                        resources[i].workspacePath = workspace.pathForWorkspace(e.name);
+                    }
+                });
+            }
 
             Promise.all(proms)
                 .then(() => {
@@ -420,7 +432,7 @@ export class Favorites {
         });
     }
 
-    public viewItemForPath(fsPath: string, context: string): Promise<ViewItem> {
+    public viewItemForPath(fsPath: string): Promise<ViewItem> {
         return new Promise((resolve, reject) => {
             const enablePreview = vscode.workspace.getConfiguration("workbench.editor").get("enablePreview") as boolean;
             Promise.all([this.identify(fsPath)])
@@ -433,7 +445,7 @@ export class Favorites {
                                 path.basename(fsPath),
                                 vscode.TreeItemCollapsibleState.None,
                                 fsPath,
-                                context,
+                                "FS_FILE",
                                 fsPath,
                                 ResourceType.File
                                 , null,
@@ -449,7 +461,7 @@ export class Favorites {
                                 path.basename(fsPath),
                                 vscode.TreeItemCollapsibleState.Collapsed,
                                 fsPath,
-                                context,
+                                "FS_DIRECTORY",
                                 fsPath,
                                 ResourceType.Directory
                                 , null);
@@ -469,13 +481,14 @@ export class Favorites {
         let o: ViewItem = null;
         switch (i.type) {
             case ResourceType.File:
-                const fUri = workspace.pathAsUri(i.name);
+                const fPath = workspace.pathAbsolute(i.workspacePath);
+                const fUri = workspace.pathAsUri(fPath);
                 o = new ViewItem(
                     (i.label != null) ? i.label : path.basename(i.name),
                     vscode.TreeItemCollapsibleState.None,
-                    i.name,
-                    "FAVORITE",
-                    i.name,
+                    fPath,
+                    "FAVORITE_FILE",
+                    fPath,
                     i.type,
                     null, // NO ICON
                     {
@@ -490,12 +503,13 @@ export class Favorites {
 
                 break;
             case ResourceType.Directory:
+                const dPath = workspace.pathAbsolute(i.workspacePath);
                 o = new ViewItem(
-                    (i.label != null) ? i.label : path.basename(i.name),
+                    (i.label != null) ? i.label : path.basename(dPath),
                     vscode.TreeItemCollapsibleState.Collapsed,
-                    i.name,
-                    "FAVORITE",
-                    i.name,
+                    dPath,
+                    "FAVORITE_DIRECTORY",
+                    dPath,
                     i.type,
                     null,
                     null,

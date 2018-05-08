@@ -74,6 +74,18 @@ class Workspace {
         }
         return uri;
     }
+
+    public pathForWorkspace(fsPath: string) {
+        const isMultiRoot = this.isMultiRootWorkspace();
+        const wp = isMultiRoot ? fsPath : fsPath.substr(this.getSingleRootPath().length + 1);
+        return wp;
+    }
+    public pathAbsolute(workspacePath: string) {
+        if (this.isMultiRootWorkspace()) {
+            return workspacePath;
+        }
+        return path.resolve(vscode.workspace.workspaceFolders[0].uri.fsPath, workspacePath);
+    }
 }
 
 export default new Workspace();
