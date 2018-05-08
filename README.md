@@ -11,13 +11,13 @@ Extension provides ability to add files and directories to favorites enabling qu
 You can create groups (and subgroups) of favorite items with files and folders.
 Time saver for complex projects.
 
-![](https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/preview.gif)
-
 ## NEW 2018/05/08
 
 - favorite items can have alias (custom display label)
 - groups can be renamed
 - favorites can be accesed via activity bar
+
+![](https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/preview.gif)
 
 ## Install
 
