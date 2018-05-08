@@ -156,7 +156,50 @@ export class Favorites {
 
         });
     }
+    public labelModify(id: string, name: string) {
+        return new Promise((resolve, reject) => {
 
+            Promise.all([
+                this.get(),
+            ]).then((result) => {
+                const all = result[0];
+                const i = all.findIndex((r) => r.id === id);
+                if (i === -1) {
+                    resolve();
+                }
+                all[i].label = name;
+                return workspace.save("root", all);
+
+            }).then(() => {
+                resolve();
+            }).catch((e) => {
+                reject(e);
+            });
+
+        });
+    }
+    public groupRename(id: string, name: string) {
+        return new Promise((resolve, reject) => {
+
+            Promise.all([
+                this.get(),
+            ]).then((result) => {
+                const all = result[0];
+                const i = all.findIndex((r) => r.id === id);
+                if (i === -1) {
+                    resolve();
+                }
+                all[i].name = name;
+                return workspace.save("root", all);
+
+            }).then(() => {
+                resolve();
+            }).catch((e) => {
+                reject(e);
+            });
+
+        });
+    }
     public addGroup(parent_id: string, name: string) {
         return new Promise((resolve, reject) => {
 
@@ -209,74 +252,7 @@ export class Favorites {
 
         });
     }
-    // public addPath(itemPath: string) {
-    //     return new Promise((resolve, reject) => {
 
-    //         const rPath = workspace.isMultiRootWorkspace() ? itemPath : itemPath.substr(workspace.getSingleRootPath().length + 1);
-
-    //         Promise.all([
-    //             this.get(),
-    //             this.hasPath(rPath),
-    //             this.identify(itemPath),
-    //         ])
-    //             .then((result) => {
-    //                 const all = result[0];
-    //                 const has = result[1];
-    //                 const type = result[2];
-
-    //                 if (has) {
-    //                     resolve();
-    //                     return;
-    //                 }
-    //                 if (!type) {
-    //                     vscode.window.showWarningMessage("Can't add path. Item is not file or directory");
-    //                     resolve();
-    //                 }
-
-    //                 const o = this.createResource(null, rPath, type);
-    //                 const newList: StoredResource[] = all.concat([o]);
-
-    //                 return workspace.save("root", newList);
-
-    //             }).then(() => {
-    //                 resolve();
-    //             }).catch((e) => {
-    //                 reject(e);
-    //             });
-
-    //     });
-    // }
-    // public removePath(itemPath: string) {
-    //     return new Promise((resolve, reject) => {
-
-    //         this.get()
-    //             .then((all) => {
-
-    //                 const index = all.findIndex((i) => {
-    //                     return i.name === itemPath && (i.type === ResourceType.File || i.type === ResourceType.Directory);
-    //                 });
-
-    //                 if (index < 0) {
-    //                     resolve();
-    //                     return;
-    //                 }
-
-    //                 all.splice(index, 1);
-
-    //                 workspace.save("root", all)
-    //                     .then(() => {
-    //                         resolve();
-    //                     }).catch((e) => {
-    //                         reject(e);
-    //                     });
-
-    //             })
-    //             .catch((e) => {
-    //                 reject(e);
-    //             });
-
-    //     });
-    // }
     public get(): Promise<StoredResource[]> {
         return new Promise((resolve, reject) => {
             const resources = workspace.get("root") as StoredResource[];
@@ -495,7 +471,7 @@ export class Favorites {
             case ResourceType.File:
                 const fUri = workspace.pathAsUri(i.name);
                 o = new ViewItem(
-                    path.basename(i.name),
+                    (i.label != null) ? i.label : path.basename(i.name),
                     vscode.TreeItemCollapsibleState.None,
                     i.name,
                     "FAVORITE",
@@ -509,12 +485,13 @@ export class Favorites {
                     },
                     i.id,
                     i.parent_id,
+                    (i.label != null) ? `[alias] ${path.basename(i.name)}` : null,
                 );
 
                 break;
             case ResourceType.Directory:
                 o = new ViewItem(
-                    path.basename(i.name),
+                    (i.label != null) ? i.label : path.basename(i.name),
                     vscode.TreeItemCollapsibleState.Collapsed,
                     i.name,
                     "FAVORITE",
@@ -524,6 +501,7 @@ export class Favorites {
                     null,
                     i.id,
                     i.parent_id,
+                    (i.label != null) ? `[alias] ${i.name}` : null,
                 )
                     ;
 

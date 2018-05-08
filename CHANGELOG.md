@@ -1,3 +1,14 @@
+## 1.3.0 | 2018.05.08
+
+- renaming group
+- alias for favorite items (custom display name)
+- activity bar contribution
+- minimum vscode version = 1.23.0
+
+## 1.2.1 | 2018.05.07
+
+Minor bugs
+
 ## 1.2.0 | 2018.05.02
 
 Added subgroup support

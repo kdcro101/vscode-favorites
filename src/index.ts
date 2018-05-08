@@ -6,6 +6,7 @@ import { DataProvider } from "./class/dataProvider";
 import { Favorites } from "./class/favorites";
 import workspace from "./class/workspace";
 import { Commands } from "./command";
+import { TreeProviders } from "./types";
 
 declare var global: any;
 
@@ -31,20 +32,31 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.getCommands(false)
         .then((l) => global.commands = l);
 
-    workspace.onDataChange(() => {
-        provider.refresh();
-    });
-
     const favorites = new Favorites(context);
     const provider = new DataProvider(context, favorites);
+    const providerActivity = new DataProvider(context, favorites);
+
+    const providers: TreeProviders = {
+        explorer: provider,
+        activity: providerActivity,
+        refresh: () => {
+            provider.refresh();
+            providerActivity.refresh();
+        },
+    };
 
     const view = vscode.window.registerTreeDataProvider("favorites", provider);
+    const viewActivity = vscode.window.registerTreeDataProvider("favoritesActivity", providerActivity);
 
     vscode.workspace.onDidChangeConfiguration(() => {
-        provider.refresh();
+        providers.refresh();
     }, this, context.subscriptions);
 
-    const c = new Commands(context, provider, favorites);
+    const c = new Commands(context, providers, favorites);
+
+    workspace.onDataChange(() => {
+        providers.refresh();
+    });
 
 }
 

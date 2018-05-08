@@ -42,6 +42,7 @@ class Workspace {
                 resolve();
             });
         });
+
     }
 
     get onDataChange(): vscode.Event<void> {

@@ -15,7 +15,7 @@
     ],
     "publisher": "kdcro101",
     "engines": {
-        "vscode": "^1.13.0"
+        "vscode": "^1.23.0"
     },
     "galleryBanner": {
         "color": "#333333",
@@ -38,20 +38,17 @@
         "url": "https://github.com/kdcro101/vscode-favorite-items.git"
     },
     "activationEvents": [
-        "onCommand:favorites.addToFavorites",
-        "onView:favorites"
+        "*"
     ],
     "license": "GPL-3.0",
     "main": "./out/",
     "contributes": {
-        "keybindings": [
-            {
-                "command": "favorites.add.current",
-                "key": "ctrl+alt+f",
-                "mac": "cmd+alt+f",
-                "when": "editorTextFocus"
-            }
-        ],
+        "keybindings": [{
+            "command": "workbench.view.extension.favorites-explorer",
+            "key": "ctrl+alt+f",
+            "mac": "cmd+alt+f",
+            "when": "editorTextFocus"
+        }],
         "configuration": {
             "type": "object",
             "title": "Favorite-items configuration",
@@ -82,17 +79,25 @@
                 }
             }
         },
+        "viewsContainers": {
+            "activitybar": [{
+                "id": "favorites-explorer",
+                "title": "Favorites",
+                "icon": "icons/activity_bar_icon.svg"
+            }]
+        },
         "views": {
-            "explorer": [
-                {
-                    "id": "favorites",
-                    "name": "Favorites"
-                }
-            ]
+            "favorites-explorer": [{
+                "id": "favoritesActivity",
+                "name": "Explorer"
+            }],
+            "explorer": [{
+                "id": "favorites",
+                "name": "Favorites"
+            }]
         },
         "menus": {
-            "explorer/context": [
-                {
+            "explorer/context": [{
                     "command": "favorites.addToFavorites",
                     "group": "favorites"
                 },
@@ -101,8 +106,7 @@
                     "group": "favorites"
                 }
             ],
-            "view/title": [
-                {
+            "view/title": [{
                     "command": "favorites.collapse",
                     "when": "view == favorites",
                     "group": "navigation@3"
@@ -126,16 +130,55 @@
                     "command": "favorites.delete.all",
                     "when": "view == favorites",
                     "group": "navigation@0"
+                },
+                {
+                    "command": "favorites.collapse.activity",
+                    "when": "view == favoritesActivity",
+                    "group": "navigation@3"
+                },
+                {
+                    "command": "favorites.nav.sort.az",
+                    "when": "view == favoritesActivity && sort==DESC",
+                    "group": "navigation@2"
+                },
+                {
+                    "command": "favorites.nav.sort.za",
+                    "when": "view == favoritesActivity && sort==ASC",
+                    "group": "navigation@2"
+                },
+                {
+                    "command": "favorites.group.create",
+                    "when": "view == favoritesActivity",
+                    "group": "navigation@1"
+                },
+                {
+                    "command": "favorites.delete.all",
+                    "when": "view == favoritesActivity",
+                    "group": "navigation@0"
                 }
             ],
-            "view/item/context": [
-                {
+            "view/item/context": [{
                     "command": "favorites.deleteFavorite",
                     "when": "view == favorites && viewItem == FAVORITE",
                     "group": "operation"
                 },
                 {
+                    "command": "favorites.alias.modify",
+                    "when": "view == favorites && viewItem == FAVORITE",
+                    "group": "operation"
+                },
+                {
+                    "command": "favorites.alias.remove",
+                    "when": "view == favorites && viewItem == FAVORITE",
+                    "group": "operation"
+                },
+                {
                     "command": "favorites.group.delete",
+                    "when": "view == favorites && viewItem == FAVORITE_GROUP",
+                    "group": "operation"
+                },
+                {
+                    "command": "favorites.group.rename",
                     "when": "view == favorites && viewItem == FAVORITE_GROUP",
                     "group": "operation"
                 },
@@ -148,11 +191,45 @@
                     "command": "favorites.group.item.delete",
                     "when": "view == favorites && viewItem == FAVORITE_GROUP_ITEM",
                     "group": "operation"
+                },
+                {
+                    "command": "favorites.deleteFavorite",
+                    "when": "view == favoritesActivity && viewItem == FAVORITE",
+                    "group": "operation"
+                },
+                {
+                    "command": "favorites.alias.modify",
+                    "when": "view == favoritesActivity && viewItem == FAVORITE",
+                    "group": "operation"
+                },
+                {
+                    "command": "favorites.alias.remove",
+                    "when": "view == favoritesActivity && viewItem == FAVORITE",
+                    "group": "operation"
+                },
+                {
+                    "command": "favorites.group.delete",
+                    "when": "view == favoritesActivity && viewItem == FAVORITE_GROUP",
+                    "group": "operation"
+                },
+                {
+                    "command": "favorites.group.rename",
+                    "when": "view == favoritesActivity && viewItem == FAVORITE_GROUP",
+                    "group": "operation"
+                },
+                {
+                    "command": "favorites.group.subgroup.create",
+                    "when": "view == favoritesActivity && viewItem == FAVORITE_GROUP",
+                    "group": "operation"
+                },
+                {
+                    "command": "favorites.group.item.delete",
+                    "when": "view == favoritesActivity && viewItem == FAVORITE_GROUP_ITEM",
+                    "group": "operation"
                 }
             ]
         },
-        "commands": [
-            {
+        "commands": [{
                 "command": "favorites.nav.sort.az",
                 "title": "%command.favorites.sort%",
                 "icon": {
@@ -170,7 +247,15 @@
             },
             {
                 "command": "favorites.collapse",
-                "title": "%command.favorites.collapse%",
+                "title": "Collapse all",
+                "icon": {
+                    "dark": "images/collapse_dark.svg",
+                    "light": "images/collapse_light.svg"
+                }
+            },
+            {
+                "command": "favorites.collapse.activity",
+                "title": "Collapse all",
                 "icon": {
                     "dark": "images/collapse_dark.svg",
                     "light": "images/collapse_light.svg"
@@ -187,6 +272,18 @@
             {
                 "command": "favorites.deleteFavorite",
                 "title": "%command.favorites.deletefavorite%"
+            },
+            {
+                "command": "favorites.group.rename",
+                "title": "Rename group"
+            },
+            {
+                "command": "favorites.alias.modify",
+                "title": "Modify alias"
+            },
+            {
+                "command": "favorites.alias.remove",
+                "title": "Remove alias"
             },
             {
                 "command": "favorites.group.create",
