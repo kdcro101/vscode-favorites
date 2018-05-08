@@ -178,13 +178,91 @@ export class FilesystemUtils {
     }
     public copy(clipboardItem: ViewItem, destination: ViewItem) {
         return new Promise((resolve, reject) => {
+            const sPath = clipboardItem.value;
+            const sBase = path.basename(clipboardItem.value);
+            const dDir = destination.value;
+            const dPath = path.join(dDir, sBase);
+
+            Promise.all([
+                fs.pathExists(dPath),
+            ]).then((results) => {
+
+                const exists = results[0];
+
+                if (exists) {
+                    return vscode.window.showQuickPick(
+                        ["Yes", "No"], {
+                            placeHolder: `Destination exists! Overwrite? '${dPath}'`,
+                        },
+                    );
+                } else {
+                    return Promise.resolve("Yes");
+                }
+
+            }).then((shouldCopy: string) => {
+
+                if (shouldCopy !== "Yes") {
+                    resolve();
+                    return;
+                }
+
+                fs.copy(sPath, dPath, {
+                    overwrite: true,
+                }).then((result) => {
+                    resolve();
+                }).catch((e) => {
+                    vscode.window.showErrorMessage(`Error copying ${sPath}`);
+                    reject(e);
+                });
+
+            });
 
         });
     }
     public move(clipboardItem: ViewItem, destination: ViewItem) {
+
         return new Promise((resolve, reject) => {
+            const sPath = clipboardItem.value;
+            const sBase = path.basename(clipboardItem.value);
+            const dDir = destination.value;
+            const dPath = path.join(dDir, sBase);
+
+            Promise.all([
+                fs.pathExists(dPath),
+            ]).then((results) => {
+
+                const exists = results[0];
+
+                if (exists) {
+                    return vscode.window.showQuickPick(
+                        ["Yes", "No"], {
+                            placeHolder: `Destination exists! Overwrite? '${dPath}'`,
+                        },
+                    );
+                } else {
+                    return Promise.resolve("Yes");
+                }
+
+            }).then((shouldMove: string) => {
+
+                if (shouldMove !== "Yes") {
+                    resolve();
+                    return;
+                }
+
+                fs.move(sPath, dDir, {
+                    overwrite: true,
+                }).then((result) => {
+                    resolve();
+                }).catch((e) => {
+                    vscode.window.showErrorMessage(`Error moving ${sPath}`);
+                    reject(e);
+                });
+
+            });
 
         });
+
     }
 
 }

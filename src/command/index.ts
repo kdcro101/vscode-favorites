@@ -115,16 +115,30 @@ export class Commands {
             // tslint:disable-next-line:no-empty
             (value: ViewItem) => {
                 const state = this.clipboard.get();
-                if ( state == null) {
+                if (state == null) {
                     return;
                 }
                 switch (state.operation) {
                     case "copy":
-                    this.filesystem.copy(state.item, value);
-                    break;
+                        this.filesystem.copy(state.item, value)
+                            .then((result) => {
+                                this.providers.refresh();
+                                // this.clipboard.reset();
+                            })
+                            .catch((e) => {
+                                console.log(e);
+                            });
+                        break;
                     case "cut":
-                    this.filesystem.move(state.item, value);
-                    break;
+                        this.filesystem.move(state.item, value)
+                            .then((result) => {
+                                this.providers.refresh();
+                                this.clipboard.reset();
+                            })
+                            .catch((e) => {
+                                console.log(e);
+                            });
+                        break;
                 }
 
             });

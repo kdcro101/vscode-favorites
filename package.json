@@ -240,7 +240,7 @@
                 },
                 {
                     "command": "filesystem.paste",
-                    "when": "viewItem == FS_DIRECTORY",
+                    "when": "viewItem == FS_DIRECTORY && clipboard == true",
                     "group": "9_cutcopypaste"
                 },
                 {
@@ -270,7 +270,7 @@
                 },
                 {
                     "command": "filesystem.paste",
-                    "when": "viewItem == FS_FILE",
+                    "when": "viewItem == FS_FILE && clipboard == true",
                     "group": "9_cutcopypaste"
                 },
                 {
@@ -300,7 +300,7 @@
                 },
                 {
                     "command": "filesystem.paste",
-                    "when": "viewItem == FAVORITE_FILE",
+                    "when": "viewItem == FAVORITE_FILE  && clipboard == true",
                     "group": "9_cutcopypaste"
                 },
                 {
