@@ -107,14 +107,28 @@ export class Commands {
         return vscode.commands.registerCommand("filesystem.delete",
             // tslint:disable-next-line:no-empty
             (value: ViewItem) => {
-
+                this.filesystem.delete(value)
+                    .then((result) => {
+                        this.providers.refresh();
+                    })
+                    .catch((e) => {
+                        this.providers.refresh();
+                        console.log(e);
+                    });
             });
     }
     public fsRename = () => {
         return vscode.commands.registerCommand("filesystem.rename",
             // tslint:disable-next-line:no-empty
             (value: ViewItem) => {
-
+                this.filesystem.rename(value)
+                    .then((result) => {
+                        this.providers.refresh();
+                    })
+                    .catch((e) => {
+                        this.providers.refresh();
+                        console.log(e);
+                    });
             });
     }
     public fsDuplicate = () => {
@@ -122,13 +136,13 @@ export class Commands {
             // tslint:disable-next-line:no-empty
             (value: ViewItem) => {
                 this.filesystem.duplicate(value)
-                .then((result) => {
-                    this.providers.refresh();
-                 })
-                .catch((e) => {
-                    this.providers.refresh();
-                    console.log(e);
-                });
+                    .then((result) => {
+                        this.providers.refresh();
+                    })
+                    .catch((e) => {
+                        this.providers.refresh();
+                        console.log(e);
+                    });
             });
     }
     public aliasRemove = () => {
