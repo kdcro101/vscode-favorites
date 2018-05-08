@@ -1,7 +1,7 @@
 ## 1.3.1 | 2018.05.08
 
 - minor bugs
-- mEADME update
+- README update
 
 ## 1.3.0 | 2018.05.08
 
