@@ -1,3 +1,9 @@
+## 1.4.0 | 2018.05.09
+
+- groups colors can be changed
+- filesystem operations in favorites view
+- copy/cut/paste operations in favorites view
+
 ## 1.3.1 | 2018.05.08
 
 - minor bugs
