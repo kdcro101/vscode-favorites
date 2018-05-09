@@ -25,4 +25,7 @@ export class ViewItem extends vscode.TreeItem {
         this.iconPath = icon;
         this.tooltip = tooltipText;
     }
+    public get isFavorite() {
+        return this.contextValue === "FAVORITE_DIRECTORY" || this.contextValue === "FAVORITE_FILE";
+    }
 }

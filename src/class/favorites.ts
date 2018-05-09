@@ -12,6 +12,58 @@ export class Favorites {
     constructor(private context: vscode.ExtensionContext) {
 
     }
+    public updateWithPath(id: string, absPath: string) {
+        return new Promise((resolve, reject) => {
+            Promise.all([
+                this.get(),
+            ]).then((results) => {
+                const all = results[0];
+                const i = all.findIndex((d) => d.id === id);
+
+                if (i < 0) {
+                    reject("no_item");
+                    return;
+                }
+                all[i].workspacePath = workspace.pathForWorkspace(absPath);
+
+                return this.save(all);
+
+            }).then(() => {
+                resolve();
+            }).catch((e) => {
+                reject(e);
+            });
+        });
+    }
+    public duplicateWithPath(id: string, absPath: string) {
+        return new Promise((resolve, reject) => {
+            Promise.all([
+                this.get(),
+            ]).then((results) => {
+                const all = results[0];
+                const i = all.findIndex((d) => d.id === id);
+
+                if (i < 0) {
+                    reject("no_item");
+                    return;
+                }
+                const o = all[i];
+                const n = _.cloneDeep(o);
+                delete n.label;
+
+                n.id = this.generateId();
+                n.workspacePath = workspace.pathForWorkspace(absPath);
+
+                all.push(n);
+                return this.save(all);
+
+            }).then(() => {
+                resolve();
+            }).catch((e) => {
+                reject(e);
+            });
+        });
+    }
     public generateGroupQuickPickList(): Promise<GroupQuickPick[]> {
         return new Promise((resolve, reject) => {
 
@@ -26,7 +78,7 @@ export class Favorites {
                 const addChildren = (lastDepth: number, parentId: string) => {
                     const children = all.filter((i) => i.type === ResourceType.Group && i.parent_id === parentId);
                     const paddingLen: number = lastDepth + 1;
-                    const padding = "".padStart(paddingLen * 3, " ") + "▹ ";
+                    const padding = "".padStart(paddingLen * 2, " ") + "▹";
 
                     children.forEach((c, i) => {
                         const label = `${padding} ${c.name}`;
@@ -484,7 +536,7 @@ export class Favorites {
                 const fPath = workspace.pathAbsolute(i.workspacePath);
                 const fUri = workspace.pathAsUri(fPath);
                 o = new ViewItem(
-                    (i.label != null) ? i.label : path.basename(i.name),
+                    (i.label != null) ? i.label : path.basename(i.workspacePath),
                     vscode.TreeItemCollapsibleState.None,
                     fPath,
                     "FAVORITE_FILE",

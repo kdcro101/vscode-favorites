@@ -43,14 +43,12 @@
     "license": "GPL-3.0",
     "main": "./out/",
     "contributes": {
-        "keybindings": [
-            {
-                "command": "workbench.view.extension.favorites-explorer",
-                "key": "ctrl+alt+f",
-                "mac": "cmd+alt+f",
-                "when": "editorTextFocus"
-            }
-        ],
+        "keybindings": [{
+            "command": "workbench.view.extension.favorites-explorer",
+            "key": "ctrl+alt+f",
+            "mac": "cmd+alt+f",
+            "when": "editorTextFocus"
+        }],
         "configuration": {
             "type": "object",
             "title": "Favorite-items configuration",
@@ -82,31 +80,24 @@
             }
         },
         "viewsContainers": {
-            "activitybar": [
-                {
-                    "id": "favorites-explorer",
-                    "title": "Favorites",
-                    "icon": "icons/activity_bar_icon.svg"
-                }
-            ]
+            "activitybar": [{
+                "id": "favorites-explorer",
+                "title": "Favorites",
+                "icon": "icons/activity_bar_icon.svg"
+            }]
         },
         "views": {
-            "favorites-explorer": [
-                {
-                    "id": "favoritesActivity",
-                    "name": "Explorer"
-                }
-            ],
-            "explorer": [
-                {
-                    "id": "favorites",
-                    "name": "Favorites"
-                }
-            ]
+            "favorites-explorer": [{
+                "id": "favoritesActivity",
+                "name": "Explorer"
+            }],
+            "explorer": [{
+                "id": "favorites",
+                "name": "Favorites"
+            }]
         },
         "menus": {
-            "explorer/context": [
-                {
+            "explorer/context": [{
                     "command": "favorites.addToFavorites",
                     "group": "favorites"
                 },
@@ -115,8 +106,7 @@
                     "group": "favorites"
                 }
             ],
-            "view/title": [
-                {
+            "view/title": [{
                     "command": "favorites.collapse",
                     "when": "view == favorites",
                     "group": "navigation@3"
@@ -167,8 +157,7 @@
                     "group": "navigation@0"
                 }
             ],
-            "view/item/context": [
-                {
+            "view/item/context": [{
                     "command": "favorites.deleteFavorite",
                     "when": "viewItem == FAVORITE_FILE",
                     "group": "operation"
@@ -201,17 +190,17 @@
                 {
                     "command": "favorites.group.delete",
                     "when": "viewItem == FAVORITE_GROUP",
-                    "group": "operation"
+                    "group": "1_modification"
                 },
                 {
                     "command": "favorites.group.rename",
                     "when": "viewItem == FAVORITE_GROUP",
-                    "group": "operation"
+                    "group": "7_modification"
                 },
                 {
                     "command": "favorites.group.subgroup.create",
                     "when": "viewItem == FAVORITE_GROUP",
-                    "group": "operation"
+                    "group": "1_modification"
                 },
                 {
                     "command": "filesystem.create.file",
@@ -269,11 +258,6 @@
                     "group": "9_cutcopypaste"
                 },
                 {
-                    "command": "filesystem.paste",
-                    "when": "viewItem == FS_FILE && clipboard == true",
-                    "group": "9_cutcopypaste"
-                },
-                {
                     "command": "filesystem.delete",
                     "when": "viewItem == FS_FILE",
                     "group": "7_modification"
@@ -296,11 +280,6 @@
                 {
                     "command": "filesystem.cut",
                     "when": "viewItem == FAVORITE_FILE",
-                    "group": "9_cutcopypaste"
-                },
-                {
-                    "command": "filesystem.paste",
-                    "when": "viewItem == FAVORITE_FILE  && clipboard == true",
                     "group": "9_cutcopypaste"
                 },
                 {
@@ -340,7 +319,7 @@
                 },
                 {
                     "command": "filesystem.paste",
-                    "when": "viewItem == FAVORITE_DIRECTORY",
+                    "when": "viewItem == FAVORITE_DIRECTORY && clipboard == true",
                     "group": "9_cutcopypaste"
                 },
                 {
@@ -355,8 +334,7 @@
                 }
             ]
         },
-        "commands": [
-            {
+        "commands": [{
                 "command": "favorites.nav.sort.az",
                 "title": "%command.favorites.sort%",
                 "icon": {
@@ -390,15 +368,15 @@
             },
             {
                 "command": "favorites.addToFavorites",
-                "title": "%command.favorites.addtofavorites%"
+                "title": "♥ Add to favorites"
             },
             {
                 "command": "favorites.addToFavoritesGroup",
-                "title": "%command.favorites.addtofavoritesGroup%"
+                "title": "♥ Add to group of favorites"
             },
             {
                 "command": "favorites.deleteFavorite",
-                "title": "%command.favorites.deletefavorite%"
+                "title": "Remove from favorites"
             },
             {
                 "command": "favorites.group.rename",
@@ -414,7 +392,7 @@
             },
             {
                 "command": "favorites.group.create",
-                "title": "%command.favorites.group.create%",
+                "title": "Create group of favorites",
                 "icon": {
                     "dark": "images/add_dark.svg",
                     "light": "images/add_light.svg"
@@ -430,19 +408,16 @@
             },
             {
                 "command": "favorites.group.delete",
-                "title": "%command.favorites.group.delete%"
+                "title": "Remove group"
             },
             {
                 "command": "favorites.group.subgroup.create",
                 "title": "Create subgroup"
             },
-            {
-                "command": "favorites.group.item.delete",
-                "title": "%command.favorites.group.item.delete%"
-            },
+
             {
                 "command": "favorites.add.current",
-                "title": "%command.favorites.add.current%"
+                "title": "Add active document to favorites"
             },
             {
                 "command": "filesystem.create.file",
