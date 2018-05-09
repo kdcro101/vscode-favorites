@@ -17,7 +17,7 @@ Time saver for complex projects.
 </p>
 
 Change group icon color.
-Right-click on group in favoites view and select `Group color`
+Right-click on group in favorites view and select `Group color`
 
 
 
