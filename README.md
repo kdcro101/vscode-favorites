@@ -20,6 +20,8 @@ Change group icon color.
 Right-click on group in favoites view and select `Group color`
 
 
+
+
 ## NEW 2018/05/08
 
 - favorite items can have alias (custom display label)
