@@ -34,7 +34,7 @@ Right-click on group in favorites view and select `Group color`.
 
 
 <p align="center">
-   <img  src="https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/adding.jpg" />
+   <img  src="https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/adding-favorites.jpg" />
 </p>
 
 - to add file/directory to favorites, right-click item in file explorer and select:
