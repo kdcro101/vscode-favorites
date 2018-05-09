@@ -50,7 +50,6 @@ Open Visual Studio Code press CTRL+p and type or copy and paste:
 
 ## Usage
 
-To add active (opened and focused in editor) file to favorites, press `CTRL+ALT+F`
 
 ### Adding to favorites
 Right-click item in File explorer and select `Add to favorites`.
