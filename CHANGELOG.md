@@ -1,3 +1,9 @@
+## 1.4.1 | 2018.05.09
+
+- fixed bug that may corrupt current favorites data
+- remove all icon changed
+- missing command labels fixed
+
 ## 1.4.0 | 2018.05.09
 
 - groups colors can be changed
