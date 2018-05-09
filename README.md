@@ -12,19 +12,21 @@ Time saver for complex projects.
 
 ## NEW
 
+ 
 <p align="center">
-   <img  src="https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/colors.jpg" />
+   <img  src="https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/operations.jpg" />
 </p>
 
-Change group icon color.
-Right-click on group in favorites view and select `Group color`
+- change group icon color.
+Right-click on group in favorites view and select `Group color`.
 
-
-
-
-## NEW 2018/05/08
-
-- favorite items can have alias (custom display label)
+- copy / cut / paste operations are available
+- basic filesystem operations:
+    - create file
+    - delete file/directory
+    - rename file/directory
+    - duplicate file/directory
+- favorite items can have alias (different label)
 - groups can be renamed
 - favorites can be accesed via activity bar
 
