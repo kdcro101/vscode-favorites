@@ -34,10 +34,12 @@ Right-click on group in favorites view and select `Group color`.
 
 
 <p align="center">
-   <img  src="https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/adding-favorite.jpg" />
+   <img  src="https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/adding-favorite.jpg?1213" />
 </p>
 
 - to add file/directory to favorites, right-click item in file explorer and select:
+    - `add to favorites` - to add item to root of favorites tree.
+    - `add to group of favorites` to add item to group of favorites you previously created.
 
 
 
