@@ -9,8 +9,12 @@ Extension provides ability to add files and directories to favorites enabling qu
 You can create groups (and subgroups) of favorite items with files and folders.
 Time saver for complex projects.
 
+
 ## NEW
-   <img align="center" src="https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/colors.jpg" />
+
+<p align="center">
+   <img  src="https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/colors.jpg" />
+</p>
 
 Change group icon color.
 Right-click on group in favoites view and select `Group color`
