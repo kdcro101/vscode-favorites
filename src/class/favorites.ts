@@ -573,6 +573,11 @@ export class Favorites {
 
                 break;
             case ResourceType.Group:
+                const iconLight: string = i.iconColor == null ?
+                         context.asAbsolutePath(path.join("images", "group_light.svg")) : i.iconPath;
+                const iconDark: string = i.iconColor == null ?
+                        context.asAbsolutePath(path.join("images", "group_dark.svg")) : i.iconPath;
+
                 o = new ViewItem(
                     i.name,
                     vscode.TreeItemCollapsibleState.Collapsed,
@@ -581,8 +586,8 @@ export class Favorites {
                     i.name,
                     i.type,
                     {
-                        light: context.asAbsolutePath(path.join("images", "group_light.svg")),
-                        dark: context.asAbsolutePath(path.join("images", "group_dark.svg")),
+                        light: iconLight,
+                        dark: iconDark,
                     },
                     null,
                     i.id,
