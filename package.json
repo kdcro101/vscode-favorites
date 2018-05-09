@@ -43,12 +43,14 @@
     "license": "GPL-3.0",
     "main": "./out/",
     "contributes": {
-        "keybindings": [{
-            "command": "workbench.view.extension.favorites-explorer",
-            "key": "ctrl+alt+f",
-            "mac": "cmd+alt+f",
-            "when": "editorTextFocus"
-        }],
+        "keybindings": [
+            {
+                "command": "workbench.view.extension.favorites-explorer",
+                "key": "ctrl+alt+f",
+                "mac": "cmd+alt+f",
+                "when": "editorTextFocus"
+            }
+        ],
         "configuration": {
             "type": "object",
             "title": "Favorite-items configuration",
@@ -80,24 +82,31 @@
             }
         },
         "viewsContainers": {
-            "activitybar": [{
-                "id": "favorites-explorer",
-                "title": "Favorites",
-                "icon": "icons/activity_bar_icon.svg"
-            }]
+            "activitybar": [
+                {
+                    "id": "favorites-explorer",
+                    "title": "Favorites",
+                    "icon": "icons/activity_bar_icon.svg"
+                }
+            ]
         },
         "views": {
-            "favorites-explorer": [{
-                "id": "favoritesActivity",
-                "name": "Explorer"
-            }],
-            "explorer": [{
-                "id": "favorites",
-                "name": "Favorites"
-            }]
+            "favorites-explorer": [
+                {
+                    "id": "favoritesActivity",
+                    "name": "Explorer"
+                }
+            ],
+            "explorer": [
+                {
+                    "id": "favorites",
+                    "name": "Favorites"
+                }
+            ]
         },
         "menus": {
-            "explorer/context": [{
+            "explorer/context": [
+                {
                     "command": "favorites.addToFavorites",
                     "group": "favorites"
                 },
@@ -106,7 +115,8 @@
                     "group": "favorites"
                 }
             ],
-            "view/title": [{
+            "view/title": [
+                {
                     "command": "favorites.collapse",
                     "when": "view == favorites",
                     "group": "navigation@3"
@@ -157,7 +167,8 @@
                     "group": "navigation@0"
                 }
             ],
-            "view/item/context": [{
+            "view/item/context": [
+                {
                     "command": "favorites.deleteFavorite",
                     "when": "viewItem == FAVORITE_FILE",
                     "group": "operation"
@@ -196,6 +207,11 @@
                     "command": "favorites.group.rename",
                     "when": "viewItem == FAVORITE_GROUP",
                     "group": "7_modification"
+                },
+                {
+                    "command": "favorites.group.color.set",
+                    "when": "viewItem == FAVORITE_GROUP",
+                    "group": "6_modification"
                 },
                 {
                     "command": "favorites.group.subgroup.create",
@@ -334,7 +350,8 @@
                 }
             ]
         },
-        "commands": [{
+        "commands": [
+            {
                 "command": "favorites.nav.sort.az",
                 "title": "%command.favorites.sort%",
                 "icon": {
@@ -411,10 +428,13 @@
                 "title": "Remove group"
             },
             {
+                "command": "favorites.group.color.set",
+                "title": "Group color"
+            },
+            {
                 "command": "favorites.group.subgroup.create",
                 "title": "Create subgroup"
             },
-
             {
                 "command": "favorites.add.current",
                 "title": "Add active document to favorites"
@@ -454,9 +474,11 @@
         ]
     },
     "devDependencies": {
+        "@types/color": "^3.0.0",
         "@types/fs-extra": "^5.0.2",
         "@types/lodash": "^4.14.108",
         "@types/lodash-es": "^4.17.0",
+        "@types/md5": "^2.1.32",
         "@types/nconf": "0.0.37",
         "@types/node": "^9.4.7",
         "del": "^3.0.0",
@@ -468,9 +490,12 @@
         "vscode-nls-dev": "^2.1.6"
     },
     "dependencies": {
+        "color": "^3.0.0",
         "fs-extra": "^6.0.0",
+        "html-colors": "0.0.4",
         "lodash": "^4.17.10",
         "lodash-es": "^4.17.10",
+        "md5": "^2.2.1",
         "nconf": "^0.10.0"
     }
 }

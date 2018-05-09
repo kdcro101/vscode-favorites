@@ -2,10 +2,12 @@ import * as fs from "fs";
 import * as path from "path";
 
 import * as vscode from "vscode";
+import { QuickPickItem } from "vscode";
 import { Clipboard } from "../class/clipboard";
 import { DataProvider } from "../class/dataProvider";
 import { Favorites } from "../class/favorites";
 import { FilesystemUtils } from "../class/filesystem";
+import { GroupColor } from "../class/group-color";
 import { ViewItem } from "../class/view-item";
 import workspace from "../class/workspace";
 import { ResourceType, StoredResource, TreeProviders } from "../types/index";
@@ -13,6 +15,8 @@ import { ResourceType, StoredResource, TreeProviders } from "../types/index";
 export class Commands {
     private clipboard = new Clipboard();
     private filesystem: FilesystemUtils = null;
+    private groupColor: GroupColor = null;
+
     constructor(
         private context: vscode.ExtensionContext,
         public providers: TreeProviders,
@@ -20,6 +24,7 @@ export class Commands {
     ) {
 
         this.filesystem = new FilesystemUtils(favorites);
+        this.groupColor = new GroupColor(favorites, context);
 
         context.subscriptions.push(this.addToFavorites());
         context.subscriptions.push(this.deleteFavorite());
@@ -45,31 +50,64 @@ export class Commands {
         context.subscriptions.push(this.fsDuplicate());
         context.subscriptions.push(this.fsDelete());
         context.subscriptions.push(this.fsRename());
+        context.subscriptions.push(this.groupColorSet());
     }
 
-    //  "command": "filesystem.create",
-    //         "title": "Create file here..."
-    //     },
-    //     {
-    //         "command": "filesystem.copy",
-    //         "title": "Copy"
-    //     },
-    //     {
-    //         "command": "filesystem.cut",
-    //         "title": "Cut"
-    //     },
-    //     {
-    //         "command": "filesystem.paste",
-    //         "title": "Paste"
-    //     },
-    //     {
-    //         "command": "filesystem.delete",
-    //         "title": "Delete"
-    //     },
-    //     {
-    //         "command": "filesystem.rename",
-    //         "title": "Rename"
-    //     }
+    public groupColorSet = () => {
+        return vscode.commands.registerCommand("favorites.group.color.set",
+            (value: ViewItem) => {
+
+                const list: QuickPickItem[] = [
+                    {
+                        label: "None",
+                        description: "Remove color from group",
+                    },
+                    {
+                        label: "Custom",
+                        description: "Use custom color (hex or rgb/rgba)",
+                    },
+                ].concat(
+                    Object.keys(this.groupColor.colorList).map((k) => {
+                        const o: QuickPickItem = {
+                            label: k,
+                            description: this.groupColor.colorList[k],
+                        };
+                        return o;
+                    }),
+                );
+
+                vscode.window.showQuickPick(list, {
+                    matchOnDescription: true,
+                    matchOnDetail: true,
+                }).then((result) => {
+
+                    if (result == null) {
+                        return Promise.resolve(null);
+                    }
+                    if (result.label === "None") {
+                        return this.groupColor.removeColor(value.id);
+                    }
+                    if (result.label === "Custom") {
+                        return vscode.window.showInputBox({
+                            prompt: "New group color",
+                            placeHolder: "Enter hex or rgb/rgba value",
+                        });
+                    }
+                    // then desc = #hex
+                    return Promise.resolve(result.description);
+
+                }).then((input: string) => {
+                    if (input == null) {
+                        // no action
+                        return Promise.resolve();
+                    }
+
+                    return this.groupColor.setColor(value.id, input);
+                }).then(() => {
+                    console.log("all ok");
+                });
+            });
+    }
     public fsCreateFile = () => {
         return vscode.commands.registerCommand("filesystem.create.file",
             // tslint:disable-next-line:no-empty

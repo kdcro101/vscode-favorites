@@ -5,6 +5,7 @@ test/**
 src/**
 promo/**
 preview/**
+svg-generated/**
 **/*.map
 .gitignore
 tsconfig.json

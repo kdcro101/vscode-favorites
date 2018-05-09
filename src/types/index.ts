@@ -17,6 +17,8 @@ export interface StoredResource {
     contents?: string[];
     label?: string;
     workspacePath?: string;
+    iconColor?: string;
+    iconPath?: string;
 }
 
 export interface FilesystemResource {
@@ -37,4 +39,8 @@ export interface TreeProviders {
 export interface ClipboardBuffer {
     item: ViewItem;
     operation: "copy" | "cut";
+}
+
+export interface HtmlColor {
+    [key: string]: string;
 }
