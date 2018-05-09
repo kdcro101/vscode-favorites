@@ -1,3 +1,8 @@
+## 1.4.2 | 2018.05.09
+
+- icon
+- readme update
+
 ## 1.4.1 | 2018.05.09
 
 - fixed bug that may corrupt current favorites data

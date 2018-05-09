@@ -17,9 +17,7 @@ Time saver for complex projects.
    <img  src="https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/operations.jpg" />
 </p>
 
-- change group icon color.
-Right-click on group in favorites view and select `Group color`.
-
+- group icon color can be changed. Right-click on group in favorites view and select `Group color`.
 - copy / cut / paste operations are available
 - basic filesystem operations:
     - create file
@@ -54,7 +52,7 @@ Open Visual Studio Code press CTRL+p and type or copy and paste:
 
 ## Configuration
 `favorites.groupsFirst` : boolean
-- If set to `true`, groups will be listed before directories and files, if `false`, groups will appear after directories and files.
+- if set to `true`, groups will be listed before directories and files, if `false`, groups will appear after directories and files.
 
 `favorites.sortDirection ` : string, `ASC` or `DESC`
 
