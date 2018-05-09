@@ -48,6 +48,7 @@
         "semicolon": [
             true,
             "always"
-        ]
+        ],
+        "no-empty":false
     }
 }

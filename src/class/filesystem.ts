@@ -1,47 +1,65 @@
 import * as fs from "fs-extra";
 import * as path from "path";
 import * as vscode from "vscode";
+import { Favorites } from "./favorites";
 import { ViewItem } from "./view-item";
 import workspace from "./workspace";
 
 export class FilesystemUtils {
+    constructor(private favorites: Favorites) {
 
+    }
     public duplicate(item: ViewItem) {
+
         return new Promise((resolve, reject) => {
+            const isFav = item.isFavorite;
             const aPath = item.value;
             const base = path.basename(aPath);
             const dir = path.dirname(aPath);
-            vscode.window.showInputBox({
-                prompt: "Enter name for duplicate",
-                placeHolder: "Type duplicate name",
-                value: base,
-            }).then((val) => {
-                if (val == null || val.trim() === "") {
-                    resolve();
-                    return;
-                }
-                if (val === base) {
-                    vscode.window.showWarningMessage("New name must be different");
-                    reject("not_different");
-                    return;
-                }
-                const newBase = val.trim();
-                const newPath = path.join(dir, newBase);
-                fs.copy(aPath, newPath)
-                    .then((result) => {
-                        vscode.window.showInformationMessage(`Duplication successful`);
-                        resolve();
-                    })
-                    .catch((e) => {
-                        vscode.window.showErrorMessage(`Error duplicating ${base}`);
-                        reject(e);
-                    });
 
-            });
+            Promise.all([])
+                .then(() => {
+
+                    vscode.window.showInputBox({
+                        prompt: "Enter name for duplicate",
+                        placeHolder: "Type duplicate name",
+                        value: base,
+                    }).then((val) => {
+                        if (val == null || val.trim() === "") {
+                            resolve();
+                            return;
+                        }
+                        if (val === base) {
+                            vscode.window.showWarningMessage("New name must be different");
+                            reject("not_different");
+                            return;
+                        }
+                        const newBase = val.trim();
+                        const newPath = path.join(dir, newBase);
+                        fs.copy(aPath, newPath)
+                            .then(() => {
+                                return isFav ? this.favorites.duplicateWithPath(item.id, newPath) : Promise.resolve();
+                            }).then((result) => {
+                                vscode.window.showInformationMessage(`Duplication successful`);
+                                resolve();
+                            })
+                            .catch((e) => {
+                                vscode.window.showErrorMessage(`Error duplicating ${base}`);
+                                reject(e);
+                            });
+
+                    });
+                })
+                .catch((e) => {
+                    reject(e);
+                });
         });
     }
     public delete(item: ViewItem) {
         return new Promise((resolve, reject) => {
+
+            const isFav = item.isFavorite;
+
             const aPath = item.value;
             const base = path.basename(aPath);
             const dir = path.dirname(aPath);
@@ -57,6 +75,9 @@ export class FilesystemUtils {
 
                 fs.remove(aPath)
                     .then((result) => {
+                        return isFav ? this.favorites.removeResource(item.id) : Promise.resolve();
+                    })
+                    .then((result) => {
                         resolve();
                     })
                     .catch((e) => {
@@ -70,6 +91,7 @@ export class FilesystemUtils {
 
     public rename(item: ViewItem) {
         return new Promise((resolve, reject) => {
+            const isFav = item.isFavorite;
             const aPath = item.value;
             const base = path.basename(aPath);
             const dir = path.dirname(aPath);
@@ -90,6 +112,8 @@ export class FilesystemUtils {
                 const newPath = path.join(dir, newBase);
                 fs.move(aPath, newPath, {
                     overwrite: true,
+                }).then((result) => {
+                    return isFav ? this.favorites.updateWithPath(item.id, newPath) : Promise.resolve();
                 }).then((result) => {
                     resolve();
                 }).catch((e) => {
@@ -222,6 +246,7 @@ export class FilesystemUtils {
     public move(clipboardItem: ViewItem, destination: ViewItem) {
 
         return new Promise((resolve, reject) => {
+            const isFav = clipboardItem.isFavorite;
             const sPath = clipboardItem.value;
             const sBase = path.basename(clipboardItem.value);
             const dDir = destination.value;
@@ -250,8 +275,10 @@ export class FilesystemUtils {
                     return;
                 }
 
-                fs.move(sPath, dDir, {
+                fs.move(sPath, dPath, {
                     overwrite: true,
+                }).then((result) => {
+                    return isFav ? this.favorites.removeResource(clipboardItem.id) : Promise.resolve();
                 }).then((result) => {
                     resolve();
                 }).catch((e) => {

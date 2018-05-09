@@ -12,12 +12,15 @@ import { ResourceType, StoredResource, TreeProviders } from "../types/index";
 
 export class Commands {
     private clipboard = new Clipboard();
-    private filesystem = new FilesystemUtils();
+    private filesystem: FilesystemUtils = null;
     constructor(
         private context: vscode.ExtensionContext,
         public providers: TreeProviders,
         private favorites: Favorites,
     ) {
+
+        this.filesystem = new FilesystemUtils(favorites);
+
         context.subscriptions.push(this.addToFavorites());
         context.subscriptions.push(this.deleteFavorite());
         context.subscriptions.push(this.setSortAsc());
@@ -27,7 +30,6 @@ export class Commands {
         context.subscriptions.push(this.createGroup());
         context.subscriptions.push(this.addToFavoritesGroup());
         context.subscriptions.push(this.deleteGroup());
-        context.subscriptions.push(this.deleteGroupItem());
         context.subscriptions.push(this.addCurrentFile());
         context.subscriptions.push(this.deleteAllFavorites());
         context.subscriptions.push(this.groupSubgroupAdd());
@@ -373,12 +375,6 @@ export class Commands {
     }
     deleteGroup = () => {
         return vscode.commands.registerCommand("favorites.group.delete",
-            (value: ViewItem) => {
-                this.favorites.removeResource(value.id);
-            });
-    }
-    deleteGroupItem = () => {
-        return vscode.commands.registerCommand("favorites.group.item.delete",
             (value: ViewItem) => {
                 this.favorites.removeResource(value.id);
             });
