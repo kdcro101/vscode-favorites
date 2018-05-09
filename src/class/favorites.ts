@@ -12,7 +12,7 @@ export class Favorites {
     constructor(private context: vscode.ExtensionContext) {
 
     }
-    public updateWithPath(id: string, absPath: string) {
+    public updateWithPath(id: string, absPath: string): Promise<void> {
         return new Promise((resolve, reject) => {
             Promise.all([
                 this.get(),
@@ -35,7 +35,7 @@ export class Favorites {
             });
         });
     }
-    public duplicateWithPath(id: string, absPath: string) {
+    public duplicateWithPath(id: string, absPath: string): Promise<void> {
         return new Promise((resolve, reject) => {
             Promise.all([
                 this.get(),
@@ -574,9 +574,9 @@ export class Favorites {
                 break;
             case ResourceType.Group:
                 const iconLight: string = i.iconColor == null ?
-                         context.asAbsolutePath(path.join("images", "group_light.svg")) : i.iconPath;
+                    context.asAbsolutePath(path.join("images", "group_light.svg")) : i.iconPath;
                 const iconDark: string = i.iconColor == null ?
-                        context.asAbsolutePath(path.join("images", "group_dark.svg")) : i.iconPath;
+                    context.asAbsolutePath(path.join("images", "group_dark.svg")) : i.iconPath;
 
                 o = new ViewItem(
                     i.name,
