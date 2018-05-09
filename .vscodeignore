@@ -12,3 +12,4 @@ tsconfig.json
 .jsbeautifyrc
 .editorconfig
 tslint.json
+media/**

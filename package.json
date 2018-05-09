@@ -28,7 +28,7 @@
         "postinstall": "node ./node_modules/vscode/bin/install",
         "translate": "gulp"
     },
-    "icon": "images/icon.png",
+    "icon": "icons/favorites.png",
     "bugs": {
         "url": "https://github.com/kdcro101/vscode-favorite-items/issues"
     },
