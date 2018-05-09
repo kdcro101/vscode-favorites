@@ -42,7 +42,7 @@ Right-click on group in favorites view and select `Group color`.
     - `add to group of favorites` to add item to group of favorites you previously created.
 
 
-
+## Preview
 ![](https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/preview-promo.gif)
 
 ## Install
