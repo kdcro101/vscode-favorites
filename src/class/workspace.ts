@@ -77,7 +77,7 @@ class Workspace {
 
     public pathForWorkspace(fsPath: string) {
         const isMultiRoot = this.isMultiRootWorkspace();
-        const wp = isMultiRoot ? fsPath : fsPath.substr(this.getSingleRootPath().length + 1);
+        const wp = isMultiRoot ? fsPath : this.pathResolve(fsPath).substr(this.getSingleRootPath().length + 1);
         return wp;
     }
     public pathAbsolute(workspacePath: string) {

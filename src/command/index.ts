@@ -66,17 +66,18 @@ export class Commands {
                         label: "Custom",
                         description: "Use custom color (hex or rgb/rgba)",
                     },
-                ].concat(
-                    Object.keys(this.groupColor.colorList).map((k) => {
-                        const o: QuickPickItem = {
-                            label: k,
-                            description: this.groupColor.colorList[k],
-                        };
-                        return o;
-                    }),
-                );
+                ];
 
-                vscode.window.showQuickPick(list, {
+                const colors: QuickPickItem[] = Object.keys(this.groupColor.colorList).map((k) => {
+                    const o: QuickPickItem = {
+                        label: k,
+                        description: this.groupColor.colorList[k],
+                    };
+                    return o;
+                });
+                const all = list.concat(colors);
+
+                vscode.window.showQuickPick(all, {
                     matchOnDescription: true,
                     matchOnDetail: true,
                 }).then((result) => {

@@ -2,7 +2,7 @@
     "name": "favorites",
     "displayName": "Favorites",
     "description": "Provides ability to add files and directories to favorites enabling quick access. You can create groups of directories and files. Time saver for complex projects.",
-    "version": "1.3.1",
+    "version": "1.4.1",
     "categories": [
         "Other"
     ],
@@ -353,7 +353,7 @@
         "commands": [
             {
                 "command": "favorites.nav.sort.az",
-                "title": "%command.favorites.sort%",
+                "title": "Sort ascending",
                 "icon": {
                     "dark": "images/sort_dark_za.svg",
                     "light": "images/sort_light_za.svg"
@@ -361,7 +361,7 @@
             },
             {
                 "command": "favorites.nav.sort.za",
-                "title": "%command.favorites.sort%",
+                "title": "Sort descending",
                 "icon": {
                     "dark": "images/sort_dark_az.svg",
                     "light": "images/sort_light_az.svg"

@@ -42,8 +42,7 @@ export class FilesystemUtils {
                             }).then((result) => {
                                 vscode.window.showInformationMessage(`Duplication successful`);
                                 resolve();
-                            })
-                            .catch((e) => {
+                            }).catch((e) => {
                                 vscode.window.showErrorMessage(`Error duplicating ${base}`);
                                 reject(e);
                             });
@@ -112,9 +111,9 @@ export class FilesystemUtils {
                 const newPath = path.join(dir, newBase);
                 fs.move(aPath, newPath, {
                     overwrite: true,
-                }).then((result) => {
+                }).then(() => {
                     return isFav ? this.favorites.updateWithPath(item.id, newPath) : Promise.resolve();
-                }).then((result) => {
+                }).then(() => {
                     resolve();
                 }).catch((e) => {
                     vscode.window.showErrorMessage(`Error renaming ${base}`);
