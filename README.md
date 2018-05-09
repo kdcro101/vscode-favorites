@@ -5,17 +5,32 @@
 [![Rating](https://img.shields.io/vscode-marketplace/r/kdcro101.favorites.svg)](https://marketplace.visualstudio.com/items?itemName=kdcro101.favorites)
 
 
-<!-- <img align="left" width="48" height="48" src="https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/images/icon-small.png"> -->
-
 Extension provides ability to add files and directories to favorites enabling quick access.
 You can create groups (and subgroups) of favorite items with files and folders.
 Time saver for complex projects.
+
+## NEW
+<div style="">
+    <img style ="float:left;margin-right:16px;margin-bottom:32px" src="https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/colors.jpg" />
+
+Change group icon color.
+Right-click on group in favoites view and select `Group color`
+
+</div>
+<div style="clear:both;padding-bottom:32px;">
+
+
+
+
 
 ## NEW 2018/05/08
 
 - favorite items can have alias (custom display label)
 - groups can be renamed
 - favorites can be accesed via activity bar
+
+
+
 
 ![](https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/preview-promo.gif)
 
