@@ -1,3 +1,9 @@
+
+## 1.4.3 | 2018.05.09
+
+- activationEvents
+- fixed command labels
+
 ## 1.4.2 | 2018.05.09
 
 - icon

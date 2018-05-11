@@ -405,7 +405,7 @@
             },
             {
                 "command": "favorites.delete.all",
-                "title": "Delete everything",
+                "title": "Remove everything from favorites",
                 "icon": {
                     "dark": "images/delete_all_dark.svg",
                     "light": "images/delete_all_light.svg"
