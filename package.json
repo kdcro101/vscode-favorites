@@ -38,19 +38,17 @@
         "url": "https://github.com/kdcro101/vscode-favorite-items.git"
     },
     "activationEvents": [
-        "*"
+        "workspaceContains:**/.*"
     ],
     "license": "GPL-3.0",
     "main": "./out/",
     "contributes": {
-        "keybindings": [
-            {
-                "command": "workbench.view.extension.favorites-explorer",
-                "key": "ctrl+alt+f",
-                "mac": "cmd+alt+f",
-                "when": "editorTextFocus"
-            }
-        ],
+        "keybindings": [{
+            "command": "workbench.view.extension.favorites-explorer",
+            "key": "ctrl+alt+f",
+            "mac": "cmd+alt+f",
+            "when": "editorTextFocus"
+        }],
         "configuration": {
             "type": "object",
             "title": "Favorite-items configuration",
@@ -82,31 +80,24 @@
             }
         },
         "viewsContainers": {
-            "activitybar": [
-                {
-                    "id": "favorites-explorer",
-                    "title": "Favorites",
-                    "icon": "icons/activity_bar_icon.svg"
-                }
-            ]
+            "activitybar": [{
+                "id": "favorites-explorer",
+                "title": "Favorites",
+                "icon": "icons/activity_bar_icon.svg"
+            }]
         },
         "views": {
-            "favorites-explorer": [
-                {
-                    "id": "favoritesActivity",
-                    "name": "Explorer"
-                }
-            ],
-            "explorer": [
-                {
-                    "id": "favorites",
-                    "name": "Favorites"
-                }
-            ]
+            "favorites-explorer": [{
+                "id": "favoritesActivity",
+                "name": "Explorer"
+            }],
+            "explorer": [{
+                "id": "favorites",
+                "name": "Favorites"
+            }]
         },
         "menus": {
-            "explorer/context": [
-                {
+            "explorer/context": [{
                     "command": "favorites.addToFavorites",
                     "group": "favorites"
                 },
@@ -115,8 +106,7 @@
                     "group": "favorites"
                 }
             ],
-            "view/title": [
-                {
+            "view/title": [{
                     "command": "favorites.collapse",
                     "when": "view == favorites",
                     "group": "navigation@3"
@@ -167,8 +157,7 @@
                     "group": "navigation@0"
                 }
             ],
-            "view/item/context": [
-                {
+            "view/item/context": [{
                     "command": "favorites.deleteFavorite",
                     "when": "viewItem == FAVORITE_FILE",
                     "group": "operation"
@@ -350,8 +339,7 @@
                 }
             ]
         },
-        "commands": [
-            {
+        "commands": [{
                 "command": "favorites.nav.sort.az",
                 "title": "Sort ascending",
                 "icon": {
