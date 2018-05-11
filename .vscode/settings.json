@@ -14,4 +14,7 @@
     },
     "favorites.groupsFirst": true,
     "favorites.root": [],
+    "typescript.navigator.showVisibilityLabels": true,
+    "typescript.navigator.showIcons": true,
+    "typescript.navigator.active": true,
 }
