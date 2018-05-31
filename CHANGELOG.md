@@ -1,4 +1,8 @@
 
+## 1.4.4 | 2018.05.25
+
+- fixed file creation bug when user cancel file name input
+
 ## 1.4.3 | 2018.05.09
 
 - activationEvents

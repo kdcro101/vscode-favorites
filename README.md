@@ -10,7 +10,7 @@ You can create groups (and subgroups) of favorite items with files and folders.
 Time saver for complex projects.
 
 
-## NEW
+## Features
 
  
 <p align="center">

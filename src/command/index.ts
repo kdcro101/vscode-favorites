@@ -111,8 +111,10 @@ export class Commands {
     }
     public fsCreateFile = () => {
         return vscode.commands.registerCommand("filesystem.create.file",
-            // tslint:disable-next-line:no-empty
             (value: ViewItem) => {
+                if (value == null) {
+                    return;
+                }
                 this.filesystem.createFile(value)
                     .then((result) => {
                         this.providers.refresh();
@@ -125,7 +127,6 @@ export class Commands {
     }
     public fsCreateDirectory = () => {
         return vscode.commands.registerCommand("filesystem.create.directory",
-            // tslint:disable-next-line:no-empty
             (value: ViewItem) => {
                 this.filesystem.createDirectory(value)
                     .then((result) => {

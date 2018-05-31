@@ -134,6 +134,7 @@ export class FilesystemUtils {
                 placeHolder: "Type file name",
             }).then((val) => {
                 if (val == null || val.trim() === "") {
+                    newPath = null;
                     resolve();
                     return;
                 }
@@ -141,6 +142,10 @@ export class FilesystemUtils {
                 newPath = path.join(aPath, val);
                 return fs.pathExists(newPath);
             }).then((b) => {
+                if (newPath == null) {
+                    // do nothing
+                    return;
+                }
 
                 if (b === true) {
                     vscode.window.showWarningMessage("File exists");
