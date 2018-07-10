@@ -302,20 +302,45 @@ export class Commands {
             });
     }
     addToFavorites = () => {
-        return vscode.commands.registerCommand("favorites.addToFavorites", (fileUri?: vscode.Uri) => {
+        return vscode.commands.registerCommand("favorites.addToFavorites", (fileUri: vscode.Uri, list: any[]) => {
+
+            if (!fileUri) {
+                return vscode.window.showWarningMessage("You have to call this extension from explorer");
+            }
+            const run = async () => {
+
+                for (const uri of list) {
+                    const itemPath = uri.fsPath;
+                    await this.favorites.addPathToGroup(null, itemPath);
+                }
+            };
+
+            run();
+            // const itemPath = fileUri.fsPath;
+            // this.favorites.addPathToGroup(null, itemPath);
+
+            // Promise.all(proms)
+            //     .then((result) => {
+            //         console.log(`${list.length} added`);
+            //     }).catch((e) => {
+            //         console.error(e);
+            //     });
+
+        });
+    }
+    addToFavoritesGroup = () => {
+        return vscode.commands.registerCommand("favorites.addToFavoritesGroup", (fileUri: vscode.Uri, list: any[]) => {
             if (!fileUri) {
                 return vscode.window.showWarningMessage("You have to call this extension from explorer");
             }
 
-            const itemPath = fileUri.fsPath;
-            this.favorites.addPathToGroup(null, itemPath);
-        });
-    }
-    addToFavoritesGroup = () => {
-        return vscode.commands.registerCommand("favorites.addToFavoritesGroup", (fileUri?: vscode.Uri) => {
-            if (!fileUri) {
-                return vscode.window.showWarningMessage("You have to call this extension from explorer");
-            }
+            const run = async (group_id: string) => {
+
+                for (const uri of list) {
+                    const itemPath = uri.fsPath;
+                    await this.favorites.addPathToGroup(group_id, itemPath);
+                }
+            };
 
             this.favorites.generateGroupQuickPickList()
                 .then((result) => {
@@ -330,8 +355,9 @@ export class Commands {
                                 // canceled
                                 return;
                             }
-                            const itemPath = fileUri.fsPath;
-                            this.favorites.addPathToGroup(pickedItem.id, itemPath);
+                            // const itemPath = fileUri.fsPath;
+                            // this.favorites.addPathToGroup(pickedItem.id, itemPath);
+                            run(pickedItem.id);
                         });
 
                 })

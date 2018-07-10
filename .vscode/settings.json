@@ -14,7 +14,8 @@
     },
     "favorites.groupsFirst": true,
     "favorites.root": [],
-    "typescript.navigator.showVisibilityLabels": true,
-    "typescript.navigator.showIcons": true,
-    "typescript.navigator.active": true,
+    "redis-console.host": "localhost",
+    "redis-console.port": 6379,
+    "redis-console.password": "",
+    "redis-console.hostIpFamily": 4
 }

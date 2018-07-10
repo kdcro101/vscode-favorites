@@ -1,3 +1,6 @@
+## 1.5.0 | 2018.07.10
+
+- multiple selection can be added to favorites
 
 ## 1.4.4 | 2018.05.25
 
