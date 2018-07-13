@@ -1,16 +1,12 @@
-import * as fs from "fs";
-import * as path from "path";
-
 import * as vscode from "vscode";
 import { QuickPickItem } from "vscode";
 import { Clipboard } from "../class/clipboard";
-import { DataProvider } from "../class/dataProvider";
 import { Favorites } from "../class/favorites";
 import { FilesystemUtils } from "../class/filesystem";
 import { GroupColor } from "../class/group-color";
 import { ViewItem } from "../class/view-item";
 import workspace from "../class/workspace";
-import { ResourceType, StoredResource, TreeProviders } from "../types/index";
+import { TreeProviders } from "../types/index";
 
 export class Commands {
     private clipboard = new Clipboard();
@@ -27,13 +23,13 @@ export class Commands {
         this.groupColor = new GroupColor(favorites, context);
 
         context.subscriptions.push(this.addToFavorites());
+        context.subscriptions.push(this.addToFavoritesGroup());
         context.subscriptions.push(this.deleteFavorite());
         context.subscriptions.push(this.setSortAsc());
         context.subscriptions.push(this.setSortDesc());
         context.subscriptions.push(this.collapse());
         context.subscriptions.push(this.collapseActivityView());
         context.subscriptions.push(this.createGroup());
-        context.subscriptions.push(this.addToFavoritesGroup());
         context.subscriptions.push(this.deleteGroup());
         context.subscriptions.push(this.addCurrentFile());
         context.subscriptions.push(this.deleteAllFavorites());
@@ -304,6 +300,13 @@ export class Commands {
     addToFavorites = () => {
         return vscode.commands.registerCommand("favorites.addToFavorites", (fileUri: vscode.Uri, list: any[]) => {
 
+            const isList = Array.isArray(list);
+            const isFile = (fileUri && fileUri.fsPath) != null ? true : false;
+
+            if (!isList && isFile) {
+                list = [fileUri];
+            }
+
             if (!fileUri) {
                 return vscode.window.showWarningMessage("You have to call this extension from explorer");
             }
@@ -332,6 +335,13 @@ export class Commands {
         return vscode.commands.registerCommand("favorites.addToFavoritesGroup", (fileUri: vscode.Uri, list: any[]) => {
             if (!fileUri) {
                 return vscode.window.showWarningMessage("You have to call this extension from explorer");
+            }
+
+            const isList = Array.isArray(list);
+            const isFile = (fileUri && fileUri.fsPath) != null ? true : false;
+
+            if (!isList && isFile) {
+                list = [fileUri];
             }
 
             const run = async (group_id: string) => {
