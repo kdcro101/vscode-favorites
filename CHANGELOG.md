@@ -1,3 +1,11 @@
+## 1.5.2 | 2018.07.13
+
+- "window.titleBarStyle": "custom" - temporary fix
+
+## 1.5.1 | 2018.07.10
+
+- Minor bugs
+
 ## 1.5.0 | 2018.07.10
 
 - multiple selection can be added to favorites
