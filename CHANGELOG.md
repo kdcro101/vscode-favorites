@@ -1,3 +1,7 @@
+## 1.5.3 | 2018.08.06
+
+- fs-extra 7.0.0 upgrade
+
 ## 1.5.2 | 2018.07.13
 
 - "window.titleBarStyle": "custom" - temporary fix
