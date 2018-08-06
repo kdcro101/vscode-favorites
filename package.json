@@ -2,7 +2,7 @@
     "name": "favorites",
     "displayName": "Favorites",
     "description": "Provides ability to add files and directories to favorites enabling quick access. You can create groups of directories and files. Time saver for complex projects.",
-    "version": "1.5.2",
+    "version": "1.5.3",
     "categories": [
         "Other"
     ],
@@ -15,7 +15,7 @@
     ],
     "publisher": "kdcro101",
     "engines": {
-        "vscode": "^1.23.0"
+        "vscode": "^1.25.0"
     },
     "galleryBanner": {
         "color": "#333333",
@@ -491,7 +491,7 @@
     },
     "dependencies": {
         "color": "^3.0.0",
-        "fs-extra": "^6.0.0",
+        "fs-extra": "^7.0.0",
         "html-colors": "0.0.4",
         "lodash": "^4.17.10",
         "lodash-es": "^4.17.10",
