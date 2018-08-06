@@ -1,9 +1,0 @@
-{"id":"uAqdV7OjKriN9ep3","command":"KEYS","arguments":"*"}
-{"id":"67Ljw3XizK2MaC5e","command":"GET","arguments":"idnus.A5a.0cCcbOJdI41Ub8npb04"}
-{"id":"UbsBOmAu5E0zyLYG","command":"HSET","arguments":"hash field1 \"one\""}
-{"id":"DynGx5wL9aTloWPr","command":"HSET","arguments":"hash field2 \"two\""}
-{"id":"YPKbfzxC7tgLaSDR","command":"HSET","arguments":"hash field3 \"three\""}
-{"id":"N3Qm1R6lxKVWfgDb","command":"KEYS","arguments":"*"}
-{"id":"C0hKxF3N8U2LGAqf","command":"HGETALL","arguments":"rt.sub.ucH2K90Wp0GGHSz2af.ld04"}
-{"id":"XKPAHGEVtUMuNab6","command":"TTL","arguments":"rt.sub.ucH2K90Wp0GGHSz2af.ld04"}
-{"id":"YUXgf8IWQOBFdxh3","command":"KEYS","arguments":"*"}
