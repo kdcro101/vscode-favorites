@@ -109,19 +109,18 @@ export class FilesystemUtils {
                 }
                 const newBase = val.trim();
                 const newPath = path.join(dir, newBase);
-                console.log(`renaming: [${aPath}]->[${ newPath }]`);
-                fs.move(aPath, newPath, {
-                    overwrite: true,
-                }).then(() => {
-                    return isFav ? this.favorites.updateWithPath(item.id, newPath) : Promise.resolve();
-                }).then(() => {
-                    resolve();
-                }).catch((e) => {
-                    console.log(e);
-                    console.error(e);
-                    vscode.window.showErrorMessage(`Error renaming ${base}`);
-                    reject(e);
-                });
+                console.log(`renaming: [${aPath}]->[${newPath}]`);
+                fs.rename(aPath, newPath)
+                    .then(() => {
+                        return isFav ? this.favorites.updateWithPath(item.id, newPath) : Promise.resolve();
+                    }).then(() => {
+                        resolve();
+                    }).catch((e) => {
+                        console.log(e);
+                        console.error(e);
+                        vscode.window.showErrorMessage(`Error renaming ${base}`);
+                        reject(e);
+                    });
 
             });
         });
