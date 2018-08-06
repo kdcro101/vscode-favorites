@@ -109,6 +109,7 @@ export class FilesystemUtils {
                 }
                 const newBase = val.trim();
                 const newPath = path.join(dir, newBase);
+                console.log(`renaming: [${aPath}]->[${ newPath }]`);
                 fs.move(aPath, newPath, {
                     overwrite: true,
                 }).then(() => {
@@ -116,6 +117,8 @@ export class FilesystemUtils {
                 }).then(() => {
                     resolve();
                 }).catch((e) => {
+                    console.log(e);
+                    console.error(e);
                     vscode.window.showErrorMessage(`Error renaming ${base}`);
                     reject(e);
                 });
