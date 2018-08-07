@@ -55,11 +55,6 @@
             "type": "object",
             "title": "Favorite-items configuration",
             "properties": {
-                "favorites.resources": {
-                    "type": "array",
-                    "default": [],
-                    "description": "compatibility"
-                },
                 "favorites.root": {
                     "type": "array",
                     "default": [],
@@ -496,6 +491,7 @@
         "lodash": "^4.17.10",
         "lodash-es": "^4.17.10",
         "md5": "^2.2.1",
-        "nconf": "^0.10.0"
+        "nconf": "^0.10.0",
+        "rxjs": "^6.2.2"
     }
 }

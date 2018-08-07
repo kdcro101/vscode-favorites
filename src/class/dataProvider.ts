@@ -12,11 +12,17 @@ export class DataProvider implements vscode.TreeDataProvider<ViewItem> {
     public onDidChangeTreeDataEmmiter = new vscode.EventEmitter<ViewItem | undefined>();
     public readonly onDidChangeTreeData: vscode.Event<ViewItem | undefined> = this.onDidChangeTreeDataEmmiter.event;
     public returnEmpty: boolean = false;
-    constructor(private context: vscode.ExtensionContext, private favorites: Favorites) {
-        // vscode.window.onDidChangeActiveTextEditor(() => this.onActiveEditorChanged());
-        // vscode.workspace.onDidChangeTextDocument(e => this.onDocumentChanged(e));
 
-        console.log("Treeview constructed");
+    constructor(private context: vscode.ExtensionContext, private favorites: Favorites) {
+    }
+
+    public getParent?(element: ViewItem): ViewItem {
+
+        if (element == null) {
+            return null;
+        }
+
+        return element.parentViewItem;
     }
     public refresh(): void {
         this.onDidChangeTreeDataEmmiter.fire();
@@ -45,7 +51,7 @@ export class DataProvider implements vscode.TreeDataProvider<ViewItem> {
             }
 
             if (item.resourceType === ResourceType.Group) {
-                this.favorites.groupViewItems(item.id)
+                this.favorites.groupViewItems(item)
                     .then((result) => {
                         resolve(result);
 
@@ -56,7 +62,7 @@ export class DataProvider implements vscode.TreeDataProvider<ViewItem> {
                 return;
             }
             if (item.resourceType === ResourceType.Directory) {
-                this.getDirectoryItems(item.resourceName)
+                this.getDirectoryItems(item)
                     .then((views) => {
                         resolve(views);
                     })
@@ -69,9 +75,9 @@ export class DataProvider implements vscode.TreeDataProvider<ViewItem> {
         });
     }
 
-    private getDirectoryItems(fsPath: string): Promise<ViewItem[]> {
+    private getDirectoryItems(parentItem: ViewItem): Promise<ViewItem[]> {
         return new Promise((resolve, reject) => {
-
+            const fsPath = parentItem.resourceName;
             const sortDirection = workspace.get("sortDirection");
 
             fs.readdir(workspace.pathResolve(fsPath), (err, items) => {
@@ -119,7 +125,7 @@ export class DataProvider implements vscode.TreeDataProvider<ViewItem> {
                             fsItems = dirsAZ.reverse().concat(filesAZ.reverse());
                         }
 
-                        Promise.all(fsItems.map((i) => this.favorites.viewItemForPath(i.path)))
+                        Promise.all(fsItems.map((i) => this.favorites.viewItemForPath(i.path, parentItem)))
                             .then((views) => {
                                 resolve(views);
                                 return;

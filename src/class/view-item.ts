@@ -4,6 +4,7 @@ import { ResourceType } from "../types/index";
 export class ViewItem extends vscode.TreeItem {
     public resourceUri: vscode.Uri;
     public groupName: string;
+    public parentViewItem: ViewItem = null;
 
     constructor(
         public label: string,
