@@ -391,9 +391,9 @@ export class Favorites {
             });
         });
     }
-    public groupViewItems(parentId: string): Promise<ViewItem[]> {
-        const enablePreview = vscode.workspace.getConfiguration("workbench.editor").get("enablePreview") as boolean;
-        const sortDirection = workspace.get("sortDirection");
+    public groupViewItems(parentItem: ViewItem): Promise<ViewItem[]> {
+
+        const parentId = parentItem == null ? null : parentItem.id;
 
         return new Promise((resolve, reject) => {
             Promise.all([
@@ -405,7 +405,7 @@ export class Favorites {
 
                 this.sortStoredResources(list)
                     .then((sorted) => {
-                        Promise.all(sorted.map((i) => this.asViewItem(i, this.context)))
+                        Promise.all(sorted.map((i) => this.asViewItem(i, this.context, parentItem)))
                             .then((views) => {
                                 resolve(views);
                             })
@@ -484,7 +484,7 @@ export class Favorites {
         });
     }
 
-    public viewItemForPath(fsPath: string): Promise<ViewItem> {
+    public viewItemForPath(fsPath: string, parentItem: ViewItem): Promise<ViewItem> {
         return new Promise((resolve, reject) => {
             const enablePreview = vscode.workspace.getConfiguration("workbench.editor").get("enablePreview") as boolean;
             Promise.all([this.identify(fsPath)])
@@ -519,6 +519,10 @@ export class Favorites {
                                 , null);
                             break;
                     }
+
+                    // put parent
+                    o.parentViewItem = parentItem;
+
                     resolve(o);
                 })
                 .catch((e) => {
@@ -527,7 +531,7 @@ export class Favorites {
 
         });
     }
-    public asViewItem(i: StoredResource, context: vscode.ExtensionContext): ViewItem {
+    public asViewItem(i: StoredResource, context: vscode.ExtensionContext, parentItem: ViewItem): ViewItem {
         const enablePreview = vscode.workspace.getConfiguration("workbench.editor").get("enablePreview") as boolean;
 
         let o: ViewItem = null;
@@ -596,6 +600,8 @@ export class Favorites {
                 );
                 break;
         }
+
+        o.parentViewItem = parentItem;
         return o;
     }
     private hasPath(itemPath): Promise<boolean> {

@@ -4,6 +4,8 @@ import * as vscode from "vscode";
 
 import { DataProvider } from "./class/dataProvider";
 import { Favorites } from "./class/favorites";
+import { TreeViewManager } from "./class/tree";
+import { ViewItem } from "./class/view-item";
 import workspace from "./class/workspace";
 import { Commands } from "./command";
 import { TreeProviders } from "./types";
@@ -45,8 +47,13 @@ export function activate(context: vscode.ExtensionContext) {
         },
     };
 
-    const view = vscode.window.registerTreeDataProvider("favorites", provider);
-    const viewActivity = vscode.window.registerTreeDataProvider("favoritesActivity", providerActivity);
+    // const view = vscode.window.registerTreeDataProvider("favorites", provider);
+    // const viewActivity = vscode.window.registerTreeDataProvider("favoritesActivity", providerActivity);
+    const treeExplorer = vscode.window.createTreeView<ViewItem>("favorites", { treeDataProvider: providers.explorer });
+    const treeActivity = vscode.window.createTreeView<ViewItem>("favoritesActivity", { treeDataProvider: providers.activity });
+
+    const managerExplorer = new TreeViewManager(treeExplorer, context);
+    const managerActivity = new TreeViewManager(treeActivity, context);
 
     vscode.workspace.onDidChangeConfiguration(() => {
         providers.refresh();
@@ -58,9 +65,13 @@ export function activate(context: vscode.ExtensionContext) {
         providers.refresh();
     });
 
+    setTimeout(() => {
+        console.log(`favorites: ${managerExplorer.visible}`);
+        console.log(`favoritesActivity: ${managerActivity.visible}`);
+    }, 3000);
+
 }
 
-// this method is called when your extension is deactivated
 export function deactivate() {
-    //
+    console.log("deactivating kdcro101.favorites");
 }
