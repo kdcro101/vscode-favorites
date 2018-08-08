@@ -1,3 +1,7 @@
+## 1.6.0 | 2018.08.08
+
+- reveal file in "favorites" view (if visible) when active editor changes
+
 ## 1.5.5 | 2018.08.06
 
 - fs.move -> fs.rename

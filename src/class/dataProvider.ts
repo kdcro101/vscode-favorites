@@ -16,13 +16,12 @@ export class DataProvider implements vscode.TreeDataProvider<ViewItem> {
     constructor(private context: vscode.ExtensionContext, private favorites: Favorites) {
     }
 
-    public getParent?(element: ViewItem): ViewItem {
+    public getParent(element: ViewItem): Thenable<ViewItem> {
 
         if (element == null) {
             return null;
         }
-
-        return element.parentViewItem;
+        return element.getParent();
     }
     public refresh(): void {
         this.onDidChangeTreeDataEmmiter.fire();
@@ -41,6 +40,7 @@ export class DataProvider implements vscode.TreeDataProvider<ViewItem> {
             if (!item) {
                 this.getRoot()
                     .then((result) => {
+
                         resolve(result);
                     })
                     .catch((e) => {
@@ -53,8 +53,8 @@ export class DataProvider implements vscode.TreeDataProvider<ViewItem> {
             if (item.resourceType === ResourceType.Group) {
                 this.favorites.groupViewItems(item)
                     .then((result) => {
-                        resolve(result);
 
+                        resolve(result);
                     })
                     .catch((e) => {
                         reject(e);
@@ -63,8 +63,9 @@ export class DataProvider implements vscode.TreeDataProvider<ViewItem> {
             }
             if (item.resourceType === ResourceType.Directory) {
                 this.getDirectoryItems(item)
-                    .then((views) => {
-                        resolve(views);
+                    .then((result) => {
+
+                        resolve(result);
                     })
                     .catch((e) => reject(e));
                 return;
@@ -125,7 +126,7 @@ export class DataProvider implements vscode.TreeDataProvider<ViewItem> {
                             fsItems = dirsAZ.reverse().concat(filesAZ.reverse());
                         }
 
-                        Promise.all(fsItems.map((i) => this.favorites.viewItemForPath(i.path, parentItem)))
+                        Promise.all(fsItems.map((i) => this.favorites.viewItemForPath(i.path)))
                             .then((views) => {
                                 resolve(views);
                                 return;

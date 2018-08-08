@@ -35,6 +35,9 @@ export function activate(context: vscode.ExtensionContext) {
         .then((l) => global.commands = l);
 
     const favorites = new Favorites(context);
+
+    ViewItem.favorites = favorites;
+
     const provider = new DataProvider(context, favorites);
     const providerActivity = new DataProvider(context, favorites);
 
@@ -52,8 +55,8 @@ export function activate(context: vscode.ExtensionContext) {
     const treeExplorer = vscode.window.createTreeView<ViewItem>("favorites", { treeDataProvider: providers.explorer });
     const treeActivity = vscode.window.createTreeView<ViewItem>("favoritesActivity", { treeDataProvider: providers.activity });
 
-    const managerExplorer = new TreeViewManager(treeExplorer, context);
-    const managerActivity = new TreeViewManager(treeActivity, context);
+    const managerExplorer = new TreeViewManager(treeExplorer, context, favorites, providers.explorer);
+    const managerActivity = new TreeViewManager(treeActivity, context, favorites, providers.activity);
 
     vscode.workspace.onDidChangeConfiguration(() => {
         providers.refresh();

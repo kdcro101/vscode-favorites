@@ -3,14 +3,22 @@ import * as fs from "fs";
 import * as _ from "lodash";
 
 import * as path from "path";
+import { ReplaySubject } from "rxjs";
 import * as vscode from "vscode";
 import { GroupQuickPick, ResourceType, StoredResource } from "../types/index";
 import { ViewItem } from "./view-item";
 import workspace from "./workspace";
 
 export class Favorites {
-    constructor(private context: vscode.ExtensionContext) {
+    public stateList = new ReplaySubject<StoredResource[]>(1);
 
+    constructor(private context: vscode.ExtensionContext) {
+        // this.get()
+        //     .then((result) => {
+        //         console.log(`FAVORITES: [${result.length} items]`);
+        //     }).catch((e) => {
+        //         console.log(e);
+        //     });
     }
     public updateWithPath(id: string, absPath: string): Promise<void> {
         return new Promise((resolve, reject) => {
@@ -314,6 +322,7 @@ export class Favorites {
             }).length === 0 ? false : true;
 
             if (shouldAddId === false && shouldConvertPath === false) {
+                this.stateList.next(resources);
                 resolve(resources);
                 return;
             }
@@ -352,6 +361,7 @@ export class Favorites {
 
             Promise.all(proms)
                 .then(() => {
+
                     this.save(resources);
                     resolve(resources);
 
@@ -362,7 +372,7 @@ export class Favorites {
         });
     }
     public save(list: StoredResource[]): Promise<void> {
-
+        this.stateList.next(list);
         return workspace.save("root", list);
     }
     public identify(itemPath: string): Promise<ResourceType> {
@@ -405,7 +415,7 @@ export class Favorites {
 
                 this.sortStoredResources(list)
                     .then((sorted) => {
-                        Promise.all(sorted.map((i) => this.asViewItem(i, this.context, parentItem)))
+                        Promise.all(sorted.map((i) => this.asViewItem(i)))
                             .then((views) => {
                                 resolve(views);
                             })
@@ -484,7 +494,7 @@ export class Favorites {
         });
     }
 
-    public viewItemForPath(fsPath: string, parentItem: ViewItem): Promise<ViewItem> {
+    public viewItemForPath(fsPath: string): Promise<ViewItem> {
         return new Promise((resolve, reject) => {
             const enablePreview = vscode.workspace.getConfiguration("workbench.editor").get("enablePreview") as boolean;
             Promise.all([this.identify(fsPath)])
@@ -520,9 +530,6 @@ export class Favorites {
                             break;
                     }
 
-                    // put parent
-                    o.parentViewItem = parentItem;
-
                     resolve(o);
                 })
                 .catch((e) => {
@@ -531,7 +538,7 @@ export class Favorites {
 
         });
     }
-    public asViewItem(i: StoredResource, context: vscode.ExtensionContext, parentItem: ViewItem): ViewItem {
+    public asViewItem(i: StoredResource): ViewItem {
         const enablePreview = vscode.workspace.getConfiguration("workbench.editor").get("enablePreview") as boolean;
 
         let o: ViewItem = null;
@@ -578,9 +585,9 @@ export class Favorites {
                 break;
             case ResourceType.Group:
                 const iconLight: string = i.iconColor == null ?
-                    context.asAbsolutePath(path.join("images", "group_light.svg")) : i.iconPath;
+                    this.context.asAbsolutePath(path.join("images", "group_light.svg")) : i.iconPath;
                 const iconDark: string = i.iconColor == null ?
-                    context.asAbsolutePath(path.join("images", "group_dark.svg")) : i.iconPath;
+                    this.context.asAbsolutePath(path.join("images", "group_dark.svg")) : i.iconPath;
 
                 o = new ViewItem(
                     i.name,
@@ -601,7 +608,7 @@ export class Favorites {
                 break;
         }
 
-        o.parentViewItem = parentItem;
+        // o.parentViewItem = parentItem;
         return o;
     }
     private hasPath(itemPath): Promise<boolean> {

@@ -12,6 +12,10 @@ Time saver for complex projects.
 
 ## Features
 
+### NEW 2018.08.08
+
+when active editor changes, file gets revealed in "favorites" view (if visible) 
+
  
 <p align="center">
    <img  src="https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/operations.jpg" />
