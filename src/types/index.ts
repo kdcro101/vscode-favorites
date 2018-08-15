@@ -14,9 +14,9 @@ export interface StoredResource {
     name: string;
     type: ResourceType;
     parent_id?: string;
-    contents?: string[];
     label?: string;
     workspacePath?: string;
+    fsPath?: string;
     iconColor?: string;
     iconPath?: string;
 }

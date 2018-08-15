@@ -43,14 +43,12 @@
     "license": "GPL-3.0",
     "main": "./out/",
     "contributes": {
-        "keybindings": [
-            {
-                "command": "workbench.view.extension.favorites-explorer",
-                "key": "ctrl+alt+f",
-                "mac": "cmd+alt+f",
-                "when": "editorTextFocus"
-            }
-        ],
+        "keybindings": [{
+            "command": "workbench.view.extension.favorites-explorer",
+            "key": "ctrl+alt+f",
+            "mac": "cmd+alt+f",
+            "when": "editorTextFocus"
+        }],
         "configuration": {
             "type": "object",
             "title": "Favorite-items configuration",
@@ -77,31 +75,24 @@
             }
         },
         "viewsContainers": {
-            "activitybar": [
-                {
-                    "id": "favorites-explorer",
-                    "title": "Favorites",
-                    "icon": "icons/activity_bar_icon.svg"
-                }
-            ]
+            "activitybar": [{
+                "id": "favorites-explorer",
+                "title": "Favorites",
+                "icon": "icons/activity_bar_icon.svg"
+            }]
         },
         "views": {
-            "favorites-explorer": [
-                {
-                    "id": "favoritesActivity",
-                    "name": "Explorer"
-                }
-            ],
-            "explorer": [
-                {
-                    "id": "favorites",
-                    "name": "Favorites"
-                }
-            ]
+            "favorites-explorer": [{
+                "id": "favoritesActivity",
+                "name": "Explorer"
+            }],
+            "explorer": [{
+                "id": "favorites",
+                "name": "Favorites"
+            }]
         },
         "menus": {
-            "explorer/context": [
-                {
+            "explorer/context": [{
                     "command": "favorites.addToFavorites",
                     "group": "favorites"
                 },
@@ -110,8 +101,7 @@
                     "group": "favorites"
                 }
             ],
-            "view/title": [
-                {
+            "view/title": [{
                     "command": "favorites.collapse",
                     "when": "view == favorites",
                     "group": "navigation@3"
@@ -162,8 +152,7 @@
                     "group": "navigation@0"
                 }
             ],
-            "view/item/context": [
-                {
+            "view/item/context": [{
                     "command": "favorites.deleteFavorite",
                     "when": "viewItem == FAVORITE_FILE",
                     "group": "operation"
@@ -201,7 +190,7 @@
                 {
                     "command": "favorites.group.rename",
                     "when": "viewItem == FAVORITE_GROUP",
-                    "group": "7_modification"
+                    "group": "1_modification"
                 },
                 {
                     "command": "favorites.group.color.set",
@@ -209,8 +198,13 @@
                     "group": "6_modification"
                 },
                 {
-                    "command": "favorites.group.subgroup.create",
+                    "command": "favorites.group.create",
                     "when": "viewItem == FAVORITE_GROUP",
+                    "group": "1_modification"
+                },
+                {
+                    "command": "favorites.group.create",
+                    "when": "viewItem != FAVORITE_GROUP && viewItem != FAVORITE_DIRECTORY && viewItem != FAVORITE_FILE && viewItem != FS_FILE && viewItem != FS_DIRECTORY",
                     "group": "1_modification"
                 },
                 {
@@ -342,11 +336,15 @@
                     "command": "filesystem.rename",
                     "when": "viewItem == FAVORITE_DIRECTORY",
                     "group": "7_modification"
+                },
+                {
+                    "command": "favorites.addExternal",
+                    "when": "viewItem != FAVORITE_DIRECTORY && viewItem != FAVORITE_FILE && viewItem != FS_FILE && viewItem != FS_DIRECTORY",
+                    "group": "7_modification"
                 }
             ]
         },
-        "commands": [
-            {
+        "commands": [{
                 "command": "favorites.nav.sort.az",
                 "title": "Sort ascending",
                 "icon": {
@@ -404,7 +402,7 @@
             },
             {
                 "command": "favorites.group.create",
-                "title": "Create group of favorites",
+                "title": "Create group",
                 "icon": {
                     "dark": "images/add_dark.svg",
                     "light": "images/add_light.svg"
@@ -425,10 +423,6 @@
             {
                 "command": "favorites.group.color.set",
                 "title": "Group color"
-            },
-            {
-                "command": "favorites.group.subgroup.create",
-                "title": "Create subgroup"
             },
             {
                 "command": "favorites.add.current",
@@ -465,6 +459,10 @@
             {
                 "command": "filesystem.duplicate",
                 "title": "Duplicate"
+            },
+            {
+                "command": "favorites.addExternal",
+                "title": "Add external resource"
             }
         ]
     },

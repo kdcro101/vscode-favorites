@@ -3,7 +3,7 @@ import * as fs from "fs";
 import * as _ from "lodash";
 
 import * as path from "path";
-import { ReplaySubject } from "rxjs";
+import { ReplaySubject, Subject } from "rxjs";
 import * as vscode from "vscode";
 import { GroupQuickPick, ResourceType, StoredResource } from "../types/index";
 import { ViewItem } from "./view-item";
@@ -11,15 +11,10 @@ import workspace from "./workspace";
 
 export class Favorites {
     public stateList = new ReplaySubject<StoredResource[]>(1);
+    public eventRefresh = new Subject<void>();
 
-    constructor(private context: vscode.ExtensionContext) {
-        // this.get()
-        //     .then((result) => {
-        //         console.log(`FAVORITES: [${result.length} items]`);
-        //     }).catch((e) => {
-        //         console.log(e);
-        //     });
-    }
+    constructor(private context: vscode.ExtensionContext) { }
+
     public updateWithPath(id: string, absPath: string): Promise<void> {
         return new Promise((resolve, reject) => {
             Promise.all([
@@ -144,6 +139,45 @@ export class Favorites {
                 console.log(e);
             });
     }
+    public addExternalPathToGroup(groupId: string, itemPath: string) {
+        return new Promise((resolve, reject) => {
+
+            let all: StoredResource[] = null;
+            Promise.all([
+                this.get(),
+            ]).then((result) => {
+                all = result[0];
+
+                const groupContents = all.filter((i) => i.parent_id === groupId);
+                const hasPath = groupContents.filter((i) => i.type !== ResourceType.Group && i.name === itemPath);
+
+                if (hasPath.length > 0) {
+                    resolve();
+                    return;
+                }
+
+                return this.identify(itemPath);
+
+            }).then((t) => {
+
+                if (t == null) {
+                    vscode.window.showErrorMessage(`Unable to identify type of ${itemPath}`);
+                    reject("identify_error");
+                    return;
+                }
+
+                const o = this.createStoredResource(groupId, itemPath, t, true);
+                all.push(o);
+                return workspace.save("root", all);
+
+            }).then(() => {
+                resolve();
+            }).catch((e) => {
+                reject(e);
+            });
+
+        });
+    }
     public addPathToGroup(groupId: string, itemPath: string) {
         return new Promise((resolve, reject) => {
 
@@ -166,7 +200,13 @@ export class Favorites {
 
             }).then((t) => {
 
-                const o = this.createResource(groupId, itemPath, t);
+                if (t == null) {
+                    vscode.window.showErrorMessage(`Unable to identify type of ${itemPath}`);
+                    reject("identify_error");
+                    return;
+                }
+
+                const o = this.createStoredResource(groupId, itemPath, t);
                 all.push(o);
                 return workspace.save("root", all);
 
@@ -175,44 +215,6 @@ export class Favorites {
             }).catch((e) => {
                 reject(e);
             });
-
-        });
-    }
-    public removePathFromGroup(groupName: string, itemPath: string) {
-        return new Promise((resolve, reject) => {
-
-            Promise.all([
-                this.get(),
-                this.hasGroup(groupName),
-            ])
-                .then((result) => {
-                    const all = result[0];
-                    const has = result[1];
-
-                    if (!has) {
-                        resolve();
-                        return;
-                    }
-                    const rPath = itemPath;
-                    const index = all.findIndex((i) => i.name === groupName && i.type === ResourceType.Group);
-                    const oPaths = all[index].contents ? all[index].contents : [];
-
-                    if (!oPaths.find((i) => i === rPath)) {
-                        resolve();
-                        return;
-                    }
-
-                    const newPaths = oPaths.filter((i) => i !== rPath);
-
-                    all[index].contents = newPaths.filter((i) => i.trim() !== "");
-
-                    return workspace.save("root", all);
-
-                }).then(() => {
-                    resolve();
-                }).catch((e) => {
-                    reject(e);
-                });
 
         });
     }
@@ -268,7 +270,7 @@ export class Favorites {
             ]).then((result) => {
                 const all = result[0];
 
-                const o = this.createResource(parent_id, name, ResourceType.Group);
+                const o = this.createStoredResource(parent_id, name, ResourceType.Group);
                 const newList: StoredResource[] = all.concat([o]);
 
                 return workspace.save("root", newList);
@@ -316,58 +318,58 @@ export class Favorites {
     public get(): Promise<StoredResource[]> {
         return new Promise((resolve, reject) => {
             const resources = workspace.get("root") as StoredResource[];
-            const shouldAddId: boolean = resources.find((i) => i.id == null) == null ? false : true;
-            const shouldConvertPath: boolean = resources.filter((i) => {
-                return (i.type === ResourceType.Directory || i.type === ResourceType.File) && i.workspacePath == null;
-            }).length === 0 ? false : true;
+            // const shouldAddId: boolean = resources.find((i) => i.id == null) == null ? false : true;
+            // const shouldConvertPath: boolean = resources.filter((i) => {
+            //     return (i.type === ResourceType.Directory || i.type === ResourceType.File) && i.workspacePath == null;
+            // }).length === 0 ? false : true;
 
-            if (shouldAddId === false && shouldConvertPath === false) {
-                this.stateList.next(resources);
-                resolve(resources);
-                return;
-            }
+            // if (shouldAddId === false && shouldConvertPath === false) {
+            this.stateList.next(resources);
+            resolve(resources);
+            return;
+            // }
 
-            const proms: Array<Promise<any>> = [];
-            if (shouldAddId) {
-                resources.forEach((e, i) => {
-                    resources[i].id = this.generateId();
-                    if (e.contents != null && e.contents.length > 0) {
-                        e.contents.forEach((c, ci) => {
+            // const proms: Array<Promise<any>> = [];
+            // if (shouldAddId) {
+            //     resources.forEach((e, i) => {
+            //         resources[i].id = this.generateId();
+            //         if (e.contents != null && e.contents.length > 0) {
+            //             e.contents.forEach((c, ci) => {
 
-                            proms.push(this.identify(c)
-                                .then((t) => {
-                                    const ce: StoredResource = {
-                                        id: this.generateId(),
-                                        name: c,
-                                        parent_id: resources[i].id,
-                                        type: t,
-                                    };
-                                    resources.push(ce);
+            //                 proms.push(this.identify(c)
+            //                     .then((t) => {
+            //                         const ce: StoredResource = {
+            //                             id: this.generateId(),
+            //                             name: c,
+            //                             parent_id: resources[i].id,
+            //                             type: t,
+            //                         };
+            //                         resources.push(ce);
 
-                                }));
-                        });
+            //                     }));
+            //             });
 
-                        delete resources[i].contents;
-                    }
-                });
-            }
-            if (shouldConvertPath) {
-                resources.forEach((e, i) => {
-                    if (e.type === ResourceType.Directory || e.type === ResourceType.File) {
-                        resources[i].workspacePath = workspace.pathForWorkspace(e.name);
-                    }
-                });
-            }
+            //             delete resources[i].contents;
+            //         }
+            //     });
+            // }
+            // if (shouldConvertPath) {
+            //     resources.forEach((e, i) => {
+            //         if (e.type === ResourceType.Directory || e.type === ResourceType.File) {
+            //             resources[i].workspacePath = workspace.pathForWorkspace(e.name);
+            //         }
+            //     });
+            // }
 
-            Promise.all(proms)
-                .then(() => {
+            // Promise.all(proms)
+            //     .then(() => {
 
-                    this.save(resources);
-                    resolve(resources);
+            //         this.save(resources);
+            //         resolve(resources);
 
-                }).catch((error) => {
-                    console.log(error);
-                });
+            //     }).catch((error) => {
+            //         console.log(error);
+            //     });
 
         });
     }
@@ -544,43 +546,85 @@ export class Favorites {
         let o: ViewItem = null;
         switch (i.type) {
             case ResourceType.File:
-                const fPath = workspace.pathAbsolute(i.workspacePath);
-                const fUri = workspace.pathAsUri(fPath);
-                o = new ViewItem(
-                    (i.label != null) ? i.label : path.basename(i.workspacePath),
-                    vscode.TreeItemCollapsibleState.None,
-                    fPath,
-                    "FAVORITE_FILE",
-                    fPath,
-                    i.type,
-                    null, // NO ICON
-                    {
-                        command: "vscode.open",
-                        title: "",
-                        arguments: [fUri, { preview: enablePreview }],
-                    },
-                    i.id,
-                    i.parent_id,
-                    (i.label != null) ? `[alias] ${path.basename(i.name)}` : null,
-                );
+
+                if (i.fsPath == null) {
+
+                    const fPath = workspace.pathAbsolute(i.workspacePath);
+                    const fUri = workspace.pathAsUri(fPath);
+                    o = new ViewItem(
+                        (i.label != null) ? i.label : path.basename(i.workspacePath),
+                        vscode.TreeItemCollapsibleState.None,
+                        fPath,
+                        "FAVORITE_FILE",
+                        fPath,
+                        i.type,
+                        null, // NO ICON
+                        {
+                            command: "vscode.open",
+                            title: "",
+                            arguments: [fUri, { preview: enablePreview }],
+                        },
+                        i.id,
+                        i.parent_id,
+                        (i.label != null) ? `[alias] ${path.basename(i.name)}` : null,
+                    );
+                } else {
+                    const fPath = i.fsPath;
+                    const fUri = vscode.Uri.parse(`file://${workspace.pathResolve(fPath)}`);
+                    o = new ViewItem(
+                        (i.label != null) ? i.label : path.basename(fPath),
+                        vscode.TreeItemCollapsibleState.None,
+                        fPath,
+                        "FAVORITE_FILE",
+                        fPath,
+                        i.type,
+                        null, // NO ICON
+                        {
+                            command: "vscode.open",
+                            title: "",
+                            arguments: [fUri, { preview: enablePreview }],
+                        },
+                        i.id,
+                        i.parent_id,
+                        (i.label != null) ? `[alias] ${path.basename(i.name)}` : null,
+                    );
+                }
 
                 break;
             case ResourceType.Directory:
-                const dPath = workspace.pathAbsolute(i.workspacePath);
-                o = new ViewItem(
-                    (i.label != null) ? i.label : path.basename(dPath),
-                    vscode.TreeItemCollapsibleState.Collapsed,
-                    dPath,
-                    "FAVORITE_DIRECTORY",
-                    dPath,
-                    i.type,
-                    null,
-                    null,
-                    i.id,
-                    i.parent_id,
-                    (i.label != null) ? `[alias] ${i.name}` : null,
-                )
-                    ;
+
+                if (i.fsPath == null) {
+                    const wPath = workspace.pathAbsolute(i.workspacePath);
+                    o = new ViewItem(
+                        (i.label != null) ? i.label : path.basename(wPath),
+                        vscode.TreeItemCollapsibleState.Collapsed,
+                        wPath,
+                        "FAVORITE_DIRECTORY",
+                        wPath,
+                        i.type,
+                        null,
+                        null,
+                        i.id,
+                        i.parent_id,
+                        (i.label != null) ? `[alias] ${i.name}` : null,
+                    );
+
+                } else {
+                    const fsPath = i.fsPath;
+                    o = new ViewItem(
+                        (i.label != null) ? i.label : path.basename(fsPath),
+                        vscode.TreeItemCollapsibleState.Collapsed,
+                        fsPath,
+                        "FAVORITE_DIRECTORY",
+                        fsPath,
+                        i.type,
+                        null,
+                        null,
+                        i.id,
+                        i.parent_id,
+                        (i.label != null) ? `[alias] ${i.name}` : null,
+                    );
+                }
 
                 break;
             case ResourceType.Group:
@@ -653,13 +697,58 @@ export class Favorites {
 
         });
     }
-    private createResource(parent_id: string, name: string, type: ResourceType): StoredResource {
-        const o: StoredResource = {
-            type,
-            name,
-            parent_id,
-            id: this.generateId(),
-        };
+    private createStoredResource(parent_id: string, name: string, type: ResourceType, external: boolean = false): StoredResource {
+        let o: StoredResource = null;
+        switch (type) {
+            case ResourceType.Group:
+                o = {
+                    type,
+                    name,
+                    parent_id,
+                    id: this.generateId(),
+                };
+                break;
+            case ResourceType.Directory:
+                if (external) {
+                    o = {
+                        type,
+                        name,
+                        parent_id,
+                        fsPath: name,
+                        id: this.generateId(),
+                    };
+                } else {
+                    o = {
+                        type,
+                        name,
+                        parent_id,
+                        workspacePath: workspace.pathForWorkspace(name),
+                        id: this.generateId(),
+                    };
+
+                }
+                break;
+            case ResourceType.File:
+                if (external) {
+                    o = {
+                        type,
+                        name,
+                        parent_id,
+                        fsPath: name,
+                        id: this.generateId(),
+                    };
+                } else {
+                    o = {
+                        type,
+                        name,
+                        parent_id,
+                        workspacePath: workspace.pathForWorkspace(name),
+                        id: this.generateId(),
+                    };
+
+                }
+                break;
+        }
 
         return o;
     }
