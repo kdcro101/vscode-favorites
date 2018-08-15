@@ -1,3 +1,4 @@
+import { valuesIn } from "lodash-es";
 import * as vscode from "vscode";
 import { QuickPickItem } from "vscode";
 import { Clipboard } from "../class/clipboard";
@@ -6,7 +7,7 @@ import { FilesystemUtils } from "../class/filesystem";
 import { GroupColor } from "../class/group-color";
 import { ViewItem } from "../class/view-item";
 import workspace from "../class/workspace";
-import { TreeProviders } from "../types/index";
+import { ResourceType, TreeProviders } from "../types/index";
 
 export class Commands {
     private clipboard = new Clipboard();
@@ -22,6 +23,7 @@ export class Commands {
         this.filesystem = new FilesystemUtils(favorites);
         this.groupColor = new GroupColor(favorites, context);
 
+        context.subscriptions.push(this.addExternal());
         context.subscriptions.push(this.addToFavorites());
         context.subscriptions.push(this.addToFavoritesGroup());
         context.subscriptions.push(this.deleteFavorite());
@@ -33,7 +35,6 @@ export class Commands {
         context.subscriptions.push(this.deleteGroup());
         context.subscriptions.push(this.addCurrentFile());
         context.subscriptions.push(this.deleteAllFavorites());
-        context.subscriptions.push(this.groupSubgroupAdd());
         context.subscriptions.push(this.groupRename());
         context.subscriptions.push(this.aliasModify());
         context.subscriptions.push(this.aliasRemove());
@@ -47,6 +48,40 @@ export class Commands {
         context.subscriptions.push(this.fsDelete());
         context.subscriptions.push(this.fsRename());
         context.subscriptions.push(this.groupColorSet());
+    }
+    public addExternal = () => {
+        //
+        return vscode.commands.registerCommand("favorites.addExternal",
+            (value: ViewItem) => {
+                console.log("favorites.addExternal");
+                console.log(value);
+                const shouldExit = (value == null || value.contextValue === "FAVORITE_GROUP") ? false : true;
+
+                if (shouldExit) {
+                    return;
+                }
+
+                const parentId = value == null ? null : value.id;
+
+                Promise.all([vscode.window.showInputBox({
+                    prompt: "New external resource",
+                    placeHolder: "Enter file or directory path",
+                })]).then((args) => {
+
+                    const pathToAdd = args[0];
+
+                    if (pathToAdd == null || pathToAdd.trim() === "") {
+                        // vscode.window.showWarningMessage("Invalid path");
+                        return;
+                    }
+
+                    return this.favorites.addExternalPathToGroup(parentId, pathToAdd);
+
+                }).catch((e) => {
+                    vscode.window.showErrorMessage(e);
+                });
+
+            });
     }
 
     public groupColorSet = () => {
@@ -280,23 +315,6 @@ export class Commands {
             });
 
     }
-    public groupSubgroupAdd = () => {
-        return vscode.commands.registerCommand("favorites.group.subgroup.create",
-            (value: ViewItem) => {
-
-                vscode.window.showInputBox({ prompt: "Enter subgroup name" })
-                    .then((name) => {
-                        console.log(name);
-                        if (!name || name.trim().length === 0) {
-                            return;
-                        }
-                        const tname = name.trim();
-                        this.favorites.addGroup(value.id, tname);
-
-                    });
-
-            });
-    }
     addToFavorites = () => {
         return vscode.commands.registerCommand("favorites.addToFavorites", (fileUri: vscode.Uri, list: any[]) => {
 
@@ -436,7 +454,7 @@ export class Commands {
         });
     }
     createGroup = () => {
-        return vscode.commands.registerCommand("favorites.group.create", () => {
+        return vscode.commands.registerCommand("favorites.group.create", (value: ViewItem) => {
 
             vscode.window.showInputBox({ prompt: "Enter group name" }).then((name) => {
                 console.log(name);
@@ -444,7 +462,8 @@ export class Commands {
                     return;
                 }
                 const tname = name.trim();
-                this.favorites.addGroup(null, tname);
+                const parentId = value == null ? null : value.id;
+                this.favorites.addGroup(parentId, tname);
 
             });
         });
