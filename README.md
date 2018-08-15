@@ -12,7 +12,14 @@ Time saver for complex projects.
 
 ## Features
 
-### NEW 2018.08.08
+### NEW 2018/08/15
+
+External resources (files/directories out of workspace) can be added to favorites
+- to add external resource to group, right click on group item and select `Add external resource`, when input box pops out, enter file or directory path
+- to add external resource to root level of favorites, right click on empty area of favorites explorer and select `Add external resource`, when input box pops out, enter file or directory path
+
+
+### NEW 2018/08/08
 
 when active editor changes, file gets revealed in "favorites" view (if visible) 
 
