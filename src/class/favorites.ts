@@ -570,7 +570,7 @@ export class Favorites {
                     );
                 } else {
                     const fPath = i.fsPath;
-                    const fUri = vscode.Uri.parse(`file://${workspace.pathResolve(fPath)}`);
+                    const fUri = vscode.Uri.file(fPath);
                     o = new ViewItem(
                         (i.label != null) ? i.label : path.basename(fPath),
                         vscode.TreeItemCollapsibleState.None,
