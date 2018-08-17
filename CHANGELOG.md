@@ -1,3 +1,7 @@
+## 1.7.1 | 2018/08/16
+
+- file uri fix for external resources
+
 ## 1.7.0 | 2018/08/15
 
 - minor bugs
