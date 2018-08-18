@@ -215,7 +215,12 @@
                 },
                 {
                     "command": "favorites.group.create",
-                    "when": "viewItem != FAVORITE_GROUP && viewItem != FAVORITE_DIRECTORY && viewItem != FAVORITE_FILE && viewItem != FS_FILE && viewItem != FS_DIRECTORY",
+                    "when": "view == favoritesActivity && viewItem != FAVORITE_GROUP && viewItem != FAVORITE_DIRECTORY && viewItem != FAVORITE_FILE && viewItem != FS_FILE && viewItem != FS_DIRECTORY",
+                    "group": "1_modification"
+                },
+                {
+                    "command": "favorites.group.create",
+                    "when": "view == favorites && viewItem != FAVORITE_GROUP && viewItem != FAVORITE_DIRECTORY && viewItem != FAVORITE_FILE && viewItem != FS_FILE && viewItem != FS_DIRECTORY",
                     "group": "1_modification"
                 },
                 {
@@ -350,7 +355,12 @@
                 },
                 {
                     "command": "favorites.addExternal",
-                    "when": "viewItem != FAVORITE_DIRECTORY && viewItem != FAVORITE_FILE && viewItem != FS_FILE && viewItem != FS_DIRECTORY",
+                    "when": "view == favoritesActivity && viewItem != FAVORITE_DIRECTORY && viewItem != FAVORITE_FILE && viewItem != FS_FILE && viewItem != FS_DIRECTORY",
+                    "group": "7_modification"
+                },
+                {
+                    "command": "favorites.addExternal",
+                    "when": "view == favorites && viewItem != FAVORITE_DIRECTORY && viewItem != FAVORITE_FILE && viewItem != FS_FILE && viewItem != FS_DIRECTORY",
                     "group": "7_modification"
                 }
             ]
