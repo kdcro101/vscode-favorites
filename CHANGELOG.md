@@ -1,3 +1,7 @@
+## 1.7.2 | 2018/08/18
+
+- code cleanup
+
 ## 1.7.1 | 2018/08/16
 
 - file uri fix for external resources
