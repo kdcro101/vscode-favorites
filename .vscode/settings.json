@@ -1,6 +1,5 @@
 // Place your settings in this file to overwrite default and user settings.
 {
-    "favorites.resources": [],
     "favorites.sortDirection": "DESC",
     "files.exclude": {
         "**/.git": true,
@@ -13,8 +12,7 @@
         ".vscode": true
     },
     "favorites.groupsFirst": true,
-    "favorites.root": [
-        {
+    "favorites.root": [{
             "type": "Group",
             "name": "www",
             "parent_id": null,
@@ -32,5 +30,6 @@
     "redis-console.port": 6379,
     "redis-console.password": "",
     "redis-console.hostIpFamily": 4,
-    "typescript.navigator.active": true
+    "typescript.referencesCodeLens.enabled": true
+
 }

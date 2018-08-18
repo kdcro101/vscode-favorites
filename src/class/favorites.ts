@@ -11,7 +11,6 @@ import workspace from "./workspace";
 
 export class Favorites {
     public stateList = new ReplaySubject<StoredResource[]>(1);
-    public eventRefresh = new Subject<void>();
 
     constructor(private context: vscode.ExtensionContext) { }
 
@@ -283,93 +282,14 @@ export class Favorites {
 
         });
     }
-    public removeGroup(name: string) {
-        return new Promise((resolve, reject) => {
-
-            this.get()
-                .then((all) => {
-
-                    const index = all.findIndex((i) => {
-                        return i.name === name && i.type === ResourceType.Group;
-                    });
-
-                    if (index < 0) {
-                        resolve();
-                        return;
-                    }
-
-                    all.splice(index, 1);
-
-                    workspace.save("root", all)
-                        .then(() => {
-                            resolve();
-                        }).catch((e) => {
-                            reject(e);
-                        });
-
-                })
-                .catch((e) => {
-                    reject(e);
-                });
-
-        });
-    }
 
     public get(): Promise<StoredResource[]> {
         return new Promise((resolve, reject) => {
             const resources = workspace.get("root") as StoredResource[];
-            // const shouldAddId: boolean = resources.find((i) => i.id == null) == null ? false : true;
-            // const shouldConvertPath: boolean = resources.filter((i) => {
-            //     return (i.type === ResourceType.Directory || i.type === ResourceType.File) && i.workspacePath == null;
-            // }).length === 0 ? false : true;
 
-            // if (shouldAddId === false && shouldConvertPath === false) {
             this.stateList.next(resources);
             resolve(resources);
             return;
-            // }
-
-            // const proms: Array<Promise<any>> = [];
-            // if (shouldAddId) {
-            //     resources.forEach((e, i) => {
-            //         resources[i].id = this.generateId();
-            //         if (e.contents != null && e.contents.length > 0) {
-            //             e.contents.forEach((c, ci) => {
-
-            //                 proms.push(this.identify(c)
-            //                     .then((t) => {
-            //                         const ce: StoredResource = {
-            //                             id: this.generateId(),
-            //                             name: c,
-            //                             parent_id: resources[i].id,
-            //                             type: t,
-            //                         };
-            //                         resources.push(ce);
-
-            //                     }));
-            //             });
-
-            //             delete resources[i].contents;
-            //         }
-            //     });
-            // }
-            // if (shouldConvertPath) {
-            //     resources.forEach((e, i) => {
-            //         if (e.type === ResourceType.Directory || e.type === ResourceType.File) {
-            //             resources[i].workspacePath = workspace.pathForWorkspace(e.name);
-            //         }
-            //     });
-            // }
-
-            // Promise.all(proms)
-            //     .then(() => {
-
-            //         this.save(resources);
-            //         resolve(resources);
-
-            //     }).catch((error) => {
-            //         console.log(error);
-            //     });
 
         });
     }
@@ -655,48 +575,7 @@ export class Favorites {
         // o.parentViewItem = parentItem;
         return o;
     }
-    private hasPath(itemPath): Promise<boolean> {
-        return new Promise((resolve, reject) => {
 
-            this.get()
-                .then((all) => {
-                    const item = all
-                        .find((i) => i.name === itemPath && (i.type === ResourceType.File || i.type === ResourceType.Directory));
-
-                    if (item) {
-                        resolve(true);
-                    } else {
-                        resolve(false);
-                    }
-
-                })
-                .catch((e) => {
-                    reject(e);
-                });
-
-        });
-    }
-    private hasGroup(name: string): Promise<boolean> {
-        return new Promise((resolve, reject) => {
-
-            this.get()
-                .then((all) => {
-                    const item = all
-                        .find((i) => i.name === name && i.type === ResourceType.Group);
-
-                    if (item) {
-                        resolve(true);
-                    } else {
-                        resolve(false);
-                    }
-
-                })
-                .catch((e) => {
-                    reject(e);
-                });
-
-        });
-    }
     private createStoredResource(parent_id: string, name: string, type: ResourceType, external: boolean = false): StoredResource {
         let o: StoredResource = null;
         switch (type) {

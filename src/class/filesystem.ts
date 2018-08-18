@@ -3,7 +3,6 @@ import * as path from "path";
 import * as vscode from "vscode";
 import { Favorites } from "./favorites";
 import { ViewItem } from "./view-item";
-import workspace from "./workspace";
 
 export class FilesystemUtils {
     constructor(private favorites: Favorites) {
