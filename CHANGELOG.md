@@ -1,3 +1,7 @@
+## 1.7.3 | 2018/08/21
+
+- view/item context menu fix
+
 ## 1.7.2 | 2018/08/18
 
 - code cleanup
@@ -10,7 +14,7 @@
 
 - minor bugs
 - create group in root from context menu (right click on empty area)
-- external resources (files/directories out of workspace) can be added 
+- external resources (files/directories out of workspace) can be added
 - minor context menu reordering
 
 ## 1.6.0 | 2018/08/08
@@ -109,7 +113,7 @@
 
 ## 0.1.3 | 2018/03/21
 
-- reduce extension size 
+- reduce extension size
 
 ## 0.1.2 | 2018/03/20
 
@@ -127,5 +131,5 @@
 ## 0.0.5 | 2018/03/19
 
 - initial commit
-- collapse function 
+- collapse function
 - fixed sorting
