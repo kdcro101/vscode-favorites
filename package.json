@@ -2,7 +2,7 @@
     "name": "favorites",
     "displayName": "Favorites",
     "description": "Add files and directories to favorites. You can create groups of directories and files. Time saver for complex projects.",
-    "version": "1.7.3",
+    "version": "1.8.0",
     "categories": [
         "Other"
     ],
@@ -55,6 +55,11 @@
             "type": "object",
             "title": "Favorite-items configuration",
             "properties": {
+                "favorites.useTrash": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Move to trash when resource gets deleted"
+                },
                 "favorites.root": {
                     "type": "array",
                     "default": [],
@@ -513,6 +518,7 @@
         "md5": "^2.2.1",
         "nconf": "^0.10.0",
         "rxjs": "^6.2.2",
+        "trash": "^4.3.0",
         "url-parse": "^1.4.3"
     }
 }
