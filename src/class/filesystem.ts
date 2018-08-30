@@ -4,6 +4,11 @@ import * as vscode from "vscode";
 import { Favorites } from "./favorites";
 import { ViewItem } from "./view-item";
 
+import { from } from "rxjs";
+import { catchError, concatMap } from "rxjs/operators";
+import trash = require("trash");
+import workspace from "./workspace";
+
 export class FilesystemUtils {
     constructor(private favorites: Favorites) {
 
@@ -55,15 +60,13 @@ export class FilesystemUtils {
     }
     public delete(item: ViewItem) {
         return new Promise((resolve, reject) => {
-
-            const isFav = item.isFavorite;
-
+            const useTrash = workspace.get("useTrash") as boolean;
             const aPath = item.value;
             const base = path.basename(aPath);
-            const dir = path.dirname(aPath);
+
             vscode.window.showQuickPick(
                 ["Yes", "No"], {
-                    placeHolder: `Are you sure you want to delete '${base}'`,
+                    placeHolder: `Are you sure you want to delete '${base}' ?`,
                 },
             ).then((val) => {
                 if (val == null || val.toLocaleLowerCase() === "no") {
@@ -71,22 +74,77 @@ export class FilesystemUtils {
                     return;
                 }
 
-                fs.remove(aPath)
-                    .then((result) => {
-                        return isFav ? this.favorites.removeResource(item.id) : Promise.resolve();
-                    })
-                    .then((result) => {
-                        resolve();
-                    })
-                    .catch((e) => {
-                        vscode.window.showErrorMessage(`Error deleting ${base}`);
-                        reject(e);
-                    });
+                const p = useTrash ? this.deleteToTrash(item) : this.deletePermanently(item);
+
+                p.then((result) => {
+                    resolve();
+                }).catch((e) => {
+                    vscode.window.showErrorMessage(`Error deleting ${base}`);
+                    reject(e);
+                });
 
             });
         });
     }
+    public deletePermanently(item: ViewItem) {
+        return new Promise((resolve, reject) => {
 
+            const isFav = item.isFavorite;
+            const aPath = item.value;
+            const base = path.basename(aPath);
+
+            fs.remove(aPath).then((result) => {
+                return isFav ? this.favorites.removeResource(item.id) : Promise.resolve();
+            }).then((result) => {
+                resolve();
+            }).catch((e) => {
+                vscode.window.showErrorMessage(`Error deleting ${base}`);
+                reject(e);
+            });
+
+        });
+
+    }
+    public deleteToTrash(item: ViewItem): Promise<boolean> {
+        return new Promise((resolve, reject) => {
+            const isFav = item.isFavorite;
+            const resourcePath = item.value;
+            const base = path.basename(resourcePath);
+
+            from(trash([resourcePath])).pipe(
+                concatMap(() => {
+                    return isFav ? Promise.resolve(this.favorites.removeResource(item.id)) : Promise.resolve();
+                }),
+            ).subscribe(() => {
+                resolve();
+            }, (e) => {
+                vscode.window.showQuickPick(
+                    ["Yes", "No"],
+                    {
+                        placeHolder: `Trash is not accessible. Do you want to permanently delete '${base}' ?`,
+                    },
+                ).then((response) => {
+
+                    if (response == null || response === "No") {
+                        resolve();
+                        return;
+                    }
+                    fs.remove(resourcePath)
+                        .then(() => {
+                            return isFav ? Promise.resolve(this.favorites.removeResource(item.id)) : Promise.resolve();
+                        })
+                        .then(() => {
+                            resolve();
+                        }).catch((fsError) => {
+                            reject(fsError);
+                        });
+
+                });
+
+            });
+
+        });
+    }
     public rename(item: ViewItem) {
         return new Promise((resolve, reject) => {
             const isFav = item.isFavorite;

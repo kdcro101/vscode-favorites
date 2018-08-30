@@ -1,3 +1,7 @@
+## 1.8.0 | 2018/08/30
+
+- Trash support
+
 ## 1.7.3 | 2018/08/21
 
 - view/item context menu fix
