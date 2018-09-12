@@ -4,32 +4,12 @@
 [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/kdcro101.favorites.svg)](https://marketplace.visualstudio.com/items?itemName=kdcro101.favorites)
 [![Rating](https://vsmarketplacebadge.apphb.com/rating-short/kdcro101.favorites.svg)](https://marketplace.visualstudio.com/items?itemName=kdcro101.favorites)
 
-<!-- [![Visual Studio Marketplace](https://img.shields.io/vscode-marketplace/v/kdcro101.favorites.svg)](https://marketplace.visualstudio.com/items?itemName=kdcro101.favorites)
-[![Installs](https://img.shields.io/vscode-marketplace/d/kdcro101.favorites.svg)](https://marketplace.visualstudio.com/items?itemName=kdcro101.favorites)
-[![Rating](https://img.shields.io/vscode-marketplace/r/kdcro101.favorites.svg)](https://marketplace.visualstudio.com/items?itemName=kdcro101.favorites) -->
-
 
 Add files and directories to favorites. You can create groups (and subgroups) of favorite items with files and folders.
 Time saver for complex projects.
 
 
 ## Features
-
-### NEW 2018/08/15
-
-External resources (files/directories out of workspace) can be added to favorites
-- to add external resource to group, right click on group item and select `Add external resource`, when input box pops out, enter file or directory path
-- to add external resource to root level of favorites, right click on empty area of favorites explorer and select `Add external resource`, when input box pops out, enter file or directory path
-
-
-### NEW 2018/08/08
-
-when active editor changes, file gets revealed in "favorites" view (if visible) 
-
- 
-<p align="center">
-   <img  src="https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/operations.jpg" />
-</p>
 
 - group icon color can be changed. Right-click on group in favorites view and select `Group color`.
 - copy / cut / paste operations are available
@@ -41,22 +21,28 @@ when active editor changes, file gets revealed in "favorites" view (if visible)
 - favorite items can have alias (different label)
 - groups can be renamed
 - favorites can be accesed via activity bar
+- external resources (files/directories out of workspace) can be added to favorites
 
 
-
-
+## Adding to favorites
 <p align="center">
    <img  src="https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/adding-favorite.jpg?1213" />
 </p>
 
 - to add file/directory to favorites, right-click item in file explorer and select:
-    - `add to favorites` - to add item to root of favorites tree.
-    - `add to group of favorites` to add item to group of favorites you previously created.
+- `add to favorites` - to add item to root of favorites tree.
+- `add to group of favorites` to add item to group of favorites you previously created.
+ 
+## Operations in Favorites explorer
+
+<p align="center">
+   <img  src="https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/operations.jpg" />
+</p>
+
+ 
 
 
-## Preview
-![](https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/preview-promo.gif)
-
+ 
 ## Install
 
 Open Visual Studio Code press CTRL+p and type or copy and paste:

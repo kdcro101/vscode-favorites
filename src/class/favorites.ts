@@ -191,13 +191,18 @@ export class Favorites {
                 const hasPath = groupContents.filter((i) => i.type !== ResourceType.Group && i.name === itemPath);
 
                 if (hasPath.length > 0) {
-                    resolve();
-                    return;
+                    return Promise.resolve("exists");
                 }
 
                 return this.identify(itemPath);
 
-            }).then((t) => {
+            }).then((t: ResourceType) => {
+
+                if ((t as string) === "exists") {
+                    vscode.window.showWarningMessage(`${itemPath} already in favorites`);
+                    resolve();
+                    return;
+                }
 
                 if (t == null) {
                     vscode.window.showErrorMessage(`Unable to identify type of ${itemPath}`);
