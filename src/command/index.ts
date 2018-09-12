@@ -9,6 +9,8 @@ import { ViewItem } from "../class/view-item";
 import workspace from "../class/workspace";
 import { ResourceType, TreeProviders } from "../types/index";
 
+import * as clipboardy from "clipboardy";
+
 export class Commands {
     private clipboard = new Clipboard();
     private filesystem: FilesystemUtils = null;
@@ -39,6 +41,7 @@ export class Commands {
         context.subscriptions.push(this.aliasModify());
         context.subscriptions.push(this.aliasRemove());
 
+        context.subscriptions.push(this.copyPath());
         context.subscriptions.push(this.fsCopy());
         context.subscriptions.push(this.fsCut());
         context.subscriptions.push(this.fsPaste());
@@ -48,6 +51,18 @@ export class Commands {
         context.subscriptions.push(this.fsDelete());
         context.subscriptions.push(this.fsRename());
         context.subscriptions.push(this.groupColorSet());
+    }
+    public copyPath = () => {
+        return vscode.commands.registerCommand("favorites.copy.path",
+            (value: ViewItem) => {
+                    if (value == null) {
+                        return;
+                    }
+                    const path = value.resourceUri.fsPath;
+                    console.log(path);
+                    clipboardy.writeSync(path);
+
+            });
     }
     public addExternal = () => {
         //

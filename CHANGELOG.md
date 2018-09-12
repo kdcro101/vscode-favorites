@@ -1,3 +1,11 @@
+## 1.9.1 | 2018/09/12
+
+- Fix reporting of "Unable to identify path" when adding file/directory that is already in favorites
+
+## 1.9.0 | 2018/09/08
+
+- Copy Path
+
 ## 1.8.0 | 2018/08/30
 
 - Trash support
