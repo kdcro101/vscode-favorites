@@ -22,7 +22,7 @@ Time saver for complex projects.
     - rename file/directory
     - duplicate file/directory
 - favorite items can have alias (different label)
-- items are accesible via activity bar and, optionally, as File explorer subview (see [Using Favorites explorer section](#using_favorites))
+- items are accesible via activity bar and, optionally, as File explorer subview (see [Using Favorites explorer section](#using))
 
 
 ## Adding to favorites
@@ -35,7 +35,7 @@ Time saver for complex projects.
 - `add to group of favorites` to add item to group of favorites you previously created.
 
  
-##  <a name="using_favorites"></a><a name="user-content-using_favorites"></a> Using Favorites explorer
+##  <a name="using"></a><a name="user-content-using"></a> Using Favorites explorer
 <p align="center">
    <img  src="https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/using.jpg?232321" />
 </p>
