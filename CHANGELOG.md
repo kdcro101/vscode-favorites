@@ -1,3 +1,9 @@
+## 1.9.3 | 2018/09/18
+
+- remove unicode characters from context menu when adding to favorites
+- change activity bar icon
+- README
+
 ## 1.9.2 | 2018/09/15
 
 - change prompt to include `PERMANENTLY` when deleting from file system
