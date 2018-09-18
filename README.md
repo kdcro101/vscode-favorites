@@ -37,7 +37,7 @@ Time saver for complex projects.
  
 ##  <a name="using_favorites"></a><a name="user-content-using_favorites"></a> Using Favorites explorer
 <p align="center">
-   <img  src="https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/using.jpg?2323" />
+   <img  src="https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/using.jpg?232321" />
 </p>
 
  
