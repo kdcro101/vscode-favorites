@@ -2,7 +2,7 @@
     "name": "favorites",
     "displayName": "Favorites",
     "description": "Add files and directories to favorites. Create groups of directories and files. Time saver for complex projects.",
-    "version": "1.9.5",
+    "version": "1.9.6",
     "categories": [
         "Other"
     ],
@@ -15,7 +15,7 @@
     ],
     "publisher": "kdcro101",
     "engines": {
-        "vscode": "^1.25.0"
+        "vscode": "^1.27.0"
     },
     "galleryBanner": {
         "color": "#333333",

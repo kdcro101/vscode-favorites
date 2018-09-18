@@ -1,18 +1,20 @@
 import * as fs from "fs";
-
 import * as _ from "lodash";
-
 import * as path from "path";
-import { ReplaySubject, Subject } from "rxjs";
+import { ReplaySubject } from "rxjs";
 import * as vscode from "vscode";
 import { GroupQuickPick, ResourceType, StoredResource } from "../types/index";
+import { GroupColor } from "./group-color";
 import { ViewItem } from "./view-item";
 import workspace from "./workspace";
 
 export class Favorites {
     public stateList = new ReplaySubject<StoredResource[]>(1);
+    public groupColor: GroupColor;
 
-    constructor(private context: vscode.ExtensionContext) { }
+    constructor(private context: vscode.ExtensionContext) {
+        this.groupColor = new GroupColor(this, context);
+    }
 
     public updateWithPath(id: string, absPath: string): Promise<void> {
         return new Promise((resolve, reject) => {
@@ -554,9 +556,11 @@ export class Favorites {
                 break;
             case ResourceType.Group:
                 const iconLight: string = i.iconColor == null ?
-                    this.context.asAbsolutePath(path.join("images", "group_light.svg")) : i.iconPath;
+                    // this.context.asAbsolutePath(path.join("images", "group_light.svg")) : i.iconPath;
+                    this.context.asAbsolutePath(path.join("images", "group_light.svg")) : this.groupColor.getIconPath(i.iconColor);
                 const iconDark: string = i.iconColor == null ?
-                    this.context.asAbsolutePath(path.join("images", "group_dark.svg")) : i.iconPath;
+                    // this.context.asAbsolutePath(path.join("images", "group_dark.svg")) : i.iconPath;
+                    this.context.asAbsolutePath(path.join("images", "group_dark.svg")) : this.groupColor.getIconPath(i.iconColor);
 
                 o = new ViewItem(
                     i.name,

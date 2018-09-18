@@ -5,7 +5,6 @@ import * as md5 from "md5";
 import * as path from "path";
 import { ExtensionContext } from "vscode";
 import { HtmlColor } from "../types";
-
 import { Favorites } from "./favorites";
 
 const STORAGE_DIRECTORY: string = "svg-generated";
@@ -15,6 +14,20 @@ export class GroupColor {
     public storagePath: string = null;
     constructor(private favorites: Favorites, private context: ExtensionContext) {
         this.storagePath = path.join(this.context.extensionPath, STORAGE_DIRECTORY);
+    }
+    public getIconPath(normalizedColor: string) {
+        const ip = this.iconPath(normalizedColor);
+        const exists = fs.pathExistsSync(ip);
+
+        if (exists) {
+            return ip;
+        }
+        const svg = this.build(normalizedColor);
+        const dir = path.dirname(ip);
+        fs.mkdirpSync(dir);
+        fs.writeFileSync(ip, svg);
+        return ip;
+
     }
     public iconPath(normalizedColor: string): string {
         const h = md5(normalizedColor);
@@ -83,7 +96,6 @@ export class GroupColor {
                 }
 
                 delete all[i].iconColor;
-                delete all[i].iconPath;
 
                 return this.favorites.save(all);
 
@@ -110,7 +122,6 @@ export class GroupColor {
                 }
 
                 all[i].iconColor = normalizedColor;
-                all[i].iconPath = this.iconPath(normalizedColor);
 
                 return this.favorites.save(all);
 

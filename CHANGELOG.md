@@ -1,3 +1,7 @@
+## 1.9.6 | -------
+
+- Colored icons for groups are generated when needed if not exists
+
 ## 1.9.5 | 2018/09/18
 
 - README 
