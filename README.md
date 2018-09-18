@@ -26,7 +26,7 @@ Time saver for complex projects.
 
 ## Adding to favorites
 <p align="center">
-   <img  src="https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/adding.jpg?1213" />
+   <img  src="https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/adding.jpg?12123" />
 </p>
 
 - to add file/directory to favorites, right-click item in file explorer and select:
