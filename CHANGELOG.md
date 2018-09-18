@@ -1,3 +1,8 @@
+## 1.9.4 | 2018/09/18
+
+- README 
+- activity bar icon name change (caching problem - full restart was required)
+
 ## 1.9.3 | 2018/09/18
 
 - remove unicode characters from context menu when adding to favorites
