@@ -22,21 +22,22 @@ Time saver for complex projects.
     - rename file/directory
     - duplicate file/directory
 - favorite items can have alias (different label)
+- items accesible via activity bar or as File explorer subview (see [Using Favorites explorer section](#using_favorites)</em>)
 
 
 ## Adding to favorites
 <p align="center">
-   <img  src="https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/adding.jpg?12123" />
+   <img  src="https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/adding.jpg?121233" />
 </p>
 
 - to add file/directory to favorites, right-click item in file explorer and select:
 - `add to favorites` - to add item to root of favorites tree.
 - `add to group of favorites` to add item to group of favorites you previously created.
- 
-## Using Favorites explorer
 
+ 
+##  <a name="using_favorites"></a><a name="user-content-using_favorites"></a> Using Favorites explorer
 <p align="center">
-   <img  src="https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/using.jpg" />
+   <img  src="https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/using.jpg?2323" />
 </p>
 
  
