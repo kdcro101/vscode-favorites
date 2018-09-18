@@ -42,8 +42,6 @@ export function activate(context: vscode.ExtensionContext) {
         },
     };
 
-    // const view = vscode.window.registerTreeDataProvider("favorites", provider);
-    // const viewActivity = vscode.window.registerTreeDataProvider("favoritesActivity", providerActivity);
     const treeExplorer = vscode.window.createTreeView<ViewItem>("favorites", { treeDataProvider: providers.explorer });
     const treeActivity = vscode.window.createTreeView<ViewItem>("favoritesActivity", { treeDataProvider: providers.activity });
 

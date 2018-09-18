@@ -18,7 +18,7 @@ export interface StoredResource {
     workspacePath?: string;
     fsPath?: string;
     iconColor?: string;
-    iconPath?: string;
+    // iconPath?: string;
 }
 
 export interface FilesystemResource {
