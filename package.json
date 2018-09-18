@@ -2,7 +2,7 @@
     "name": "favorites",
     "displayName": "Favorites",
     "description": "Add files and directories to favorites. Create groups of directories and files. Time saver for complex projects.",
-    "version": "1.9.1",
+    "version": "1.9.3",
     "categories": [
         "Other"
     ],
@@ -425,11 +425,11 @@
             },
             {
                 "command": "favorites.addToFavorites",
-                "title": "♥ Add to favorites"
+                "title": "Favorites: Add to favorites"
             },
             {
                 "command": "favorites.addToFavoritesGroup",
-                "title": "♥ Add to group of favorites"
+                "title": "Favorites: Add to group of favorites"
             },
             {
                 "command": "favorites.deleteFavorite",

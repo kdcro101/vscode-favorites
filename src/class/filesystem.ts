@@ -66,7 +66,7 @@ export class FilesystemUtils {
 
             vscode.window.showQuickPick(
                 ["Yes", "No"], {
-                    placeHolder: `Are you sure you want to delete '${base}' ?`,
+                    placeHolder: `Are you sure you want to PERMANENTLY delete '${base}' ?`,
                 },
             ).then((val) => {
                 if (val == null || val.toLocaleLowerCase() === "no") {

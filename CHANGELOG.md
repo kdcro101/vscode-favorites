@@ -1,3 +1,7 @@
+## 1.9.2 | 2018/09/15
+
+- change prompt to include `PERMANENTLY` when deleting from file system
+
 ## 1.9.1 | 2018/09/12
 
 - Fix reporting of "Unable to identify path" when adding file/directory that is already in favorites
