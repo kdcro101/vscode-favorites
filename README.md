@@ -22,7 +22,7 @@ Time saver for complex projects.
     - rename file/directory
     - duplicate file/directory
 - favorite items can have alias (different label)
-- items are accesible via activity bar or/and as File explorer subview (see [Using Favorites explorer section](#using_favorites)</em>)
+- items are accesible via activity bar and, optionally, as File explorer subview (see [Using Favorites explorer section](#using_favorites)</em>)
 
 
 ## Adding to favorites
