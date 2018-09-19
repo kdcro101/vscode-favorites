@@ -1,11 +1,11 @@
-## 1.9.6 | -------
+## 1.9.6 | 2018/09/19
 
 - Colored icons for groups are generated when needed if not exists
 
 ## 1.9.5 | 2018/09/18
 
-- README 
 - activity bar icon name change (caching problem - full restart was required)
+- README 
 
 ## 1.9.3 | 2018/09/18
 
