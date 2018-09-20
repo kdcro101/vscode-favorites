@@ -7,7 +7,6 @@ import workspace from "./class/workspace";
 import { Commands } from "./command";
 import { TreeProviders } from "./types";
 
-declare var global: any;
 export function activate(context: vscode.ExtensionContext) {
 
     const configSort = workspace.get("sortDirection") as string;
@@ -19,12 +18,6 @@ export function activate(context: vscode.ExtensionContext) {
     // secure defaults...
     workspace.save("sortDirection", sort);
     workspace.save("groupsFirst", groupsFirst);
-
-    global.vscode = vscode;
-    global.commands = [];
-
-    vscode.commands.getCommands(false)
-        .then((l) => global.commands = l);
 
     const favorites = new Favorites(context);
 
@@ -58,13 +51,8 @@ export function activate(context: vscode.ExtensionContext) {
         providers.refresh();
     });
 
-    setTimeout(() => {
-        console.log(`favorites: ${managerExplorer.visible}`);
-        console.log(`favoritesActivity: ${managerActivity.visible}`);
-    }, 3000);
-
 }
 
 export function deactivate() {
-    console.log("deactivating kdcro101.favorites");
+
 }

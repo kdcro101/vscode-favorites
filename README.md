@@ -15,7 +15,7 @@ Time saver for complex projects.
 - add external resources (files or directories out of workspace)
 - organize favorites in groups and subgroups (nesting not limited)
 - group icons can have their colors changed
-- basic filesystem operations within Favorites explorer:
+- basic file system operations within Favorites explorer:
     - copy/cut -> paste
     - create file
     - delete file/directory
