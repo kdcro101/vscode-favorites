@@ -1,3 +1,8 @@
+## 1.9.7 | 2018/09/25
+
+- favorites.useTrash -> README
+- remove obsolete code
+
 ## 1.9.6 | 2018/09/19
 
 - Colored icons for groups are generated when needed if not exists

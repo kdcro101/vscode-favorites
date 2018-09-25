@@ -1,9 +1,8 @@
 import * as fs from "fs";
 import * as path from "path";
 import * as vscode from "vscode";
-
 import { ResourceType } from "../types";
-import { FilesystemResource, StoredResource } from "../types/index";
+import { FilesystemResource } from "../types/index";
 import { Favorites } from "./favorites";
 import { ViewItem } from "./view-item";
 import workspace from "./workspace";

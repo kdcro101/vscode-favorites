@@ -11,7 +11,6 @@ export class TreeViewManager {
     public visible: boolean = false;
     public activeEditor: vscode.TextEditor = null;
     private eventVisibility = new Subject<boolean>();
-    private eventReveal = new Subject<string>();
     private eventActiveEditor = new Subject<vscode.TextEditor>();
 
     constructor(

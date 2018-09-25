@@ -1,13 +1,13 @@
 import * as fs from "fs-extra";
 import * as path from "path";
+import { from } from "rxjs";
+import { concatMap } from "rxjs/operators";
 import * as vscode from "vscode";
 import { Favorites } from "./favorites";
 import { ViewItem } from "./view-item";
-
-import { from } from "rxjs";
-import { catchError, concatMap } from "rxjs/operators";
-import trash = require("trash");
 import workspace from "./workspace";
+
+import trash = require("trash");
 
 export class FilesystemUtils {
     constructor(private favorites: Favorites) {
