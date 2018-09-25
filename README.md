@@ -31,8 +31,8 @@ Time saver for complex projects.
 </p>
 
 - to add file or directory to favorites, right-click item in ***File explorer*** and select:
-- **add to favorites** - to add item to root of favorites tree.
-- **add to group of favorites** to add item to group of favorites you previously created.
+- `add to favorites` - to add item to root of favorites tree.
+- `add to group of favorites` - to add item to group of favorites you previously created.
 
  
 ##  <a name="using"></a><a name="user-content-using"></a> Using Favorites explorer
@@ -40,7 +40,7 @@ Time saver for complex projects.
    <img  src="https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/using.jpg?232321" />
 </p>
 
-you can turn off subview in ***File explorer*** by clicking on it header and deselecting it.
+you can turn off subview in ***File explorer*** by clicking on its header and deselecting it.
  
 
 ## Install
