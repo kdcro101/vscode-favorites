@@ -1,4 +1,4 @@
-import { valuesIn } from "lodash-es";
+import * as clipboardy from "clipboardy";
 import * as vscode from "vscode";
 import { QuickPickItem } from "vscode";
 import { Clipboard } from "../class/clipboard";
@@ -7,9 +7,7 @@ import { FilesystemUtils } from "../class/filesystem";
 import { GroupColor } from "../class/group-color";
 import { ViewItem } from "../class/view-item";
 import workspace from "../class/workspace";
-import { ResourceType, TreeProviders } from "../types/index";
-
-import * as clipboardy from "clipboardy";
+import { TreeProviders } from "../types/index";
 
 export class Commands {
     private clipboard = new Clipboard();

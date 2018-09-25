@@ -6,7 +6,6 @@ export enum ResourceType {
     File = "File",
     Group = "Group",
     Directory = "Directory",
-
 }
 
 export interface StoredResource {
@@ -18,7 +17,6 @@ export interface StoredResource {
     workspacePath?: string;
     fsPath?: string;
     iconColor?: string;
-    // iconPath?: string;
 }
 
 export interface FilesystemResource {
