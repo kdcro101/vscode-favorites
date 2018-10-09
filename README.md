@@ -23,6 +23,7 @@ Time saver for complex projects.
     - duplicate file/directory
 - favorite items can have alias (different label)
 - items are accesible via activity bar and, optionally, as File explorer subview (see [Using Favorites explorer section](#using))
+- language independent
 
 
 ## Adding to favorites
@@ -35,12 +36,14 @@ Time saver for complex projects.
 - `add to group of favorites` - to add item to group of favorites you previously created.
 
  
-##  <a name="using"></a><a name="user-content-using"></a> Using Favorites explorer
+ <a id="using"></a><a name="user-content-using"></a>
+## Using Favorites explorer
+
 <p align="center">
    <img  src="https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/using.jpg?232321" />
 </p>
 
-you can turn off subview in ***File explorer*** by clicking on its header and deselecting it.
+you can **turn off** subview in ***File explorer*** by clicking on its header and deselecting it.
  
 
 ## Install
@@ -63,21 +66,19 @@ Open Visual Studio Code press CTRL+p and type or copy and paste:
 ## Usage
 
 
-### Adding to favorites
+#### Adding to favorites
 Right-click item in File explorer and select `Add to favorites`.
-### Adding to favorites group or subgroup
+#### Adding to favorites group or subgroup
 Right-click item in File explorer and select `Add to favorites group`, then select group from list.
-### Removing from favorites
-Right-click item in Favorites view and select `Delete favorite`
-### Create favorites group
-Click on folder icon on Favorites view title, type unique name and press enter
-### Create favorites subgroup
-Right-click on group item and choose "Create subgroup"
-### Delete favorites group
-Right-click group item in Favorites view and select `Delete group`
-### Delete item in favorites group
-Right-click item inside group in Favorites view and select `Delete item`
-### Delete everything 
+#### Removing from favorites
+Right-click item in Favorites view and select `Remove from favorites`
+#### Create favorites group
+Right-click on empty area and select `Create group`
+#### Create favorites subgroup
+Right-click on group item and choose `Create group`
+#### Delete favorites group
+Right-click group item in Favorites view and select `Remove group`
+#### Remove everything from favorites
 Click on trash bin icon on Favorites view title, type "yes" to confirm
 
 ## LICENSE

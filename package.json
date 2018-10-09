@@ -2,7 +2,7 @@
     "name": "favorites",
     "displayName": "Favorites",
     "description": "Add files and directories to favorites. Create groups of directories and files. Time saver for complex projects.",
-    "version": "1.9.7",
+    "version": "1.9.8",
     "categories": [
         "Other"
     ],

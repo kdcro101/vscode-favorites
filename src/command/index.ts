@@ -53,12 +53,12 @@ export class Commands {
     public copyPath = () => {
         return vscode.commands.registerCommand("favorites.copy.path",
             (value: ViewItem) => {
-                    if (value == null) {
-                        return;
-                    }
-                    const path = value.resourceUri.fsPath;
-                    console.log(path);
-                    clipboardy.writeSync(path);
+                if (value == null) {
+                    return;
+                }
+                const path = value.resourceUri.fsPath;
+                console.log(path);
+                clipboardy.writeSync(path);
 
             });
     }
@@ -333,14 +333,15 @@ export class Commands {
 
             const isList = Array.isArray(list);
             const isFile = (fileUri && fileUri.fsPath) != null ? true : false;
+            const isActiveEditor = vscode.window.activeTextEditor != null ? true : false;
 
             if (!isList && isFile) {
                 list = [fileUri];
             }
-
-            if (!fileUri) {
-                return vscode.window.showWarningMessage("You have to call this extension from explorer");
+            if (!isList && !isFile && isActiveEditor) {
+                list = [vscode.window.activeTextEditor.document.uri];
             }
+
             const run = async () => {
 
                 for (const uri of list) {
@@ -350,15 +351,6 @@ export class Commands {
             };
 
             run();
-            // const itemPath = fileUri.fsPath;
-            // this.favorites.addPathToGroup(null, itemPath);
-
-            // Promise.all(proms)
-            //     .then((result) => {
-            //         console.log(`${list.length} added`);
-            //     }).catch((e) => {
-            //         console.error(e);
-            //     });
 
         });
     }
