@@ -1,3 +1,8 @@
+## 1.9.8 | 2018/10/09
+
+- README
+- `Add to favorites` executed from command pallete adds active document to favorites root
+
 ## 1.9.7 | 2018/09/25
 
 - favorites.useTrash -> README
