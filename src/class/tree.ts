@@ -75,7 +75,7 @@ export class TreeViewManager {
             if (fileItem && type === ResourceType.File) {
                 // it is file in root!
                 const viewItem = this.favorites.asViewItem(fileItem);
-                this.treeView.reveal(viewItem, { select: true, focus: true });
+                this.treeView.reveal(viewItem, { select: true, focus: false });
 
                 return;
             }
@@ -85,7 +85,7 @@ export class TreeViewManager {
             if (isPart) {
                 this.favorites.viewItemForPath(fsPath)
                     .then((item) => {
-                        this.treeView.reveal(item, { select: true, focus: true });
+                        this.treeView.reveal(item, { select: true, focus: false });
                         return;
                     }).catch((e) => {
                         console.log(e);
