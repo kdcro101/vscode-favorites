@@ -1,3 +1,7 @@
+## 1.9.9 | 2018/10/11
+
+- Fix favorites explorer focusing on acitve editor change. [#16](https://github.com/kdcro101/vscode-favorite-items/issues/16)
+
 ## 1.9.8 | 2018/10/09
 
 - README
