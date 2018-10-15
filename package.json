@@ -2,7 +2,7 @@
     "name": "favorites",
     "displayName": "Favorites",
     "description": "Add files and directories to favorites. Create groups of directories and files. Time saver for complex projects.",
-    "version": "1.9.9",
+    "version": "1.9.10",
     "categories": [
         "Other"
     ],
@@ -86,7 +86,7 @@
                 {
                     "id": "favorites-explorer",
                     "title": "Favorites",
-                    "icon": "icons/activity_bar_icon_outline.svg"
+                    "icon": "icons/activity_bar_icon.svg"
                 }
             ]
         },
