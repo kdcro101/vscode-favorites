@@ -1,10 +1,12 @@
 import * as fs from "fs";
 import * as _ from "lodash";
 import * as path from "path";
-import { ReplaySubject } from "rxjs";
+import { from, ReplaySubject } from "rxjs";
+import { tap } from "rxjs/operators";
 import * as vscode from "vscode";
 import { GroupQuickPick, ResourceType, StoredResource } from "../types/index";
 import { GroupColor } from "./group-color";
+import { FavoriteStorage } from "./storage";
 import { ViewItem } from "./view-item";
 import workspace from "./workspace";
 
@@ -12,7 +14,7 @@ export class Favorites {
     public stateList = new ReplaySubject<StoredResource[]>(1);
     public groupColor: GroupColor;
 
-    constructor(private context: vscode.ExtensionContext) {
+    constructor(private context: vscode.ExtensionContext, private storage: FavoriteStorage) {
         this.groupColor = new GroupColor(this, context);
     }
 
@@ -169,7 +171,7 @@ export class Favorites {
 
                 const o = this.createStoredResource(groupId, itemPath, t, true);
                 all.push(o);
-                return workspace.save("root", all);
+                return this.save(all);
 
             }).then(() => {
                 resolve();
@@ -214,7 +216,7 @@ export class Favorites {
 
                 const o = this.createStoredResource(groupId, itemPath, t);
                 all.push(o);
-                return workspace.save("root", all);
+                return this.save(all);
 
             }).then(() => {
                 resolve();
@@ -236,7 +238,7 @@ export class Favorites {
                     resolve();
                 }
                 all[i].label = name;
-                return workspace.save("root", all);
+                return this.save(all);
 
             }).then(() => {
                 resolve();
@@ -258,7 +260,7 @@ export class Favorites {
                     resolve();
                 }
                 all[i].name = name;
-                return workspace.save("root", all);
+                return this.save(all);
 
             }).then(() => {
                 resolve();
@@ -278,8 +280,7 @@ export class Favorites {
 
                 const o = this.createStoredResource(parent_id, name, ResourceType.Group);
                 const newList: StoredResource[] = all.concat([o]);
-
-                return workspace.save("root", newList);
+                return this.save(newList);
 
             }).then(() => {
                 resolve();
@@ -290,7 +291,7 @@ export class Favorites {
         });
     }
 
-    public get(): Promise<StoredResource[]> {
+    public __get(): Promise<StoredResource[]> {
         return new Promise((resolve, reject) => {
             const resources = workspace.get("root") as StoredResource[];
 
@@ -300,9 +301,26 @@ export class Favorites {
 
         });
     }
-    public save(list: StoredResource[]): Promise<void> {
+    public get(): Promise<StoredResource[]> {
+        return new Promise((resolve, reject) => {
+
+            from(this.storage.get()).pipe(
+                tap((list) => this.stateList.next(list)),
+            ).subscribe((list) => {
+                resolve(list);
+            }, (e) => {
+                console.log(e);
+            });
+
+        });
+    }
+    public __save(list: StoredResource[]): Promise<void> {
         this.stateList.next(list);
         return workspace.save("root", list);
+    }
+    public save(list: StoredResource[]): Promise<void> {
+        this.stateList.next(list);
+        return this.storage.save(list);
     }
     public identify(itemPath: string): Promise<ResourceType> {
         return new Promise((resolve, reject) => {

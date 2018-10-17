@@ -12,20 +12,7 @@
         ".vscode": true
     },
     "favorites.groupsFirst": true,
-    "favorites.root": [{
-            "type": "Group",
-            "name": "www",
-            "parent_id": null,
-            "id": "Ix3YWh6b5pLjzqAo"
-        },
-        {
-            "type": "File",
-            "name": "/exec/vscode-favorite-items/CHANGELOG.md",
-            "parent_id": "Ix3YWh6b5pLjzqAo",
-            "workspacePath": "CHANGELOG.md",
-            "id": "F4rH3KJLjMIDl91i"
-        }
-    ],
+    "favorites.root": [],
     "redis-console.host": "localhost",
     "redis-console.port": 6379,
     "redis-console.password": "",
