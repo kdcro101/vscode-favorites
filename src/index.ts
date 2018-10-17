@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import { DataProvider } from "./class/dataProvider";
 import { Favorites } from "./class/favorites";
+import { FavoriteStorage } from "./class/storage";
 import { TreeViewManager } from "./class/tree";
 import { ViewItem } from "./class/view-item";
 import workspace from "./class/workspace";
@@ -19,7 +20,8 @@ export function activate(context: vscode.ExtensionContext) {
     workspace.save("sortDirection", sort);
     workspace.save("groupsFirst", groupsFirst);
 
-    const favorites = new Favorites(context);
+    const storage = new FavoriteStorage(context);
+    const favorites = new Favorites(context, storage);
 
     ViewItem.favorites = favorites;
 
@@ -44,6 +46,10 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.workspace.onDidChangeConfiguration(() => {
         providers.refresh();
     }, this, context.subscriptions);
+
+    storage.eventChange.pipe().subscribe(() => {
+        providers.refresh();
+    });
 
     const c = new Commands(context, providers, favorites);
 
