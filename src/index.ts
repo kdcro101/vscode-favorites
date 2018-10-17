@@ -10,6 +10,10 @@ import { TreeProviders } from "./types";
 
 export function activate(context: vscode.ExtensionContext) {
 
+    if (vscode.workspace.workspaceFolders == null || vscode.workspace.workspaceFolders.length === 0) {
+        return;
+    }
+
     const configSort = workspace.get("sortDirection") as string;
     const sort = (configSort === "DESC" || configSort === "ASC") ? configSort : "ASC";
     const configGroupsFirst = workspace.get("groupsFirst");
