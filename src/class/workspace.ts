@@ -1,4 +1,3 @@
-import * as nconf from "nconf";
 import * as os from "os";
 import * as path from "path";
 import * as vscode from "vscode";
@@ -9,39 +8,15 @@ class Workspace {
 
     public get(key: string): any {
         const config = vscode.workspace.getConfiguration("favorites");
-        const favoriterc = config.get("favoriterc") as boolean;
 
-        if (this.isMultiRootWorkspace() || !favoriterc) {
-            return config.get(key) as string[];
-        }
-
-        nconf.file({ file: path.resolve(this.getSingleRootPath(), ".favoriterc") });
-
-        return nconf.get(key);
+        return config.get(key);
     }
 
     public save(key: string, value: any): Promise<void> {
         const config = vscode.workspace.getConfiguration("favorites");
-        const favoriterc = config.get("favoriterc") as boolean;
 
-        if (this.isMultiRootWorkspace() || !favoriterc) {
-            config.update(key, value, false);
-            return Promise.resolve();
-        }
-
-        nconf.file({ file: path.resolve(this.getSingleRootPath(), ".favoriterc") });
-
-        nconf.set(key, value);
-
-        return new Promise<void>((resolve, reject) => {
-            nconf.save((err) => {
-                if (err) {
-                    return reject(err);
-                }
-                this.eventEmitter.fire();
-                resolve();
-            });
-        });
+        config.update(key, value, false);
+        return Promise.resolve();
 
     }
 

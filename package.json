@@ -2,7 +2,7 @@
     "name": "favorites",
     "displayName": "Favorites",
     "description": "Add files and directories to favorites. Create groups of directories and files. Time saver for complex projects.",
-    "version": "2.0.1",
+    "version": "2.0.2",
     "categories": [
         "Other"
     ],
@@ -59,6 +59,11 @@
                     "type": "boolean",
                     "default": false,
                     "description": "Move to trash when resource gets deleted"
+                },
+                "favorites.storageFilePath": {
+                    "type": "string",
+                    "default": "favorites.json",
+                    "description": "storage file path relative to workspace"
                 },
                 "favorites.root": {
                     "type": "array",
