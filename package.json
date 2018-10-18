@@ -62,7 +62,7 @@
                 },
                 "favorites.storageFilePath": {
                     "type": "string",
-                    "default": "favorites.json",
+                    "default": ".favorites.json",
                     "description": "storage file path relative to workspace"
                 },
                 "favorites.root": {

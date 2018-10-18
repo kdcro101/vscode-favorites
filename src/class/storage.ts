@@ -8,7 +8,7 @@ import { StoredResource } from "../types";
 import workspace from "./workspace";
 
 export class FavoriteStorage {
-    public defaultRelativePath = "favorites.json";
+    public defaultRelativePath = ".favorites.json";
     public storageFilePath: string = null;
     public eventChange = new Subject<void>();
     private eventDestroy = new Subject<void>();
@@ -21,6 +21,7 @@ export class FavoriteStorage {
 
         const legacy = workspace.get("root") as StoredResource[];
         const storageFileExists = fs.existsSync(this.storageFilePath);
+
         if (!storageFileExists && legacy.length && legacy.length > 0) {
             this.convertLegacy(legacy);
         }
