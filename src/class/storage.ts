@@ -8,14 +8,16 @@ import { StoredResource } from "../types";
 import workspace from "./workspace";
 
 export class FavoriteStorage {
-    public storageFilename = "favorites.json";
+    public defaultRelativePath = "favorites.json";
     public storageFilePath: string = null;
     public eventChange = new Subject<void>();
     private eventDestroy = new Subject<void>();
 
     constructor(context: vscode.ExtensionContext) {
+        const configRelativePath  = workspace.get("storageFilePath");
+        const execRelativePath = configRelativePath || this.defaultRelativePath;
 
-        this.storageFilePath = path.join(workspace.getSingleRootPath(), ".vscode", this.storageFilename);
+        this.storageFilePath = path.join(workspace.getSingleRootPath(), execRelativePath);
 
         const legacy = workspace.get("root") as StoredResource[];
         const storageFileExists = fs.existsSync(this.storageFilePath);
