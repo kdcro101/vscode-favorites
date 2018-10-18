@@ -7,9 +7,6 @@
 - Favorites items are stored, by default, in workspace root as `favorites.json` In case of multiroot workspace, file is located in first workspace. [#13](https://github.com/kdcro101/vscode-favorite-items/issues/13)  [#18](https://github.com/kdcro101/vscode-favorite-items/issues/18) [#19](https://github.com/kdcro101/vscode-favorite-items/issues/19) 
 - added configuration item `favorites.storageFilePath` to overrride storage file path relative to workspace. Default is `.favorites.json`
 
-
-`.vscode/favorites.json`. In case of multiroot workspace, file is located in first workspace. [#13](https://github.com/kdcro101/vscode-favorite-items/issues/13)  [#18](https://github.com/kdcro101/vscode-favorite-items/issues/18)  
-
 ## 2.0.1 | 2018/10/17
 
 - Favorites items are stored in `.vscode/favorites.json`. In case of multiroot workspace, file is located in first workspace. [#13](https://github.com/kdcro101/vscode-favorite-items/issues/13)  [#18](https://github.com/kdcro101/vscode-favorite-items/issues/18)  
