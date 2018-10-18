@@ -2,7 +2,7 @@
     "name": "favorites",
     "displayName": "Favorites",
     "description": "Add files and directories to favorites. Create groups of directories and files. Time saver for complex projects.",
-    "version": "2.0.4",
+    "version": "2.0.5",
     "categories": [
         "Other"
     ],
@@ -18,7 +18,7 @@
         "vscode": "^1.27.0"
     },
     "galleryBanner": {
-        "color": "#303f9f",
+        "color": "#283593",
         "theme": "dark"
     },
     "scripts": {

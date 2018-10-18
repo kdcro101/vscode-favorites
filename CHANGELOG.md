@@ -1,3 +1,7 @@
+## 2.0.5 | 2018/10/18
+
+- Icon + Marketplace banner
+
 ## 2.0.4 | 2018/10/18
 
 - README fix
