@@ -4,7 +4,7 @@ import * as vscode from "vscode";
 
 import { from, Subject } from "rxjs";
 import { tap } from "rxjs/operators";
-import { StoredResource } from "../types";
+import { ResourceType, StoredResource } from "../types";
 import workspace from "./workspace";
 
 export class FavoriteStorage {
@@ -14,7 +14,7 @@ export class FavoriteStorage {
     private eventDestroy = new Subject<void>();
 
     constructor(context: vscode.ExtensionContext) {
-        const configRelativePath  = workspace.get("storageFilePath");
+        const configRelativePath = workspace.get("storageFilePath");
         const execRelativePath = configRelativePath || this.defaultRelativePath;
 
         this.storageFilePath = path.join(workspace.getSingleRootPath(), execRelativePath);
@@ -36,6 +36,9 @@ export class FavoriteStorage {
 
             fs.readJson(this.storageFilePath)
                 .then((result) => {
+                    return this.___fixItems(result);
+                })
+                .then((result) => {
                     resolve(result as StoredResource[]);
                 }).catch((e) => {
                     reject(e);
@@ -43,7 +46,7 @@ export class FavoriteStorage {
 
         });
     }
-    public save(list: StoredResource[]): Promise<void> {
+    public save(list: StoredResource[], triggerChange: boolean = true): Promise<void> {
         return new Promise((resolve, reject) => {
 
             const data = !list ? [] : list;
@@ -51,7 +54,11 @@ export class FavoriteStorage {
             from(fs.writeJson(this.storageFilePath, data, {
                 spaces: 4,
             })).pipe(
-                tap(() => this.eventChange.next()),
+                tap(() => {
+                    if (triggerChange) {
+                        this.eventChange.next();
+                    }
+                }),
             ).subscribe(() => {
                 resolve();
             }, (e) => {
@@ -67,6 +74,36 @@ export class FavoriteStorage {
     private convertLegacy(list: StoredResource[]) {
         fs.writeJsonSync(this.storageFilePath, list, {
             spaces: 4,
+        });
+    }
+    private ___fixItems(list: StoredResource[]): Promise<StoredResource[]> {
+        return new Promise((resolve, reject) => {
+
+            const result = list.map((item) => {
+                if (item.fsPath || item.type === ResourceType.Group) {
+                    item.workspaceRoot = null;
+                    item.workspacePath = null;
+                    return item;
+                }
+                if (item.workspaceRoot == null && item.fsPath == null) {
+                    const itemFsPath = workspace.pathAbsolute(item.workspacePath);
+                    item.workspaceRoot = workspace.workspaceRoot(itemFsPath);
+                    item.workspacePath = workspace.workspacePath(itemFsPath);
+                    return item;
+
+                }
+
+                return item;
+
+            });
+
+            this.save(result, false)
+                .then(() => {
+                    resolve(result);
+                }).catch((e) => {
+                    reject(e);
+                });
+
         });
     }
 

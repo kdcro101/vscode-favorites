@@ -1,4 +1,9 @@
 ## 2.0.5 | 2018/10/18
+ 
+ - added `Copy Name` to copy file name
+ - added support for `files.exclude`
+
+## 2.0.5 | 2018/10/18
 
 - Icon + Marketplace banner
 

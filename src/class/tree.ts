@@ -6,6 +6,7 @@ import { ResourceType, StoredResource } from "../types/index";
 import { DataProvider } from "./dataProvider";
 import { Favorites } from "./favorites";
 import { ViewItem } from "./view-item";
+import workspace from "./workspace";
 
 export class TreeViewManager {
     public visible: boolean = false;
@@ -60,6 +61,10 @@ export class TreeViewManager {
         this.eventActiveEditor.next(this.activeEditor);
     }
     public reveal(fsPath: string) {
+
+        if (workspace.excludeCheck.isExcluded(fsPath)) {
+            return;
+        }
 
         Promise.all([
             this.favorites.identify(fsPath),
