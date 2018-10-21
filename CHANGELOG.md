@@ -1,4 +1,4 @@
-## 2.1.1 | 2018/10/18
+## 2.1.1 | 2018/10/21
  
  - added `Copy Name` to copy file name
  - added support for `files.exclude`
