@@ -14,7 +14,7 @@ Time saver for complex projects.
 - add resources within workspace
 - add external resources (files or directories out of workspace)
 - organize favorites in groups and subgroups (nesting not limited)
-- group icons can have their colors changed
+- group icons can have their color changed
 - basic file system operations within Favorites explorer:
     - copy/cut -> paste
     - create file
@@ -23,6 +23,7 @@ Time saver for complex projects.
     - duplicate file/directory
 - favorite items can have alias (different label)
 - items are accesible via activity bar and, optionally, as File explorer subview (see [Using Favorites explorer section](#using))
+- `files.exclude` supported (see [configuration](#configuration)) 
 - language independent
 
 
@@ -36,14 +37,14 @@ Time saver for complex projects.
 - `add to group of favorites` - to add item to group of favorites you previously created.
 
  
- <a id="using"></a><a name="user-content-using"></a>
+<a id="using"></a><a name="user-content-using"></a>
 ## Using Favorites explorer
 
 <p align="center">
    <img  src="https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/using.jpg?232321" />
 </p>
 
-you can **turn off** subview in ***File explorer*** by clicking on its header and deselecting it.
+you can **turn off** subview in **File explorer** by clicking on its header and deselecting it.
  
 
 ## Install
@@ -52,8 +53,11 @@ Open Visual Studio Code press CTRL+p and type or copy and paste:
 
 `ext install kdcro101.favorites`
 
-
+ <a id="configuration"></a><a name="user-content-configuration"></a>
 ## Configuration
+`favorites.useFilesExclude` : boolean
+- should `files.exclude` setting be used. Default is `true`
+
 `favorites.storageFilePath` : string
 - overrride storage file path relative to workspace. Default is `.favorites.json`
 

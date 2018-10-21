@@ -13,6 +13,7 @@ export class DataProvider implements vscode.TreeDataProvider<ViewItem> {
     public returnEmpty: boolean = false;
 
     constructor(private context: vscode.ExtensionContext, private favorites: Favorites) {
+
     }
 
     public getParent(element: ViewItem): Thenable<ViewItem> {
@@ -86,7 +87,10 @@ export class DataProvider implements vscode.TreeDataProvider<ViewItem> {
                     return;
                 }
 
-                const resolved = items.map((i) => workspace.pathResolve(path.join(fsPath, i)));
+                const resolved = items.map((i) => workspace.pathResolve(path.join(fsPath, i)))
+                .filter((item) => {
+                    return !workspace.excludeCheck.isExcluded(item);
+                });
 
                 Promise.all(resolved.map((i) => this.favorites.identify(i)))
                     .then((result) => {

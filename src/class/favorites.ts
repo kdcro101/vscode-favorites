@@ -358,7 +358,14 @@ export class Favorites {
             ]).then((result) => {
                 const all = result[0];
                 // tslint:disable-next-line:triple-equals
-                const list: StoredResource[] = all.filter((i) => i.parent_id == parentId);
+                const list: StoredResource[] = all.filter((i) => i.parent_id == parentId)
+                    .filter((item) => {
+                        if (item.type === ResourceType.Group) {
+                            return true;
+                        }
+                        const checkPath = item.fsPath || path.join(item.workspaceRoot, item.workspacePath);
+                        return !workspace.excludeCheck.isExcluded(checkPath);
+                    });
 
                 this.sortStoredResources(list)
                     .then((sorted) => {
@@ -494,7 +501,8 @@ export class Favorites {
 
                 if (i.fsPath == null) {
 
-                    const fPath = workspace.pathAbsolute(i.workspacePath);
+                    // const fPath = workspace.pathAbsolute(i.workspacePath);
+                    const fPath = path.join(i.workspaceRoot, i.workspacePath);
                     const fUri = workspace.pathAsUri(fPath);
                     o = new ViewItem(
                         (i.label != null) ? i.label : path.basename(i.workspacePath),
@@ -539,7 +547,8 @@ export class Favorites {
             case ResourceType.Directory:
 
                 if (i.fsPath == null) {
-                    const wPath = workspace.pathAbsolute(i.workspacePath);
+                    // const wPath = workspace.pathAbsolute(i.workspacePath);
+                    const wPath = path.join(i.workspaceRoot, i.workspacePath);
                     o = new ViewItem(
                         (i.label != null) ? i.label : path.basename(wPath),
                         vscode.TreeItemCollapsibleState.Collapsed,
@@ -611,6 +620,8 @@ export class Favorites {
                     type,
                     name,
                     parent_id,
+                    workspaceRoot: null,
+                    workspacePath: null,
                     id: this.generateId(),
                 };
                 break;
@@ -621,6 +632,8 @@ export class Favorites {
                         name,
                         parent_id,
                         fsPath: name,
+                        workspaceRoot: null,
+                        workspacePath: null,
                         id: this.generateId(),
                     };
                 } else {
@@ -628,7 +641,9 @@ export class Favorites {
                         type,
                         name,
                         parent_id,
-                        workspacePath: workspace.pathForWorkspace(name),
+                        // workspacePath: workspace.pathForWorkspace(name),
+                        workspaceRoot: workspace.workspaceRoot(name),
+                        workspacePath: workspace.workspacePath(name),
                         id: this.generateId(),
                     };
 
@@ -641,6 +656,8 @@ export class Favorites {
                         name,
                         parent_id,
                         fsPath: name,
+                        workspaceRoot: null,
+                        workspacePath: null,
                         id: this.generateId(),
                     };
                 } else {
@@ -648,7 +665,9 @@ export class Favorites {
                         type,
                         name,
                         parent_id,
-                        workspacePath: workspace.pathForWorkspace(name),
+                        // workspacePath: workspace.pathForWorkspace(name),
+                        workspaceRoot: workspace.workspaceRoot(name),
+                        workspacePath: workspace.workspacePath(name),
                         id: this.generateId(),
                     };
 

@@ -1,4 +1,5 @@
 import * as clipboardy from "clipboardy";
+import * as path from "path";
 import * as vscode from "vscode";
 import { QuickPickItem } from "vscode";
 import { Clipboard } from "../class/clipboard";
@@ -40,6 +41,7 @@ export class Commands {
         context.subscriptions.push(this.aliasRemove());
 
         context.subscriptions.push(this.copyPath());
+        context.subscriptions.push(this.copyName());
         context.subscriptions.push(this.fsCopy());
         context.subscriptions.push(this.fsCut());
         context.subscriptions.push(this.fsPaste());
@@ -56,9 +58,21 @@ export class Commands {
                 if (value == null) {
                     return;
                 }
-                const path = value.resourceUri.fsPath;
+                const fsPath = value.resourceUri.fsPath;
                 console.log(path);
-                clipboardy.writeSync(path);
+                clipboardy.writeSync(fsPath);
+
+            });
+    }
+    public copyName = () => {
+        return vscode.commands.registerCommand("favorites.copy.name",
+            (value: ViewItem) => {
+                if (value == null) {
+                    return;
+                }
+                const name = path.basename(value.resourceUri.fsPath);
+                console.log(path);
+                clipboardy.writeSync(name);
 
             });
     }

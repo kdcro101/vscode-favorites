@@ -2,7 +2,7 @@
     "name": "favorites",
     "displayName": "Favorites",
     "description": "Add files and directories to favorites. Create groups of directories and files. Time saver for complex projects.",
-    "version": "2.0.5",
+    "version": "2.1.0",
     "categories": [
         "Other"
     ],
@@ -59,6 +59,11 @@
                     "type": "boolean",
                     "default": false,
                     "description": "Move to trash when resource gets deleted"
+                },
+                "favorites.useFilesExclude": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Should 'files.exclude' setting be used "
                 },
                 "favorites.storageFilePath": {
                     "type": "string",
@@ -376,22 +381,42 @@
                 {
                     "command": "favorites.copy.path",
                     "when": "viewItem == FAVORITE_FILE",
-                    "group": "9_cutcopypaste"
+                    "group": "8_copyNameOrPath"
                 },
                 {
                     "command": "favorites.copy.path",
                     "when": "viewItem == FS_FILE",
-                    "group": "9_cutcopypaste"
+                    "group": "8_copyNameOrPath"
                 },
                 {
                     "command": "favorites.copy.path",
                     "when": "viewItem == FAVORITE_DIRECTORY",
-                    "group": "9_cutcopypaste"
+                    "group": "8_copyNameOrPath"
                 },
                 {
                     "command": "favorites.copy.path",
                     "when": "viewItem == FS_DIRECTORY",
-                    "group": "9_cutcopypaste"
+                    "group": "8_copyNameOrPath"
+                },
+                {
+                    "command": "favorites.copy.name",
+                    "when": "viewItem == FAVORITE_FILE",
+                    "group": "8_copyNameOrPath"
+                },
+                {
+                    "command": "favorites.copy.name",
+                    "when": "viewItem == FS_FILE",
+                    "group": "8_copyNameOrPath"
+                },
+                {
+                    "command": "favorites.copy.name",
+                    "when": "viewItem == FAVORITE_DIRECTORY",
+                    "group": "8_copyNameOrPath"
+                },
+                {
+                    "command": "favorites.copy.name",
+                    "when": "viewItem == FS_DIRECTORY",
+                    "group": "8_copyNameOrPath"
                 }
             ]
         },
@@ -519,6 +544,10 @@
             {
                 "command": "favorites.copy.path",
                 "title": "Copy Path"
+            },
+            {
+                "command": "favorites.copy.name",
+                "title": "Copy Name"
             }
         ]
     },
@@ -529,6 +558,7 @@
         "@types/lodash": "^4.14.108",
         "@types/lodash-es": "^4.17.0",
         "@types/md5": "^2.1.32",
+        "@types/minimatch": "^3.0.3",
         "@types/nconf": "0.0.37",
         "@types/node": "^9.4.7",
         "del": "^3.0.0",
@@ -548,6 +578,7 @@
         "lodash": "^4.17.10",
         "lodash-es": "^4.17.10",
         "md5": "^2.2.1",
+        "minimatch": "^3.0.4",
         "nconf": "^0.10.0",
         "rxjs": "^6.2.2",
         "trash": "^4.3.0",
