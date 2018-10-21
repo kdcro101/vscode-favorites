@@ -60,9 +60,6 @@ export function activate(context: vscode.ExtensionContext) {
     workspace.eventConfigurationChange.pipe(
 
     ).subscribe(() => {
-        console.log("---------------------");
-        console.log("--------REFRESH------");
-        console.log("---------------------");
         providers.refresh();
     });
 

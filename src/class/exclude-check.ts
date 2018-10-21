@@ -8,8 +8,6 @@ export class ExcludeCheck {
 
     constructor(private workspace: Workspace) {
         this.collectExcludeList();
-        console.log("OK");
-
         this.useExclude = workspace.get("useFilesExclude");
     }
 
@@ -23,13 +21,12 @@ export class ExcludeCheck {
         if (!relative) {
             relative = fsPath;
         }
-        console.log(`checking ${relative}`);
+
         const excluded = this.excludeList.reduce((acc, cur) => {
             const res = minimatch(relative, cur, {
                 dot: true,
             });
             if (res) {
-                console.log(`\texcluding ${relative}`);
                 acc = true;
                 return acc;
             }

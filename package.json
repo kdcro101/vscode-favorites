@@ -18,7 +18,7 @@
         "vscode": "^1.27.0"
     },
     "galleryBanner": {
-        "color": "#283593",
+        "color": "#1a237e",
         "theme": "dark"
     },
     "scripts": {
