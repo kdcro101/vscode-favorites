@@ -1,3 +1,8 @@
+
+## 2.1.3 | 2018/10/22
+
+- fixed `Path must be string. Received null` error
+
 ## 2.1.2 | 2018/10/21
  
  - added `Copy Name` to copy file name
@@ -6,13 +11,6 @@
 ## 2.0.5 | 2018/10/18
 
 - Icon + Marketplace banner
-
-## 2.0.4 | 2018/10/18
-
-- README fix
-
-## 2.0.2 | 2018/10/18
-
 - Favorites items are stored, by default, in workspace root as `favorites.json` In case of multiroot workspace, file is located in first workspace. [#13](https://github.com/kdcro101/vscode-favorite-items/issues/13)  [#18](https://github.com/kdcro101/vscode-favorite-items/issues/18) [#19](https://github.com/kdcro101/vscode-favorite-items/issues/19) 
 - added configuration item `favorites.storageFilePath` to overrride storage file path relative to workspace. Default is `.favorites.json`
 
