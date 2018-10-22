@@ -80,15 +80,27 @@ export class FavoriteStorage {
         return new Promise((resolve, reject) => {
 
             const result = list.map((item) => {
+
+                const wRoot = workspace.workspaceRoot(item.name);
+                const wPath = workspace.workspacePath(item.name);
+
                 if (item.fsPath || item.type === ResourceType.Group) {
                     item.workspaceRoot = null;
                     item.workspacePath = null;
                     return item;
                 }
-                if (item.workspaceRoot == null && item.workspacePath == null && item.fsPath == null) {
-                    item.fsPath = item.name;
+                if (wRoot && item.workspaceRoot == null && item.workspacePath == null && item.fsPath == null) {
+                    item.workspaceRoot = wRoot;
+                    item.workspacePath = wPath;
                     return item;
                 }
+                if (!wRoot && item.workspaceRoot == null && item.workspacePath == null && item.fsPath == null) {
+                    item.fsPath = item.name;
+                    item.workspacePath = null;
+                    item.workspaceRoot = null;
+                    return item;
+                }
+
                 if (item.workspaceRoot == null && item.fsPath == null) {
                     const itemFsPath = workspace.pathAbsolute(item.workspacePath || item.name);
                     item.workspaceRoot = workspace.workspaceRoot(itemFsPath);
