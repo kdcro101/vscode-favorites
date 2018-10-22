@@ -85,6 +85,10 @@ export class FavoriteStorage {
                     item.workspacePath = null;
                     return item;
                 }
+                if (item.workspaceRoot == null && item.workspacePath == null && item.fsPath == null) {
+                    item.fsPath = item.name;
+                    return item;
+                }
                 if (item.workspaceRoot == null && item.fsPath == null) {
                     const itemFsPath = workspace.pathAbsolute(item.workspacePath || item.name);
                     item.workspaceRoot = workspace.workspaceRoot(itemFsPath);
