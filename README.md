@@ -5,7 +5,7 @@
 [![Rating](https://vsmarketplacebadge.apphb.com/rating-short/kdcro101.favorites.svg)](https://marketplace.visualstudio.com/items?itemName=kdcro101.favorites#review-details)
 
 
-Add files and directories to favorites. You can create groups (and subgroups) of favorite items with files and folders.
+Add files and directories to **workspace** favorites. You can create groups (and subgroups) of favorite items with files and folders.
 Time saver for complex projects.
 
 
