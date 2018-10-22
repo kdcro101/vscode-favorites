@@ -1,5 +1,5 @@
 
-## 2.1.4 | 2018/10/22
+## 2.1.5 | 2018/10/22
 
 - fixed `Path must be string. Received null` error
 
