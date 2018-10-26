@@ -4,7 +4,7 @@
 
 ## 2.2.1 | 2018/10/26
 
-- Favorites refresh on FileSystemWatcher events
+- Favorites refresh on FileSystemWatcher events [#24](https://github.com/kdcro101/vscode-favorite-items/issues/24)
 - added `refresh` button
 
 ## 2.2.0 | 2018/10/24
