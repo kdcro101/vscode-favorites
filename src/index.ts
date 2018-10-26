@@ -17,13 +17,8 @@ export function activate(context: vscode.ExtensionContext) {
 
     const configSort = workspace.get("sortDirection") as string;
     const sort = (configSort === "DESC" || configSort === "ASC") ? configSort : "ASC";
-    const configGroupsFirst = workspace.get("groupsFirst");
-    const groupsFirst = configGroupsFirst ? configGroupsFirst : true;
 
     vscode.commands.executeCommand("setContext", "sort", sort);
-    // secure defaults...
-    workspace.save("sortDirection", sort);
-    workspace.save("groupsFirst", groupsFirst);
 
     const storage = new FavoriteStorage(context);
     const favorites = new Favorites(context, storage);
