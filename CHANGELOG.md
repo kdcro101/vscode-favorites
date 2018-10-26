@@ -15,7 +15,7 @@
 
 ## 2.1.5 | 2018/10/22
 
-- fixed `Path must be string. Received null` error
+- fixed `Path must be string. Received null` error [#20](https://github.com/kdcro101/vscode-favorite-items/issues/20)
 
 ## 2.1.2 | 2018/10/21
  
@@ -66,7 +66,7 @@
 
 ## 1.9.3 | 2018/09/18
 
-- remove unicode characters from context menu when adding to favorites
+- remove unicode characters from context menu when adding to favorites [#11](https://github.com/kdcro101/vscode-favorite-items/issues/11)
 - change activity bar icon
 - README
 
