@@ -14,17 +14,14 @@ export class FavoriteStorage {
     private eventDestroy = new Subject<void>();
 
     constructor(context: vscode.ExtensionContext) {
+
+        this.reloadStoragePath();
+
+    }
+    public reloadStoragePath() {
         const configRelativePath = workspace.get("storageFilePath");
         const execRelativePath = configRelativePath || this.defaultRelativePath;
-
-        this.storageFilePath = path.join(workspace.getSingleRootPath(), execRelativePath);
-
-        const legacy = workspace.get("root") as StoredResource[];
-        const storageFileExists = fs.existsSync(this.storageFilePath);
-
-        if (!storageFileExists && legacy.length && legacy.length > 0) {
-            this.convertLegacy(legacy);
-        }
+        this.storageFilePath = path.join(workspace.getConfigurationRoot(), execRelativePath);
     }
     public get(): Promise<StoredResource[]> {
         return new Promise((resolve, reject) => {

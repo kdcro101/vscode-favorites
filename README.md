@@ -55,6 +55,10 @@ Open Visual Studio Code press CTRL+p and type or copy and paste:
 
  <a id="configuration"></a><a name="user-content-configuration"></a>
 ## Configuration
+
+`favorites.useWorkspace` : number - default is `0`
+- index of workspace to use as root when composing storage file path
+
 `favorites.useFilesExclude` : boolean
 - should `files.exclude` setting be used. Default is `true`
 

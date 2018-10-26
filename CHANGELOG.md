@@ -1,3 +1,13 @@
+## 2.2.1 | 2018/10/26
+
+- Favorites refresh on FileSystemWatcher events
+- added `refresh` button
+
+## 2.2.0 | 2018/10/24
+
+- fixed "Remove everything from favorites"
+- added configuration `favorites.useWorkspace`
+- added workspace folder selection for storage of favorites
 
 ## 2.1.5 | 2018/10/22
 

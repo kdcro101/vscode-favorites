@@ -2,11 +2,11 @@ import * as os from "os";
 import * as path from "path";
 import { fromEventPattern, Subject } from "rxjs";
 import * as vscode from "vscode";
-import { StoredResource } from "../types/index";
+import { WorkspaceConfiguration } from "../types/index";
 import { ExcludeCheck } from "./exclude-check";
 
 export class Workspace {
-    // public eventEmitter: vscode.EventEmitter<void> = new vscode.EventEmitter<void>();
+
     public eventConfigurationChange = new Subject<void>();
     public excludeCheck = new ExcludeCheck(this);
 
@@ -24,37 +24,36 @@ export class Workspace {
         });
     }
 
-    public get(key: string): any {
+    public get<T extends keyof WorkspaceConfiguration>(key: T): WorkspaceConfiguration[T] {
         const config = vscode.workspace.getConfiguration("favorites");
-        return config.get(key);
+        return config.get(key) as T;
     }
     public getGlobal(key: string): any {
         const config = vscode.workspace.getConfiguration();
         return config.get(key);
     }
 
-    public save(key: string, value: any): Promise<void> {
+    public save<T extends keyof WorkspaceConfiguration>(key: T, value: WorkspaceConfiguration[T]): Promise<void> {
         const config = vscode.workspace.getConfiguration("favorites");
 
         config.update(key, value, false);
         return Promise.resolve();
 
     }
+    public getConfigurationRoot() {
+        const workspaceIndex = this.get("useWorkspace");
+        const rootPath = vscode.workspace.workspaceFolders[workspaceIndex] != null
+            ? vscode.workspace.workspaceFolders[workspaceIndex].uri.fsPath
+            : vscode.workspace.workspaceFolders[0].uri.fsPath;
 
-    // get onDataChange(): vscode.Event<void> {
-    //     return this.eventEmitter.event;
-    // }
+        return rootPath;
+    }
     public getSingleRootPath(): string {
         return vscode.workspace.workspaceFolders[0].uri.fsPath;
     }
 
     public isMultiRootWorkspace(): boolean {
         return vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders.length > 1;
-    }
-    public storedResourcesWrite(list: StoredResource[]): Promise<void> {
-        const config = vscode.workspace.getConfiguration("root");
-        this.save("root", list);
-        return Promise.resolve();
     }
 
     public pathResolve(filePath: string) {
@@ -68,6 +67,7 @@ export class Workspace {
         if (os.platform().startsWith("win")) {
             uri = vscode.Uri.parse(`file:///${this.pathResolve(fsPath)}`.replace(/\\/g, "/"));
         }
+
         return uri;
     }
 

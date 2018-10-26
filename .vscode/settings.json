@@ -16,7 +16,13 @@
     "redis-console.host": "localhost",
     "redis-console.port": 6379,
     "redis-console.password": "",
-    "redis-console.hostIpFamily": 4
+    "redis-console.hostIpFamily": 4,
+    "cassandraWorkbench.activeClusterName": "Cluster AllowAllAuthenticator",
+    "cassandraWorkbench.activeKeyspace": [
+        [
+            "Cluster AllowAllAuthenticator",
+            "example_keyspace"
+        ]
+    ]
     // "typescript.referencesCodeLens.enabled": true
-
 }
