@@ -6,9 +6,10 @@ import { Clipboard } from "../class/clipboard";
 import { Favorites } from "../class/favorites";
 import { FilesystemUtils } from "../class/filesystem";
 import { GroupColor } from "../class/group-color";
+import { FavoriteStorage } from "../class/storage";
 import { ViewItem } from "../class/view-item";
 import workspace from "../class/workspace";
-import { TreeProviders } from "../types/index";
+import { TreeProviders, WorkspaceQuickPickItem } from "../types/index";
 
 export class Commands {
     private clipboard = new Clipboard();
@@ -19,11 +20,14 @@ export class Commands {
         private context: vscode.ExtensionContext,
         public providers: TreeProviders,
         private favorites: Favorites,
+        private storage: FavoriteStorage,
     ) {
 
         this.filesystem = new FilesystemUtils(favorites);
         this.groupColor = new GroupColor(favorites, context);
 
+        context.subscriptions.push(this.favoritesRefresh());
+        context.subscriptions.push(this.selectWorkspace());
         context.subscriptions.push(this.addExternal());
         context.subscriptions.push(this.addToFavorites());
         context.subscriptions.push(this.addToFavoritesGroup());
@@ -52,6 +56,42 @@ export class Commands {
         context.subscriptions.push(this.fsRename());
         context.subscriptions.push(this.groupColorSet());
     }
+    public favoritesRefresh = () => {
+        return vscode.commands.registerCommand("favorites.refresh",
+            () => {
+                this.providers.refresh();
+            });
+    }
+    public selectWorkspace = () => {
+        return vscode.commands.registerCommand("favorites.selectWorkspace",
+            () => {
+
+                const list: WorkspaceQuickPickItem[] = vscode.workspace.workspaceFolders.map((wf, i) => {
+                    const out: WorkspaceQuickPickItem = {
+                        index: i,
+                        label: `${wf.uri.fsPath}`,
+
+                    };
+                    return out;
+                });
+
+                vscode.window.showQuickPick(list, {
+                    matchOnDescription: true,
+                    matchOnDetail: true,
+                    placeHolder: "Select workspace folder for Favorites",
+                }).then((result) => {
+                    if (!result) {
+                        return;
+                    }
+
+                    return workspace.save("useWorkspace", result.index);
+                }).then(() => {
+                    console.log("Active folder changed");
+                });
+
+            });
+    }
+
     public copyPath = () => {
         return vscode.commands.registerCommand("favorites.copy.path",
             (value: ViewItem) => {
@@ -514,10 +554,12 @@ export class Commands {
             })
                 .then((val) => {
                     if (val === "yes") {
-                        workspace.save("root", [])
+                        this.storage.save([])
                             .then(() => {
                                 vscode.window.showInformationMessage(`All favorites are removed`);
 
+                            }).catch((e) => {
+                                console.log(e);
                             });
 
                     }

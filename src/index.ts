@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import { DataProvider } from "./class/dataProvider";
 import { Favorites } from "./class/favorites";
+import { FsWatcher } from "./class/fs-watcher";
 import { FavoriteStorage } from "./class/storage";
 import { TreeViewManager } from "./class/tree";
 import { ViewItem } from "./class/view-item";
@@ -46,6 +47,27 @@ export function activate(context: vscode.ExtensionContext) {
 
     const managerExplorer = new TreeViewManager(treeExplorer, context, favorites, providers.explorer);
     const managerActivity = new TreeViewManager(treeActivity, context, favorites, providers.activity);
+    const fsWatcher = new FsWatcher(storage);
+
+    const c = new Commands(context, providers, favorites, storage);
+    let status: vscode.StatusBarItem = null;
+
+    if (vscode.workspace.workspaceFolders.length > 1) {
+
+        status = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 1);
+        context.subscriptions.push(status);
+        status.command = "favorites.selectWorkspace";
+        status.show();
+        refreshStatus(status);
+
+    }
+
+    workspace.eventConfigurationChange.pipe(
+    ).subscribe(() => {
+        providers.refresh();
+        storage.reloadStoragePath();
+        refreshStatus(status);
+    });
 
     vscode.workspace.onDidChangeConfiguration(() => {
         providers.refresh();
@@ -55,14 +77,21 @@ export function activate(context: vscode.ExtensionContext) {
         providers.refresh();
     });
 
-    const c = new Commands(context, providers, favorites);
-
-    workspace.eventConfigurationChange.pipe(
-
-    ).subscribe(() => {
+    fsWatcher.eventFs.pipe().subscribe(() => {
         providers.refresh();
     });
 
+}
+
+function refreshStatus(status: vscode.StatusBarItem) {
+
+    if (!status) {
+        return;
+    }
+
+    const wi = workspace.get("useWorkspace");
+    status.text = `$(heart) ${wi}`;
+    status.tooltip = `Favorites using ${vscode.workspace.workspaceFolders[wi].uri.fsPath} (click to switch)`;
 }
 
 export function deactivate() {

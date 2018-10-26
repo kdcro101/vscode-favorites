@@ -2,7 +2,7 @@
     "name": "favorites",
     "displayName": "Favorites",
     "description": "Add files and directories to workspace favorites. Create groups of directories and files. Time saver for complex projects.",
-    "version": "2.1.5",
+    "version": "2.2.1",
     "categories": [
         "Other"
     ],
@@ -43,14 +43,12 @@
     "license": "GPL-3.0",
     "main": "./out/",
     "contributes": {
-        "keybindings": [
-            {
-                "command": "workbench.view.extension.favorites-explorer",
-                "key": "ctrl+alt+f",
-                "mac": "cmd+alt+f",
-                "when": "editorTextFocus"
-            }
-        ],
+        "keybindings": [{
+            "command": "workbench.view.extension.favorites-explorer",
+            "key": "ctrl+alt+f",
+            "mac": "cmd+alt+f",
+            "when": "editorTextFocus"
+        }],
         "configuration": {
             "type": "object",
             "title": "Favorite-items configuration",
@@ -59,6 +57,11 @@
                     "type": "boolean",
                     "default": false,
                     "description": "Move to trash when resource gets deleted"
+                },
+                "favorites.useWorkspace": {
+                    "type": "number",
+                    "default": 0,
+                    "description": "Index of workspace where to look for storage file"
                 },
                 "favorites.useFilesExclude": {
                     "type": "boolean",
@@ -69,11 +72,6 @@
                     "type": "string",
                     "default": ".favorites.json",
                     "description": "Storage file path relative to workspace"
-                },
-                "favorites.root": {
-                    "type": "array",
-                    "default": [],
-                    "description": "Groups and favorites"
                 },
                 "favorites.groupsFirst": {
                     "type": "boolean",
@@ -92,31 +90,24 @@
             }
         },
         "viewsContainers": {
-            "activitybar": [
-                {
-                    "id": "favorites-explorer",
-                    "title": "Favorites",
-                    "icon": "icons/activity_bar_icon.svg"
-                }
-            ]
+            "activitybar": [{
+                "id": "favorites-explorer",
+                "title": "Favorites",
+                "icon": "icons/activity_bar_icon.svg"
+            }]
         },
         "views": {
-            "favorites-explorer": [
-                {
-                    "id": "favoritesActivity",
-                    "name": "Explorer"
-                }
-            ],
-            "explorer": [
-                {
-                    "id": "favorites",
-                    "name": "Favorites"
-                }
-            ]
+            "favorites-explorer": [{
+                "id": "favoritesActivity",
+                "name": "Explorer"
+            }],
+            "explorer": [{
+                "id": "favorites",
+                "name": "Favorites"
+            }]
         },
         "menus": {
-            "explorer/context": [
-                {
+            "explorer/context": [{
                     "command": "favorites.addToFavorites",
                     "group": "favorites"
                 },
@@ -125,12 +116,17 @@
                     "group": "favorites"
                 }
             ],
-            "view/title": [
-                {
+            "view/title": [{
                     "command": "favorites.collapse",
+                    "when": "view == favorites",
+                    "group": "navigation@4"
+                },
+                {
+                    "command": "favorites.refresh",
                     "when": "view == favorites",
                     "group": "navigation@3"
                 },
+
                 {
                     "command": "favorites.nav.sort.az",
                     "when": "view == favorites && sort==DESC",
@@ -153,6 +149,11 @@
                 },
                 {
                     "command": "favorites.collapse.activity",
+                    "when": "view == favoritesActivity",
+                    "group": "navigation@4"
+                },
+                {
+                    "command": "favorites.refresh",
                     "when": "view == favoritesActivity",
                     "group": "navigation@3"
                 },
@@ -177,8 +178,7 @@
                     "group": "navigation@0"
                 }
             ],
-            "view/item/context": [
-                {
+            "view/item/context": [{
                     "command": "favorites.deleteFavorite",
                     "when": "viewItem == FAVORITE_FILE",
                     "group": "operation"
@@ -420,7 +420,10 @@
                 }
             ]
         },
-        "commands": [
+        "commands": [{
+                "command": "favorites.selectWorkspace",
+                "title": "Select Workspace for Favorites"
+            },
             {
                 "command": "favorites.nav.sort.az",
                 "title": "Sort ascending",
@@ -491,6 +494,14 @@
                 "icon": {
                     "dark": "images/delete_all_dark.svg",
                     "light": "images/delete_all_light.svg"
+                }
+            },
+            {
+                "command": "favorites.refresh",
+                "title": "Refresh list",
+                "icon": {
+                    "dark": "images/refresh_dark.svg",
+                    "light": "images/refresh_light.svg"
                 }
             },
             {

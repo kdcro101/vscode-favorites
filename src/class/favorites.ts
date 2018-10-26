@@ -290,17 +290,6 @@ export class Favorites {
 
         });
     }
-
-    public __get(): Promise<StoredResource[]> {
-        return new Promise((resolve, reject) => {
-            const resources = workspace.get("root") as StoredResource[];
-
-            this.stateList.next(resources);
-            resolve(resources);
-            return;
-
-        });
-    }
     public get(): Promise<StoredResource[]> {
         return new Promise((resolve, reject) => {
 
@@ -314,10 +303,7 @@ export class Favorites {
 
         });
     }
-    public __save(list: StoredResource[]): Promise<void> {
-        this.stateList.next(list);
-        return workspace.save("root", list);
-    }
+
     public save(list: StoredResource[]): Promise<void> {
         this.stateList.next(list);
         return this.storage.save(list);
