@@ -36,6 +36,7 @@ export class FavoriteStorage {
             ).subscribe((result) => {
                 resolve(result);
             }, (e) => {
+                console.log(e);
                 resolve([] as StoredResource[]);
             });
 
