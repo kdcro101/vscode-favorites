@@ -1,3 +1,7 @@
+## 2.2.4 | 2018/10/27
+
+- unsubscribe observables on extension deactivation
+
 ## 2.2.2 | 2018/10/26
 
 - fixed creating `.vscode/setting.json` when folder gets opened [#25](https://github.com/kdcro101/vscode-favorite-items/issues/25)

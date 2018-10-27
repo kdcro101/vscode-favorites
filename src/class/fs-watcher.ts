@@ -1,6 +1,7 @@
 import { fromEventPattern, merge, Subject } from "rxjs";
-import { catchError, debounceTime, filter, map } from "rxjs/operators";
+import { catchError, debounceTime, filter, map, takeUntil } from "rxjs/operators";
 import * as vscode from "vscode";
+import { Global } from "./global";
 import { FavoriteStorage } from "./storage";
 
 export interface FileSystemEvent {
@@ -46,6 +47,7 @@ export class FsWatcher {
                 } as FileSystemEvent;
             })),
         ).pipe(
+            takeUntil(Global.eventDeactivate),
             filter((e) => e.fsPath !== this.storage.storageFilePath),
             debounceTime(500),
             catchError((e, o) => o),

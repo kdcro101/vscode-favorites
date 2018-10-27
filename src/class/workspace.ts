@@ -1,9 +1,11 @@
 import * as os from "os";
 import * as path from "path";
 import { fromEventPattern, Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 import * as vscode from "vscode";
 import { WorkspaceConfiguration } from "../types/index";
 import { ExcludeCheck } from "./exclude-check";
+import { Global } from "./global";
 
 export class Workspace {
 
@@ -17,7 +19,7 @@ export class Workspace {
         }, (f: any, d: vscode.Disposable) => {
             d.dispose();
         }).pipe(
-
+            takeUntil(Global.eventDeactivate),
         ).subscribe((e) => {
             this.excludeCheck = new ExcludeCheck(this);
             this.eventConfigurationChange.next();
