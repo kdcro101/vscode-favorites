@@ -3,7 +3,7 @@ import * as path from "path";
 import * as vscode from "vscode";
 
 import { from, Subject } from "rxjs";
-import { tap } from "rxjs/operators";
+import { concatMap, tap } from "rxjs/operators";
 import { ResourceType, StoredResource } from "../types";
 import workspace from "./workspace";
 
@@ -31,15 +31,13 @@ export class FavoriteStorage {
                 return;
             }
 
-            fs.readJson(this.storageFilePath)
-                .then((result) => {
-                    return this.___fixItems(result);
-                })
-                .then((result) => {
-                    resolve(result as StoredResource[]);
-                }).catch((e) => {
-                    reject(e);
-                });
+            from(fs.readJson(this.storageFilePath)).pipe(
+                concatMap((result) => this.___fixItems(result)),
+            ).subscribe((result) => {
+                resolve(result);
+            }, (e) => {
+                resolve([] as StoredResource[]);
+            });
 
         });
     }

@@ -1,7 +1,12 @@
-import { fromEventPattern, Subject } from "rxjs";
-import { catchError, filter } from "rxjs/operators";
+import { fromEventPattern, merge, Subject } from "rxjs";
+import { catchError, debounceTime, filter, map } from "rxjs/operators";
 import * as vscode from "vscode";
 import { FavoriteStorage } from "./storage";
+
+export interface FileSystemEvent {
+    type: "change" | "create" | "delete";
+    fsPath: string;
+}
 
 export class FsWatcher {
     public eventFs = new Subject<void>();
@@ -9,38 +14,44 @@ export class FsWatcher {
     constructor(private storage: FavoriteStorage) {
 
         this.watcher = vscode.workspace.createFileSystemWatcher("**/*.*", false, false, false);
-
-        fromEventPattern<vscode.Uri>((f) => {
-            return this.watcher.onDidCreate(f as any);
-        }, (f: any, d: vscode.Disposable) => {
-            d.dispose();
-        }).pipe(
+        merge<FileSystemEvent>(
+            fromEventPattern<vscode.Uri>((f) => {
+                return this.watcher.onDidCreate(f as any);
+            }, (f: any, d: vscode.Disposable) => {
+                d.dispose();
+            }).pipe(map((e) => {
+                return {
+                    fsPath: e.fsPath,
+                    type: "create",
+                } as FileSystemEvent;
+            })),
+            fromEventPattern<vscode.Uri>((f) => {
+                return this.watcher.onDidDelete(f as any);
+            }, (f: any, d: vscode.Disposable) => {
+                d.dispose();
+            }).pipe(map((e) => {
+                return {
+                    fsPath: e.fsPath,
+                    type: "delete",
+                } as FileSystemEvent;
+            })),
+            fromEventPattern<vscode.Uri>((f) => {
+                return this.watcher.onDidChange(f as any);
+            }, (f: any, d: vscode.Disposable) => {
+                d.dispose();
+            }).pipe(map((e) => {
+                return {
+                    fsPath: e.fsPath,
+                    type: "change",
+                } as FileSystemEvent;
+            })),
+        ).pipe(
             filter((e) => e.fsPath !== this.storage.storageFilePath),
+            debounceTime(500),
             catchError((e, o) => o),
         ).subscribe((e) => {
             this.eventFs.next();
         });
 
-        fromEventPattern<vscode.Uri>((f) => {
-            return this.watcher.onDidDelete(f as any);
-        }, (f: any, d: vscode.Disposable) => {
-            d.dispose();
-        }).pipe(
-            filter((e) => e.fsPath !== this.storage.storageFilePath),
-            catchError((e, o) => o),
-        ).subscribe((e) => {
-            this.eventFs.next();
-        });
-
-        fromEventPattern<vscode.Uri>((f) => {
-            return this.watcher.onDidChange(f as any);
-        }, (f: any, d: vscode.Disposable) => {
-            d.dispose();
-        }).pipe(
-            filter((e) => e.fsPath !== this.storage.storageFilePath),
-            catchError((e, o) => o),
-        ).subscribe((e) => {
-            this.eventFs.next();
-        });
     }
 }
