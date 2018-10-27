@@ -2,7 +2,7 @@
     "name": "favorites",
     "displayName": "Favorites",
     "description": "Add files and directories to workspace favorites. Create groups of directories and files. Time saver for complex projects.",
-    "version": "2.2.3",
+    "version": "2.2.4",
     "categories": [
         "Other"
     ],

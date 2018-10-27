@@ -1,7 +1,9 @@
+import { takeUntil } from "rxjs/operators";
 import * as vscode from "vscode";
 import { DataProvider } from "./class/dataProvider";
 import { Favorites } from "./class/favorites";
 import { FsWatcher } from "./class/fs-watcher";
+import { Global } from "./class/global";
 import { FavoriteStorage } from "./class/storage";
 import { TreeViewManager } from "./class/tree";
 import { ViewItem } from "./class/view-item";
@@ -58,6 +60,7 @@ export function activate(context: vscode.ExtensionContext) {
     }
 
     workspace.eventConfigurationChange.pipe(
+        takeUntil(Global.eventDeactivate),
     ).subscribe(() => {
         providers.refresh();
         storage.reloadStoragePath();
@@ -72,7 +75,9 @@ export function activate(context: vscode.ExtensionContext) {
         providers.refresh();
     });
 
-    fsWatcher.eventFs.pipe().subscribe(() => {
+    fsWatcher.eventFs.pipe(
+        takeUntil(Global.eventDeactivate),
+    ).subscribe(() => {
         providers.refresh();
     });
 
@@ -91,4 +96,5 @@ function refreshStatus(status: vscode.StatusBarItem) {
 
 export function deactivate() {
 
+    Global.eventDeactivate.next();
 }

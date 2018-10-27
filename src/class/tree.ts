@@ -1,10 +1,11 @@
 import * as path from "path";
 import { fromEventPattern, merge, Subject } from "rxjs";
-import { filter } from "rxjs/operators";
+import { filter, takeUntil } from "rxjs/operators";
 import * as vscode from "vscode";
 import { ResourceType, StoredResource } from "../types/index";
 import { DataProvider } from "./dataProvider";
 import { Favorites } from "./favorites";
+import { Global } from "./global";
 import { ViewItem } from "./view-item";
 import workspace from "./workspace";
 
@@ -28,7 +29,9 @@ export class TreeViewManager {
             return this.treeView.onDidChangeVisibility(f, null, context.subscriptions);
         }, (f: any, d: vscode.Disposable) => {
             d.dispose();
-        }).pipe().subscribe((m) => {
+        }).pipe(
+            takeUntil(Global.eventDeactivate),
+        ).subscribe((m) => {
             this.visible = m.visible;
             this.eventVisibility.next(m.visible);
         });
@@ -37,7 +40,9 @@ export class TreeViewManager {
             return vscode.window.onDidChangeActiveTextEditor(f, null, context.subscriptions);
         }, (f: any, d: vscode.Disposable) => {
             d.dispose();
-        }).pipe().subscribe((m) => {
+        }).pipe(
+            takeUntil(Global.eventDeactivate),
+        ).subscribe((m) => {
             this.activeEditor = m;
             this.eventActiveEditor.next(m);
         });
@@ -46,6 +51,7 @@ export class TreeViewManager {
             this.eventActiveEditor.pipe(),
             this.eventVisibility.pipe(),
         ).pipe(
+            takeUntil(Global.eventDeactivate),
             filter(() => {
                 return (
                     this.activeEditor != null &&
