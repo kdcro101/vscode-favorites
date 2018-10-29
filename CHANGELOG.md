@@ -1,3 +1,7 @@
+## 2.2.5 | 2018/10/29
+
+- merging update observables
+
 ## 2.2.4 | 2018/10/27
 
 - unsubscribe observables on extension deactivation
