@@ -49,7 +49,7 @@ export class FsWatcher {
         ).pipe(
             takeUntil(Global.eventDeactivate),
             filter((e) => e.fsPath !== this.storage.storageFilePath),
-            debounceTime(500),
+            debounceTime(1000),
             catchError((e, o) => o),
         ).subscribe((e) => {
             this.eventFs.next();
