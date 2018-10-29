@@ -1,3 +1,4 @@
+import { merge } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 import * as vscode from "vscode";
 import { DataProvider } from "./class/dataProvider";
@@ -67,15 +68,7 @@ export function activate(context: vscode.ExtensionContext) {
         refreshStatus(status);
     });
 
-    vscode.workspace.onDidChangeConfiguration(() => {
-        providers.refresh();
-    }, this, context.subscriptions);
-
-    storage.eventChange.pipe().subscribe(() => {
-        providers.refresh();
-    });
-
-    fsWatcher.eventFs.pipe(
+    merge(storage.eventChange, fsWatcher.eventFs).pipe(
         takeUntil(Global.eventDeactivate),
     ).subscribe(() => {
         providers.refresh();
