@@ -14,6 +14,7 @@ Time saver for complex projects.
 - add resources within workspace
 - add external resources (files or directories out of workspace)
 - organize favorites in groups and subgroups (nesting not limited)
+- have multiple (switchable) sets of favorites using setting `favorites.storageRegistry`
 - group icons can have their color changed
 - basic file system operations within Favorites explorer:
     - copy/cut -> paste
