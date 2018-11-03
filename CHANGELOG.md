@@ -1,6 +1,6 @@
 ## 2.3.0 | 2018/11/03
 
-- added support for multiple/switchable favorite storage per workspace
+- added support for multiple/switchable favorite storage per workspace [#28](https://github.com/kdcro101/vscode-favorite-items/issues/28)
 - fixed adding file from editor using command `Favorites: Add to group of favorites` from pallete [#26](https://github.com/kdcro101/vscode-favorite-items/issues/26)
 
 ## 2.2.5 | 2018/10/29
