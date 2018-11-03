@@ -42,14 +42,26 @@ export class FavoriteStorage {
 
         });
     }
+    public storageName(fromPath?: string) {
+        const sp = fromPath == null ? this.storageFilePath : fromPath;
+        const e = path.extname(sp);
+        const b = path.basename(sp);
+        const rx = new RegExp(`${e}$`, "i");
+        const out = b.replace(rx, "");
+
+        return out;
+    }
     public save(list: StoredResource[], triggerChange: boolean = true): Promise<void> {
         return new Promise((resolve, reject) => {
 
             const data = !list ? [] : list;
 
-            from(fs.writeJson(this.storageFilePath, data, {
-                spaces: 4,
-            })).pipe(
+            const dir = path.dirname(this.storageFilePath);
+
+            from(fs.mkdirp(dir)).pipe(
+                concatMap(() => fs.writeJson(this.storageFilePath, data, {
+                    spaces: 4,
+                })),
                 tap(() => {
                     if (triggerChange) {
                         this.eventChange.next();

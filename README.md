@@ -65,6 +65,9 @@ Open Visual Studio Code press CTRL+p and type or copy and paste:
 `favorites.storageFilePath` : string
 - overrride storage file path relative to workspace. Default is `.favorites.json`
 
+`favorites.storageRegistry` : string[]
+- List of storage file paths relative to workspace to make available for switching using command `Favorites: Select alternative storage from registry`. Default is `[]`
+
 `favorites.groupsFirst` : boolean
 - if set to `true`, groups will be listed before directories and files, if `false`, groups will appear after directories and files.
 

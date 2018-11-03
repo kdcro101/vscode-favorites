@@ -2,7 +2,7 @@
     "name": "favorites",
     "displayName": "Favorites",
     "description": "Add files and directories to workspace favorites. Create groups of directories and files. Time saver for complex projects.",
-    "version": "2.2.5",
+    "version": "2.3.0",
     "categories": [
         "Other"
     ],
@@ -72,6 +72,16 @@
                     "type": "string",
                     "default": ".favorites.json",
                     "description": "Storage file path relative to workspace"
+                },
+                "favorites.storageRegistry": {
+                    "type": "array",
+                    "default": [],
+                    "description": "List of alternative storage paths relative to workspace",
+                    "items": {
+                        "type": "string",
+                        "title": "Path",
+                        "description": "Path to alternative storage .json file"
+                    }
                 },
                 "favorites.groupsFirst": {
                     "type": "boolean",
@@ -422,7 +432,11 @@
         },
         "commands": [{
                 "command": "favorites.selectWorkspace",
-                "title": "Select Workspace for Favorites"
+                "title": "Favorites: Select Workspace for Favorites"
+            },
+            {
+                "command": "favorites.selectFromRegistry",
+                "title": "Favorites: Select alternative storage from registry"
             },
             {
                 "command": "favorites.nav.sort.az",
@@ -458,11 +472,11 @@
             },
             {
                 "command": "favorites.addToFavorites",
-                "title": "Favorites: Add to favorites"
+                "title": "Favorites: Add to favorites"
             },
             {
                 "command": "favorites.addToFavoritesGroup",
-                "title": "Favorites: Add to group of favorites"
+                "title": "Favorites: Add to group of favorites"
             },
             {
                 "command": "favorites.deleteFavorite",
@@ -511,10 +525,6 @@
             {
                 "command": "favorites.group.color.set",
                 "title": "Group color"
-            },
-            {
-                "command": "favorites.add.current",
-                "title": "Add active document to favorites"
             },
             {
                 "command": "filesystem.create.file",
