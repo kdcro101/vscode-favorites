@@ -8,8 +8,12 @@ export enum ResourceType {
     Directory = "Directory",
 }
 
-export interface WorkspaceQuickPickItem  extends QuickPickItem {
+export interface WorkspaceQuickPickItem extends QuickPickItem {
     index: number;
+}
+export interface RegistryQuickPickItem extends QuickPickItem {
+    index: number;
+    relativePath: string;
 }
 
 export interface WorkspaceConfiguration {
@@ -17,6 +21,7 @@ export interface WorkspaceConfiguration {
     useWorkspace: number;
     useFilesExclude: boolean;
     storageFilePath: string;
+    storageRegistry: string[];
     groupsFirst: boolean;
     sortDirection: "ASC" | "DESC";
 }

@@ -9,7 +9,7 @@ import { GroupColor } from "../class/group-color";
 import { FavoriteStorage } from "../class/storage";
 import { ViewItem } from "../class/view-item";
 import workspace from "../class/workspace";
-import { TreeProviders, WorkspaceQuickPickItem } from "../types/index";
+import { RegistryQuickPickItem, TreeProviders, WorkspaceQuickPickItem } from "../types/index";
 
 export class Commands {
     private clipboard = new Clipboard();
@@ -26,6 +26,7 @@ export class Commands {
         this.filesystem = new FilesystemUtils(favorites);
         this.groupColor = new GroupColor(favorites, context);
 
+        context.subscriptions.push(this.selectRegistryItem());
         context.subscriptions.push(this.favoritesRefresh());
         context.subscriptions.push(this.selectWorkspace());
         context.subscriptions.push(this.addExternal());
@@ -38,7 +39,6 @@ export class Commands {
         context.subscriptions.push(this.collapseActivityView());
         context.subscriptions.push(this.createGroup());
         context.subscriptions.push(this.deleteGroup());
-        context.subscriptions.push(this.addCurrentFile());
         context.subscriptions.push(this.deleteAllFavorites());
         context.subscriptions.push(this.groupRename());
         context.subscriptions.push(this.aliasModify());
@@ -60,6 +60,38 @@ export class Commands {
         return vscode.commands.registerCommand("favorites.refresh",
             () => {
                 this.providers.refresh();
+            });
+    }
+    public selectRegistryItem = () => {
+        return vscode.commands.registerCommand("favorites.selectFromRegistry",
+            () => {
+
+                const list: RegistryQuickPickItem[] = workspace.get("storageRegistry").map((p, i) => {
+                    const out: RegistryQuickPickItem = {
+                        index: i,
+                        label: `${this.storage.storageName(p)}`,
+                        description: `${p}`,
+                        relativePath: p,
+
+                    };
+                    return out;
+                });
+
+                vscode.window.showQuickPick(list, {
+                    matchOnDescription: true,
+                    matchOnDetail: true,
+                    placeHolder: "Select alternative storage from registry",
+                }).then((result) => {
+                    if (!result) {
+                        return;
+                    }
+
+                    workspace.save("storageFilePath", result.relativePath);
+                    return this.providers.refresh();
+                }).then(() => {
+                    console.log("Active storageFilePath changed");
+                });
+
             });
     }
     public selectWorkspace = () => {
@@ -400,7 +432,12 @@ export class Commands {
 
                 for (const uri of list) {
                     const itemPath = uri.fsPath;
-                    await this.favorites.addPathToGroup(null, itemPath);
+                    const workspacePath = workspace.workspaceRoot(itemPath);
+                    if (workspacePath) {
+                        await this.favorites.addPathToGroup(null, itemPath);
+                    } else {
+                        await this.favorites.addExternalPathToGroup(null, itemPath);
+                    }
                 }
             };
 
@@ -410,22 +447,29 @@ export class Commands {
     }
     addToFavoritesGroup = () => {
         return vscode.commands.registerCommand("favorites.addToFavoritesGroup", (fileUri: vscode.Uri, list: any[]) => {
-            if (!fileUri) {
-                return vscode.window.showWarningMessage("You have to call this extension from explorer");
-            }
 
             const isList = Array.isArray(list);
             const isFile = (fileUri && fileUri.fsPath) != null ? true : false;
+            const isActiveEditor = vscode.window.activeTextEditor != null ? true : false;
 
             if (!isList && isFile) {
                 list = [fileUri];
+            }
+            if (!isList && !isFile && isActiveEditor) {
+                list = [vscode.window.activeTextEditor.document.uri];
             }
 
             const run = async (group_id: string) => {
 
                 for (const uri of list) {
                     const itemPath = uri.fsPath;
-                    await this.favorites.addPathToGroup(group_id, itemPath);
+                    const workspacePath = workspace.workspaceRoot(itemPath);
+
+                    if (workspacePath) {
+                        await this.favorites.addPathToGroup(group_id, itemPath);
+                    } else {
+                        await this.favorites.addExternalPathToGroup(group_id, itemPath);
+                    }
                 }
             };
 
@@ -442,8 +486,6 @@ export class Commands {
                                 // canceled
                                 return;
                             }
-                            // const itemPath = fileUri.fsPath;
-                            // this.favorites.addPathToGroup(pickedItem.id, itemPath);
                             run(pickedItem.id);
                         });
 
@@ -532,18 +574,6 @@ export class Commands {
             (value: ViewItem) => {
                 this.favorites.removeResource(value.id);
             });
-    }
-    addCurrentFile = () => {
-        return vscode.commands.registerCommand("favorites.add.current", (value: any) => {
-            const fsPath = vscode.window.activeTextEditor.document.fileName;
-            this.favorites.addPathToGroup(null, fsPath)
-                .then((result) => {
-                    vscode.window.showInformationMessage(`${fsPath} added to favorites`);
-                })
-                .catch((e) => {
-                    console.log(e);
-                });
-        });
     }
     deleteAllFavorites = () => {
         return vscode.commands.registerCommand("favorites.delete.all", (value: any) => {
