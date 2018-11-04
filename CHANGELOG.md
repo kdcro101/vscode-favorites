@@ -1,3 +1,7 @@
+## 2.3.1 | 2018/11/04
+
+- README
+
 ## 2.3.0 | 2018/11/03
 
 - added support for multiple/switchable favorite storage per workspace [#28](https://github.com/kdcro101/vscode-favorite-items/issues/28)
