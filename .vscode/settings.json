@@ -10,19 +10,6 @@
         // "out": true,
         // "node_modules": true,
         ".vscode": true
-    },
-    "favorites.groupsFirst": true,
-    "favorites.root": [],
-    "redis-console.host": "localhost",
-    "redis-console.port": 6379,
-    "redis-console.password": "",
-    "redis-console.hostIpFamily": 4,
-    "cassandraWorkbench.activeClusterName": "Cluster AllowAllAuthenticator",
-    "cassandraWorkbench.activeKeyspace": [
-        [
-            "Cluster AllowAllAuthenticator",
-            "example_keyspace"
-        ]
-    ]
-    // "typescript.referencesCodeLens.enabled": true
+    }
+
 }
