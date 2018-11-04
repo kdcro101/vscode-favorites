@@ -1,6 +1,5 @@
 // Place your settings in this file to overwrite default and user settings.
 {
-    "favorites.sortDirection": "DESC",
     "files.exclude": {
         "**/.git": true,
         "**/.svn": true,
