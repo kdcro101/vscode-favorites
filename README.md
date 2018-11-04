@@ -14,7 +14,7 @@ Time saver for complex projects.
 - add resources within workspace
 - add external resources (files or directories out of workspace)
 - organize favorites in groups and subgroups (nesting not limited)
-- have multiple (switchable) sets of favorites using setting `favorites.storageRegistry`
+- have  [multiple sets](#multiple-sets) of favorites, per workspace, depending of context, using setting `favorites.storageRegistry`
 - group icons can have their color changed
 - basic file system operations within Favorites explorer:
     - copy/cut -> paste
@@ -67,7 +67,7 @@ Open Visual Studio Code press CTRL+p and type or copy and paste:
 - overrride storage file path relative to workspace. Default is `.favorites.json`
 
 `favorites.storageRegistry` : string[]
-- List of storage file paths relative to workspace to make available for switching using command `Favorites: Select alternative storage from registry`. Default is `[]`
+- List of storage file paths relative to workspace to make available for switching using command `Favorites: Select alternative storage from registry`. ([multiple sets](#multiple-sets)). Default is `[]`
 
 `favorites.groupsFirst` : boolean
 - if set to `true`, groups will be listed before directories and files, if `false`, groups will appear after directories and files.
@@ -79,7 +79,6 @@ Open Visual Studio Code press CTRL+p and type or copy and paste:
 
 
 ## Usage
-
 
 #### Adding to favorites
 Right-click item in File explorer and select `Add to favorites`.
@@ -95,6 +94,28 @@ Right-click on group item and choose `Create group`
 Right-click group item in Favorites view and select `Remove group`
 #### Remove everything from favorites
 Click on trash bin icon on Favorites view title, type "yes" to confirm
+
+## Multiple sets
+
+You can have multiple sets of favorites per workspace. This allows you to build independent set of favorites, depending on context.
+To achieve this you need to setup storage registry.
+
+Add favorites.storageRegistry to your workspace settings, for example:
+```ts
+// paths are relative to workspace
+ "favorites.storageRegistry": [
+            "favorites/system.json",
+            "favorites/classes.json",
+            "favorites/services.json",
+],
+```
+
+Select active storage file from registry  by clicking status bar element ![select](https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/statusRegistry.jpg) or by executing command `Favorites: Select alternative storage from registry` from command pallete and then selecting item from list:
+
+![list](https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/selectRegistry.jpg) 
+
+All `add favorite` operations will be written in currently selected storage file.
+
 
 ## LICENSE
 
