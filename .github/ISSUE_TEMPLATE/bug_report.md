@@ -21,7 +21,7 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **System info (please complete the following information):**
- - OS: [e.g. iOS]
+ - OS version: [e.g. Windows 10, Debian 9, MacOS 10.14.1]
  - Favorites extension version
  - vscode version
 
