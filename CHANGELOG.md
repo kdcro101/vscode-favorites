@@ -1,3 +1,8 @@
+## 2.3.2 | 2018/11/16
+
+- extension packed using `webpack.js` for faster loading
+- fixed `duplicate` file when inside group
+
 ## 2.3.1 | 2018/11/04
 
 - README
