@@ -54,14 +54,13 @@ export class Favorites {
                     return;
                 }
                 const o = all[i];
-                const n = _.cloneDeep(o);
-                delete n.label;
 
-                n.id = this.generateId();
-                n.workspacePath = workspace.pathForWorkspace(absPath);
-
-                all.push(n);
-                return this.save(all);
+                const workspaceRoot = workspace.workspaceRoot(absPath);
+                if (workspaceRoot) {
+                    return this.addPathToGroup(o.parent_id, absPath);
+                } else {
+                    return this.addExternalPathToGroup(o.parent_id, absPath);
+                }
 
             }).then(() => {
                 resolve();

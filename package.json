@@ -15,18 +15,17 @@
     ],
     "publisher": "kdcro101",
     "engines": {
-        "vscode": "^1.27.0"
+        "vscode": "^1.29.0"
     },
     "galleryBanner": {
         "color": "#283593",
         "theme": "dark"
     },
     "scripts": {
-        "vscode:prepublish": "tsc -p ./",
-        "compile": "tsc -watch -p ./",
-        "watch": "tsc -watch -p ./",
-        "postinstall": "node ./node_modules/vscode/bin/install",
-        "translate": "gulp"
+        "vscode:prepublish": "webpack --mode production",
+        "webpack": "webpack --mode development",
+        "webpack-dev": "webpack --mode development --watch",
+        "postinstall": "node ./node_modules/vscode/bin/install"
     },
     "icon": "icons/favorites.png",
     "bugs": {
@@ -41,14 +40,16 @@
         "*"
     ],
     "license": "GPL-3.0",
-    "main": "./out/",
+    "main": "./packed/",
     "contributes": {
-        "keybindings": [{
-            "command": "workbench.view.extension.favorites-explorer",
-            "key": "ctrl+alt+f",
-            "mac": "cmd+alt+f",
-            "when": "editorTextFocus"
-        }],
+        "keybindings": [
+            {
+                "command": "workbench.view.extension.favorites-explorer",
+                "key": "ctrl+alt+f",
+                "mac": "cmd+alt+f",
+                "when": "editorTextFocus"
+            }
+        ],
         "configuration": {
             "type": "object",
             "title": "Favorite-items configuration",
@@ -100,24 +101,31 @@
             }
         },
         "viewsContainers": {
-            "activitybar": [{
-                "id": "favorites-explorer",
-                "title": "Favorites",
-                "icon": "icons/activity_bar_icon.svg"
-            }]
+            "activitybar": [
+                {
+                    "id": "favorites-explorer",
+                    "title": "Favorites",
+                    "icon": "icons/activity_bar_icon.svg"
+                }
+            ]
         },
         "views": {
-            "favorites-explorer": [{
-                "id": "favoritesActivity",
-                "name": "Explorer"
-            }],
-            "explorer": [{
-                "id": "favorites",
-                "name": "Favorites"
-            }]
+            "favorites-explorer": [
+                {
+                    "id": "favoritesActivity",
+                    "name": "Explorer"
+                }
+            ],
+            "explorer": [
+                {
+                    "id": "favorites",
+                    "name": "Favorites"
+                }
+            ]
         },
         "menus": {
-            "explorer/context": [{
+            "explorer/context": [
+                {
                     "command": "favorites.addToFavorites",
                     "group": "favorites"
                 },
@@ -126,7 +134,8 @@
                     "group": "favorites"
                 }
             ],
-            "view/title": [{
+            "view/title": [
+                {
                     "command": "favorites.collapse",
                     "when": "view == favorites",
                     "group": "navigation@4"
@@ -136,7 +145,6 @@
                     "when": "view == favorites",
                     "group": "navigation@3"
                 },
-
                 {
                     "command": "favorites.nav.sort.az",
                     "when": "view == favorites && sort==DESC",
@@ -188,7 +196,8 @@
                     "group": "navigation@0"
                 }
             ],
-            "view/item/context": [{
+            "view/item/context": [
+                {
                     "command": "favorites.deleteFavorite",
                     "when": "viewItem == FAVORITE_FILE",
                     "group": "operation"
@@ -430,7 +439,8 @@
                 }
             ]
         },
-        "commands": [{
+        "commands": [
+            {
                 "command": "favorites.selectWorkspace",
                 "title": "Favorites: Select Workspace for Favorites"
             },
@@ -585,10 +595,13 @@
         "del": "^3.0.0",
         "gulp": "^3.9.1",
         "gulp-rename": "^1.2.2",
+        "ts-loader": "^5.3.0",
         "tslint": "^5.9.1",
         "typescript": "^2.7.2",
         "vscode": "^1.1.13",
-        "vscode-nls-dev": "^2.1.6"
+        "vscode-nls-dev": "^2.1.6",
+        "webpack": "^4.25.1",
+        "webpack-cli": "^3.1.2"
     },
     "dependencies": {
         "clipboardy": "^1.2.3",
@@ -596,7 +609,7 @@
         "cryptiles": "^4.1.2",
         "fs-extra": "^7.0.0",
         "html-colors": "0.0.4",
-        "lodash": "^4.17.10",
+        "lodash": "^4.17.5",
         "lodash-es": "^4.17.10",
         "md5": "^2.2.1",
         "minimatch": "^3.0.4",

@@ -19,6 +19,8 @@
     },
     "exclude": [
         "node_modules",
-        "out"
+        "out",
+        "packed",
+        "webpack.config.js"
     ]
 }
