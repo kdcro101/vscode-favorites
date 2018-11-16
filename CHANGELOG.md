@@ -1,3 +1,7 @@
+## 2.3.4 | 2018/11/16
+
+- fixed `Copy path` / `Copy Relative Path` not working with webpack
+
 ## 2.3.2 | 2018/11/16
 
 - extension packed using `webpack.js` for faster loading

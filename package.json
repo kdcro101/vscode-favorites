@@ -2,7 +2,7 @@
     "name": "favorites",
     "displayName": "Favorites",
     "description": "Add files and directories to workspace favorites. Create groups of directories and files. Time saver for complex projects.",
-    "version": "2.3.2",
+    "version": "2.3.4",
     "categories": [
         "Other"
     ],
@@ -615,6 +615,7 @@
         "minimatch": "^3.0.4",
         "nconf": "^0.10.0",
         "rxjs": "^6.2.2",
+        "spawn-sync": "^2.0.0",
         "trash": "^4.3.0",
         "url-parse": "^1.4.3"
     }

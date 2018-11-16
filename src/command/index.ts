@@ -132,7 +132,11 @@ export class Commands {
                 }
                 const fsPath = value.resourceUri.fsPath;
                 console.log(path);
-                clipboardy.writeSync(fsPath);
+                try {
+                    clipboardy.writeSync(fsPath);
+                } catch (e) {
+                    console.log(e);
+                }
 
             });
     }
