@@ -600,6 +600,11 @@ export class Favorites {
     public isPartOfFavorites(fsPath: string): Promise<boolean> {
         return new Promise((resolve, reject) => {
 
+            if (!fsPath) {
+                resolve(false);
+                return;
+            }
+
             zip(this.stateList, this.identify(fsPath))
                 .subscribe((result) => {
                     const list = result[0];
