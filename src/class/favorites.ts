@@ -16,6 +16,12 @@ export class Favorites {
 
     constructor(private context: vscode.ExtensionContext, private storage: FavoriteStorage) {
         this.groupColor = new GroupColor(this, context);
+        this.get()
+            .then((result) => {
+                console.log(`kdcro101.favorites > loaded ${result.length} stored items`);
+            }).catch((e) => {
+                console.log(e);
+            });
     }
 
     public updateWithPath(id: string, absPath: string): Promise<void> {
