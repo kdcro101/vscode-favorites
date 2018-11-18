@@ -29,8 +29,8 @@ export function activate(context: vscode.ExtensionContext) {
 
     ViewItem.favorites = favorites;
 
-    const provider = new DataProvider(context, favorites);
-    const providerActivity = new DataProvider(context, favorites);
+    const provider = new DataProvider(favorites);
+    const providerActivity = new DataProvider(favorites);
 
     const providers: TreeProviders = {
         explorer: provider,
@@ -113,6 +113,5 @@ function refreshStatus(storage: FavoriteStorage) {
 }
 
 export function deactivate() {
-
     Global.eventDeactivate.next();
 }

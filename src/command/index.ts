@@ -1,15 +1,18 @@
 import * as clipboardy from "clipboardy";
 import * as path from "path";
+import { of } from "rxjs";
+import { concatMap } from "rxjs/operators";
 import * as vscode from "vscode";
 import { QuickPickItem } from "vscode";
 import { Clipboard } from "../class/clipboard";
 import { Favorites } from "../class/favorites";
+import { FavoritesNavigator, FavoritesNavigatorQuickPickItem } from "../class/favorites-navigator";
 import { FilesystemUtils } from "../class/filesystem";
 import { GroupColor } from "../class/group-color";
 import { FavoriteStorage } from "../class/storage";
 import { ViewItem } from "../class/view-item";
 import workspace from "../class/workspace";
-import { RegistryQuickPickItem, TreeProviders, WorkspaceQuickPickItem } from "../types/index";
+import { RegistryQuickPickItem, ResourceType, TreeProviders, WorkspaceQuickPickItem } from "../types/index";
 
 export class Commands {
     private clipboard = new Clipboard();
@@ -55,6 +58,71 @@ export class Commands {
         context.subscriptions.push(this.fsDelete());
         context.subscriptions.push(this.fsRename());
         context.subscriptions.push(this.groupColorSet());
+        context.subscriptions.push(this.favoritesBrowse());
+    }
+    public favoritesBrowse = () => {
+        return vscode.commands.registerCommand("favorites.browse",
+            () => {
+
+                Promise.all([])
+                    .then(async () => {
+
+                        const navigator = new FavoritesNavigator(this.favorites);
+                        const editor = vscode.window.activeTextEditor;
+                        const editorFsPath = editor ? path.dirname(editor.document.uri.fsPath) : null;
+                        const isPart = await this.favorites.isPartOfFavorites(editorFsPath);
+                        const item = isPart ? await this.favorites.viewItemForPath(editorFsPath) : null;
+                        const viewColumn = editor ? editor.viewColumn : null;
+
+                        const display = (startItem: ViewItem) => {
+
+                            of(true).pipe(
+                                concatMap(() => navigator.build(startItem)),
+                            ).subscribe((list) => {
+                                vscode.window.showQuickPick(list, {
+                                    canPickMany: false,
+                                    placeHolder: "Type to filter",
+                                }).then((result) => {
+                                    if (!result) {
+                                        return;
+                                    }
+
+                                    if (result.upLevel) {
+                                        display(result.parent);
+                                        return;
+                                    }
+
+                                    const selItem = result.viewItem;
+                                    switch (selItem.resourceType) {
+                                        case ResourceType.Group:
+                                            display(selItem);
+                                            break;
+                                        case ResourceType.Directory:
+                                            display(selItem);
+                                            break;
+                                        case ResourceType.File:
+                                            vscode.window.showTextDocument(selItem.resourceUri, {
+                                                viewColumn,
+                                            }).then(() => {
+
+                                            }, (e) => {
+                                                console.log(e);
+                                            });
+                                            break;
+                                    }
+
+                                });
+                            });
+
+                        };
+
+                        display(item);
+
+                    }).catch((e) => {
+                        console.log(e);
+                    });
+
+            });
     }
     public favoritesRefresh = () => {
         return vscode.commands.registerCommand("favorites.refresh",

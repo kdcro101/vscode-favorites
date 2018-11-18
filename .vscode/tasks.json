@@ -20,6 +20,14 @@
         "type": "npm",
         "script": "webpack",
         "problemMatcher": []
+    },
+    {
+        "type": "npm",
+        "script": "webpack-dev",
+        "problemMatcher": [
+            "$tsc-watch"
+        ],
+        "isBackground": true
     }
 ]
 }

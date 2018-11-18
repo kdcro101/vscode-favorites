@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import * as _ from "lodash";
 import * as path from "path";
-import { from, ReplaySubject } from "rxjs";
+import { from, ReplaySubject, zip } from "rxjs";
 import { tap } from "rxjs/operators";
 import * as vscode from "vscode";
 import { GroupQuickPick, ResourceType, StoredResource } from "../types/index";
@@ -597,6 +597,53 @@ export class Favorites {
         return o;
     }
 
+    public isPartOfFavorites(fsPath: string): Promise<boolean> {
+        return new Promise((resolve, reject) => {
+
+            zip(this.stateList, this.identify(fsPath))
+                .subscribe((result) => {
+                    const list = result[0];
+                    const type = result[1];
+
+                    if (!fsPath || !list || list.length === 0) {
+                        resolve(false);
+                        return;
+                    }
+
+                    let dir: string = "";
+
+                    if (type === ResourceType.Directory) {
+                        dir = fsPath;
+                    }
+                    if (type === ResourceType.File) {
+                        dir = path.dirname(fsPath);
+                    }
+
+                    const splits = dir.split(path.sep);
+                    const findDirect = list.find((sr) => sr.name === dir && sr.type === ResourceType.Directory);
+
+                    if (findDirect) {
+                        resolve(true);
+                    }
+                    let currentDir = dir;
+                    for (let i = 0; i < splits.length; i++) {
+                        const p = path.join(currentDir, "..");
+                        const f = list.find((sr) => sr.name === p && sr.type === ResourceType.Directory);
+                        if (f) {
+                            resolve(true);
+                        }
+                        currentDir = p;
+                    }
+
+                    resolve(false);
+
+                }, (e) => {
+                    reject(e);
+                });
+
+        });
+    }
+
     private createStoredResource(parent_id: string, name: string, type: ResourceType, external: boolean = false): StoredResource {
         let o: StoredResource = null;
         switch (type) {
@@ -665,5 +712,4 @@ export class Favorites {
     private generateId(): string {
         return _.sampleSize("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789", 16).join("");
     }
-
 }

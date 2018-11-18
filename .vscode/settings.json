@@ -10,5 +10,6 @@
         // "node_modules": true,
         ".vscode": true
     }
+    // "typescript.referencesCodeLens.enabled": true
 
 }

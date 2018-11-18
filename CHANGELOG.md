@@ -1,3 +1,7 @@
+## 2.4.0 | 2018/11/18
+
+- added 'mouseless' browsing of favorites via palette `Favorites: Browse`. [#31](https://github.com/kdcro101/vscode-favorite-items/issues/31)
+
 ## 2.3.4 | 2018/11/16
 
 - fixed `Copy path` not working with webpack
@@ -14,7 +18,7 @@
 ## 2.3.0 | 2018/11/03
 
 - added support for multiple/switchable favorite storage per workspace [#28](https://github.com/kdcro101/vscode-favorite-items/issues/28)
-- fixed adding file from editor using command `Favorites: Add to group of favorites` from pallete [#26](https://github.com/kdcro101/vscode-favorite-items/issues/26)
+- fixed adding file from editor using command `Favorites: Add to group of favorites` from palette [#26](https://github.com/kdcro101/vscode-favorite-items/issues/26)
 
 ## 2.2.5 | 2018/10/29
 
@@ -74,7 +78,7 @@
 ## 1.9.8 | 2018/10/09
 
 - README
-- `Add to favorites` executed from command pallete adds active document to favorites root
+- `Add to favorites` executed from command palette adds active document to favorites root
 
 ## 1.9.7 | 2018/09/25
 

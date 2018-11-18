@@ -11,6 +11,7 @@ Time saver for complex projects.
 
 ## Features
 
+- mouseless browsing via `Favorites: Browse` palette command
 - add resources within workspace
 - add external resources (files or directories out of workspace)
 - organize favorites in groups and subgroups (nesting not limited)
@@ -110,7 +111,7 @@ Add favorites.storageRegistry to your workspace settings, for example:
 ],
 ```
 
-Select active storage file from registry  by clicking status bar element ![select](https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/statusRegistry.jpg) or by executing command `Favorites: Select alternative storage from registry` from command pallete and then selecting item from list:
+Select active storage file from registry  by clicking status bar element ![select](https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/statusRegistry.jpg) or by executing command `Favorites: Select alternative storage from registry` from command palette and then selecting item from list:
 
 ![list](https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/selectRegistry.jpg) 
 

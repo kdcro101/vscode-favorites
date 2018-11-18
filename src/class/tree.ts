@@ -1,8 +1,7 @@
-import * as path from "path";
-import { fromEventPattern, merge, Subject } from "rxjs";
+import { fromEventPattern, merge, Subject, zip } from "rxjs";
 import { filter, takeUntil } from "rxjs/operators";
 import * as vscode from "vscode";
-import { ResourceType, StoredResource } from "../types/index";
+import { ResourceType } from "../types/index";
 import { DataProvider } from "./dataProvider";
 import { Favorites } from "./favorites";
 import { Global } from "./global";
@@ -72,12 +71,14 @@ export class TreeViewManager {
             return;
         }
 
-        Promise.all([
+        zip(
             this.favorites.identify(fsPath),
-            this.favorites.get(),
-        ]).then((result) => {
+            this.favorites.stateList,
+            this.favorites.isPartOfFavorites(fsPath),
+        ).subscribe((result) => {
             const type = result[0];
             const list = result[1];
+            const isPart = result[2];
 
             // try to locate in favorite items! directly added
             const fileItem = list.find((f) => f.name === fsPath && f.type === ResourceType.File);
@@ -87,49 +88,23 @@ export class TreeViewManager {
                 // it is file in root!
                 const viewItem = this.favorites.asViewItem(fileItem);
                 this.treeView.reveal(viewItem, { select: true, focus: false });
-
                 return;
             }
-
-            const isPart = this.isPartOfFavorites(fsPath, list);
 
             if (isPart) {
                 this.favorites.viewItemForPath(fsPath)
                     .then((item) => {
                         this.treeView.reveal(item, { select: true, focus: false });
-                        return;
                     }).catch((e) => {
                         console.log(e);
                     });
 
             }
 
-        }).catch((e) => {
+        }, (e) => {
             console.log(e);
         });
 
-    }
-
-    private isPartOfFavorites(fsPath: string, list: StoredResource[]): boolean {
-        const dir = path.dirname(fsPath);
-        const splits = dir.split(path.sep);
-
-        const findDirect = list.find((sr) => sr.name === dir && sr.type === ResourceType.Directory);
-
-        if (findDirect) {
-            return true;
-        }
-        let currentDir = dir;
-        for (let i = 0; i < splits.length; i++) {
-            const p = path.join(currentDir, "..");
-            const f = list.find((sr) => sr.name === p && sr.type === ResourceType.Directory);
-            if (f) {
-                return true;
-            }
-            currentDir = p;
-        }
-
-        return false;
     }
 
 }
