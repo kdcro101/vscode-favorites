@@ -11,7 +11,7 @@ Time saver for complex projects.
 
 ## Features
 
-- mouseless browsing via `Favorites: Browse` palette command
+- [browsing using keyboard](#keyboard-browsing) only via `Favorites: Browse` palette command
 - add resources within workspace
 - add external resources (files or directories out of workspace)
 - organize favorites in groups and subgroups (nesting not limited)

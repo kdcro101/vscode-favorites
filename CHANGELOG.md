@@ -1,6 +1,6 @@
-## 2.4.2 | 2018/11/18
+## 2.4.3 | 2018/11/18
 
-- added 'mouseless' browsing of favorites via palette `Favorites: Browse`. [#31](https://github.com/kdcro101/vscode-favorite-items/issues/31)
+- added browsing using keyboard only (mouseless) of favorites via palette `Favorites: Browse`. [#31](https://github.com/kdcro101/vscode-favorite-items/issues/31)
 
 ## 2.3.4 | 2018/11/16
 
