@@ -78,6 +78,13 @@ Open Visual Studio Code press CTRL+p and type or copy and paste:
 `favorites.useTrash`: boolean (default `false`)
 - if set to `true`, extension will try to use system trash when resource (file or directory is deleted)
 
+## Keyboard browsing
+
+You can browse favorites using **keyboard only** by executing command `Favorites: Browse` command from palette. Assign keyboard shortcut if needed.
+
+<p align="center">
+   <img  src="https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/browsing.gif?3212" />
+</p>
 
 ## Usage
 
