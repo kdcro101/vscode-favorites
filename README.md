@@ -31,7 +31,7 @@ Time saver for complex projects.
 
 ## Adding to favorites
 <p align="center">
-   <img  src="https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/adding.jpg?121233" />
+   <img  src="https://raw.githubusercontent.com/kdcro101/vscode-favorites/master/preview/adding.jpg?121233" />
 </p>
 
 - to add file or directory to favorites, right-click item in ***File explorer*** and select:
@@ -43,7 +43,7 @@ Time saver for complex projects.
 ## Using Favorites explorer
 
 <p align="center">
-   <img  src="https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/using.jpg?232321" />
+   <img  src="https://raw.githubusercontent.com/kdcro101/vscode-favorites/master/preview/using.jpg?232321" />
 </p>
 
 you can **turn off** subview in **File explorer** by clicking on its header and deselecting it.
@@ -83,7 +83,7 @@ Open Visual Studio Code press CTRL+p and type or copy and paste:
 You can browse favorites using **keyboard only** by executing command `Favorites: Browse` command from palette. Assign keyboard shortcut if needed.
 
 <p align="center">
-   <img  src="https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/browsing.gif?3212" />
+   <img  src="https://raw.githubusercontent.com/kdcro101/vscode-favorites/master/preview/browsing.gif?3212" />
 </p>
 
 ## Usage
@@ -118,13 +118,13 @@ Add favorites.storageRegistry to your workspace settings, for example:
 ],
 ```
 
-Select active storage file from registry  by clicking status bar element ![select](https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/statusRegistry.jpg) or by executing command `Favorites: Select alternative storage from registry` from command palette and then selecting item from list:
+Select active storage file from registry  by clicking status bar element ![select](https://raw.githubusercontent.com/kdcro101/vscode-favorites/master/preview/statusRegistry.jpg) or by executing command `Favorites: Select alternative storage from registry` from command palette and then selecting item from list:
 
-![list](https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/preview/selectRegistry.jpg) 
+![list](https://raw.githubusercontent.com/kdcro101/vscode-favorites/master/preview/selectRegistry.jpg) 
 
 All `add favorite` operations will be written in currently selected storage file.
 
 
 ## LICENSE
 
-[GPL v3 License](https://raw.githubusercontent.com/kdcro101/vscode-favorite-items/master/LICENSE)
+[GPL v3 License](https://raw.githubusercontent.com/kdcro101/vscode-favorites/master/LICENSE)

@@ -2,7 +2,7 @@
     "name": "favorites",
     "displayName": "Favorites",
     "description": "Add files and directories to workspace favorites. Create groups of directories and files. Time saver for complex projects.",
-    "version": "2.4.3",
+    "version": "2.4.4",
     "categories": [
         "Other"
     ],
@@ -29,12 +29,12 @@
     },
     "icon": "icons/favorites.png",
     "bugs": {
-        "url": "https://github.com/kdcro101/vscode-favorite-items/issues"
+        "url": "https://github.com/kdcro101/vscode-favorites/issues"
     },
-    "homepage": "https://github.com/kdcro101/vscode-favorite-items/blob/master/README.md",
+    "homepage": "https://github.com/kdcro101/vscode-favorites/blob/master/README.md",
     "repository": {
         "type": "git",
-        "url": "https://github.com/kdcro101/vscode-favorite-items.git"
+        "url": "https://github.com/kdcro101/vscode-favorites.git"
     },
     "activationEvents": [
         "*"

@@ -1,6 +1,10 @@
+## 2.4.4 | 2018/11/25
+
+- repo rename
+
 ## 2.4.3 | 2018/11/18
 
-- added browsing using keyboard only (mouseless) of favorites via palette `Favorites: Browse`. [#31](https://github.com/kdcro101/vscode-favorite-items/issues/31)
+- added browsing using keyboard only (mouseless) of favorites via palette `Favorites: Browse`. [#31](https://github.com/kdcro101/vscode-favorites/issues/31)
 
 ## 2.3.4 | 2018/11/16
 
@@ -17,8 +21,8 @@
 
 ## 2.3.0 | 2018/11/03
 
-- added support for multiple/switchable favorite storage per workspace [#28](https://github.com/kdcro101/vscode-favorite-items/issues/28)
-- fixed adding file from editor using command `Favorites: Add to group of favorites` from palette [#26](https://github.com/kdcro101/vscode-favorite-items/issues/26)
+- added support for multiple/switchable favorite storage per workspace [#28](https://github.com/kdcro101/vscode-favorites/issues/28)
+- fixed adding file from editor using command `Favorites: Add to group of favorites` from palette [#26](https://github.com/kdcro101/vscode-favorites/issues/26)
 
 ## 2.2.5 | 2018/10/29
 
@@ -30,11 +34,11 @@
 
 ## 2.2.2 | 2018/10/26
 
-- fixed creating `.vscode/setting.json` when folder gets opened [#25](https://github.com/kdcro101/vscode-favorite-items/issues/25)
+- fixed creating `.vscode/setting.json` when folder gets opened [#25](https://github.com/kdcro101/vscode-favorites/issues/25)
 
 ## 2.2.1 | 2018/10/26
 
-- Favorites refresh on FileSystemWatcher events [#24](https://github.com/kdcro101/vscode-favorite-items/issues/24)
+- Favorites refresh on FileSystemWatcher events [#24](https://github.com/kdcro101/vscode-favorites/issues/24)
 - added `refresh` button
 
 ## 2.2.0 | 2018/10/24
@@ -45,7 +49,7 @@
 
 ## 2.1.5 | 2018/10/22
 
-- fixed `Path must be string. Received null` error [#20](https://github.com/kdcro101/vscode-favorite-items/issues/20)
+- fixed `Path must be string. Received null` error [#20](https://github.com/kdcro101/vscode-favorites/issues/20)
 
 ## 2.1.2 | 2018/10/21
  
@@ -55,16 +59,16 @@
 ## 2.0.5 | 2018/10/18
 
 - Icon + Marketplace banner
-- Favorites items are stored, by default, in workspace root as `favorites.json` In case of multiroot workspace, file is located in first workspace. [#13](https://github.com/kdcro101/vscode-favorite-items/issues/13)  [#18](https://github.com/kdcro101/vscode-favorite-items/issues/18) [#19](https://github.com/kdcro101/vscode-favorite-items/issues/19) 
+- Favorites items are stored, by default, in workspace root as `favorites.json` In case of multiroot workspace, file is located in first workspace. [#13](https://github.com/kdcro101/vscode-favorites/issues/13)  [#18](https://github.com/kdcro101/vscode-favorites/issues/18) [#19](https://github.com/kdcro101/vscode-favorites/issues/19) 
 - added configuration item `favorites.storageFilePath` to overrride storage file path relative to workspace. Default is `.favorites.json`
 
 ## 2.0.1 | 2018/10/17
 
-- Favorites items are stored in `.vscode/favorites.json`. In case of multiroot workspace, file is located in first workspace. [#13](https://github.com/kdcro101/vscode-favorite-items/issues/13)  [#18](https://github.com/kdcro101/vscode-favorite-items/issues/18)  
+- Favorites items are stored in `.vscode/favorites.json`. In case of multiroot workspace, file is located in first workspace. [#13](https://github.com/kdcro101/vscode-favorites/issues/13)  [#18](https://github.com/kdcro101/vscode-favorites/issues/18)  
 
 ## 2.0.0 | 2018/10/17
 
-- Favorites items are stored in workspace root as file `.favorites.json`. In case of multiroot workspace, file is located in first workspace. [#13](https://github.com/kdcro101/vscode-favorite-items/issues/13)  
+- Favorites items are stored in workspace root as file `.favorites.json`. In case of multiroot workspace, file is located in first workspace. [#13](https://github.com/kdcro101/vscode-favorites/issues/13)  
 
 
 ## 1.9.10 | 2018/10/15
@@ -73,7 +77,7 @@
 
 ## 1.9.9 | 2018/10/11
 
-- Fix favorites explorer focusing on acitve editor change. [#16](https://github.com/kdcro101/vscode-favorite-items/issues/16)
+- Fix favorites explorer focusing on acitve editor change. [#16](https://github.com/kdcro101/vscode-favorites/issues/16)
 
 ## 1.9.8 | 2018/10/09
 
@@ -96,7 +100,7 @@
 
 ## 1.9.3 | 2018/09/18
 
-- remove unicode characters from context menu when adding to favorites [#11](https://github.com/kdcro101/vscode-favorite-items/issues/11)
+- remove unicode characters from context menu when adding to favorites [#11](https://github.com/kdcro101/vscode-favorites/issues/11)
 - change activity bar icon
 - README
 
