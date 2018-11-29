@@ -1,3 +1,7 @@
+## 2.4.5 | 2018/11/25
+
+- fixed vulnerability issue
+
 ## 2.4.4 | 2018/11/25
 
 - repo rename
