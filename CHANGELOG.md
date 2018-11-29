@@ -1,4 +1,4 @@
-## 2.4.5 | 2018/11/25
+## 2.4.5 | 2018/11/29
 
 - fixed vulnerability issue
 
