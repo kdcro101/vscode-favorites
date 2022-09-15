@@ -78,6 +78,12 @@ Open Visual Studio Code press CTRL+p and type or copy and paste:
 `favorites.useTrash`: boolean (default `false`)
 - if set to `true`, extension will try to use system trash when resource (file or directory is deleted)
 
+`favorites.includeInDocumentBodyContextMenu` : boolean (default `false`)
+- if set to `true`, the two "Add to * favorites" commands will be included in the editor context menu that appears when right-clicking the body of an open document.
+
+`favorites.includeInEditorTabContextMenu` : boolean (default `true`)
+- if set to `true`, the two "Add to * favorites" commands will be included in the context menu for the tab of a specific file (e.g. the menu that appears when right-clicking the tab of an open document).
+
 ## Keyboard browsing
 
 You can browse favorites using **keyboard only** by executing command `Favorites: Browse` command from palette. Assign keyboard shortcut if needed.
@@ -89,9 +95,9 @@ You can browse favorites using **keyboard only** by executing command `Favorites
 ## Usage
 
 #### Adding to favorites
-Right-click item in File explorer and select `Add to favorites`.
+Right-click item in File explorer, an open file tab, or the background of an open editor and select `Add to favorites`.
 #### Adding to favorites group or subgroup
-Right-click item in File explorer and select `Add to favorites group`, then select group from list.
+Right-click item in File explorer, an open file tab, or the background of an open editor and select `Add to favorites group`, then select group from list.
 #### Removing from favorites
 Right-click item in Favorites view and select `Remove from favorites`
 #### Create favorites group

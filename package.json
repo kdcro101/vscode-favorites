@@ -97,6 +97,16 @@
                     ],
                     "default": "ASC",
                     "description": "Specify an order for all favorites"
+                },
+                "favorites.includeInDocumentBodyContextMenu": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Display the 'Favorites: Add to * favorites' commands in the editor context menu"
+                },
+                "favorites.includeInEditorTabContextMenu": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Display the 'Favorites: Add to * favorites' commands in the context menu for the tab of a specific file"
                 }
             }
         },
@@ -146,22 +156,24 @@
             ],
             "editor/title/context": [
                 {
+                    "when": "config.favorites.includeInEditorTabContextMenu",
                     "command": "favorites.addToFavorites",
                     "group": "favorites"
                 },
                 {
+                    "when": "config.favorites.includeInEditorTabContextMenu",
                     "command": "favorites.addToFavoritesGroup",
                     "group": "favorites"
                 }
             ],
             "editor/context": [
                 {
-                    "when": "resourceScheme == file",
+                    "when": "config.favorites.includeInDocumentBodyContextMenu && resourceScheme == file",
                     "command": "favorites.addFileToFavorites",
                     "group": "favorites"
                 },
                 {
-                    "when": "resourceScheme == file",
+                    "when": "config.favorites.includeInDocumentBodyContextMenu && resourceScheme == file",
                     "command": "favorites.addFileToFavoritesGroup",
                     "group": "favorites"
                 }

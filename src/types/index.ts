@@ -24,6 +24,8 @@ export interface WorkspaceConfiguration {
     storageRegistry: string[];
     groupsFirst: boolean;
     sortDirection: "ASC" | "DESC";
+    includeInDocumentBodyContextMenu: boolean;
+    includeInEditorTabContextMenu: boolean;
 }
 
 export interface StoredResource {
