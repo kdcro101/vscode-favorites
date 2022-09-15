@@ -2,7 +2,7 @@
     "name": "favorites",
     "displayName": "Favorites",
     "description": "Add files and directories to workspace favorites. Create groups of directories and files. Time saver for complex projects.",
-    "version": "2.4.5",
+    "version": "2.4.6",
     "categories": [
         "Other"
     ],
@@ -131,6 +131,38 @@
                 },
                 {
                     "command": "favorites.addToFavoritesGroup",
+                    "group": "favorites"
+                }
+            ],
+            "editor/title": [
+                {
+                    "command": "favorites.addToFavorites",
+                    "group": "favorites"
+                },
+                {
+                    "command": "favorites.addToFavoritesGroup",
+                    "group": "favorites"
+                }
+            ],
+            "editor/title/context": [
+                {
+                    "command": "favorites.addToFavorites",
+                    "group": "favorites"
+                },
+                {
+                    "command": "favorites.addToFavoritesGroup",
+                    "group": "favorites"
+                }
+            ],
+            "editor/context": [
+                {
+                    "when": "resourceScheme == file",
+                    "command": "favorites.addFileToFavorites",
+                    "group": "favorites"
+                },
+                {
+                    "when": "resourceScheme == file",
+                    "command": "favorites.addFileToFavoritesGroup",
                     "group": "favorites"
                 }
             ],
@@ -487,6 +519,14 @@
             {
                 "command": "favorites.addToFavoritesGroup",
                 "title": "Favorites: Add to group of favorites"
+            },
+            {
+                "command": "favorites.addFileToFavorites",
+                "title": "Favorites: Add file to favorites"
+            },
+            {
+                "command": "favorites.addFileToFavoritesGroup",
+                "title": "Favorites: Add file to group of favorites"
             },
             {
                 "command": "favorites.deleteFavorite",
