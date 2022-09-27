@@ -2,7 +2,7 @@
     "name": "favorites",
     "displayName": "Favorites",
     "description": "Add files and directories to workspace favorites. Create groups of directories and files. Time saver for complex projects.",
-    "version": "2.4.5",
+    "version": "2.4.6",
     "categories": [
         "Other"
     ],
@@ -97,6 +97,16 @@
                     ],
                     "default": "ASC",
                     "description": "Specify an order for all favorites"
+                },
+                "favorites.includeInDocumentBodyContextMenu": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Display the 'Favorites: Add to * favorites' commands in the editor context menu"
+                },
+                "favorites.includeInEditorTabContextMenu": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Display the 'Favorites: Add to * favorites' commands in the context menu for the tab of a specific file"
                 }
             }
         },
@@ -131,6 +141,40 @@
                 },
                 {
                     "command": "favorites.addToFavoritesGroup",
+                    "group": "favorites"
+                }
+            ],
+            "editor/title": [
+                {
+                    "command": "favorites.addToFavorites",
+                    "group": "favorites"
+                },
+                {
+                    "command": "favorites.addToFavoritesGroup",
+                    "group": "favorites"
+                }
+            ],
+            "editor/title/context": [
+                {
+                    "when": "config.favorites.includeInEditorTabContextMenu",
+                    "command": "favorites.addToFavorites",
+                    "group": "favorites"
+                },
+                {
+                    "when": "config.favorites.includeInEditorTabContextMenu",
+                    "command": "favorites.addToFavoritesGroup",
+                    "group": "favorites"
+                }
+            ],
+            "editor/context": [
+                {
+                    "when": "config.favorites.includeInDocumentBodyContextMenu && resourceScheme == file",
+                    "command": "favorites.addFileToFavorites",
+                    "group": "favorites"
+                },
+                {
+                    "when": "config.favorites.includeInDocumentBodyContextMenu && resourceScheme == file",
+                    "command": "favorites.addFileToFavoritesGroup",
                     "group": "favorites"
                 }
             ],
@@ -487,6 +531,14 @@
             {
                 "command": "favorites.addToFavoritesGroup",
                 "title": "Favorites: Add to group of favorites"
+            },
+            {
+                "command": "favorites.addFileToFavorites",
+                "title": "Favorites: Add file to favorites"
+            },
+            {
+                "command": "favorites.addFileToFavoritesGroup",
+                "title": "Favorites: Add file to group of favorites"
             },
             {
                 "command": "favorites.deleteFavorite",

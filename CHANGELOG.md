@@ -1,3 +1,8 @@
+## 2.4.6 | 2022/09/15
+
+- enabled the "Add to Favorites" and "Add to Favorites Group" context menu items in additional context menus such as when right clicking an open file tab, or in the text of an open editor. 
+
+
 ## 2.4.5 | 2018/11/29
 
 - fixed vulnerability issue

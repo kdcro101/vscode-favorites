@@ -35,6 +35,8 @@ export class Commands {
         context.subscriptions.push(this.addExternal());
         context.subscriptions.push(this.addToFavorites());
         context.subscriptions.push(this.addToFavoritesGroup());
+        context.subscriptions.push(this.addFileToFavorites());
+        context.subscriptions.push(this.addFileToFavoritesGroup());
         context.subscriptions.push(this.deleteFavorite());
         context.subscriptions.push(this.setSortAsc());
         context.subscriptions.push(this.setSortDesc());
@@ -520,6 +522,91 @@ export class Commands {
     addToFavoritesGroup = () => {
         return vscode.commands.registerCommand("favorites.addToFavoritesGroup", (fileUri: vscode.Uri, list: any[]) => {
 
+            const isList = Array.isArray(list);
+            const isFile = (fileUri && fileUri.fsPath) != null ? true : false;
+            const isActiveEditor = vscode.window.activeTextEditor != null ? true : false;
+
+            if (!isList && isFile) {
+                list = [fileUri];
+            }
+            if (!isList && !isFile && isActiveEditor) {
+                list = [vscode.window.activeTextEditor.document.uri];
+            }
+
+            const run = async (group_id: string) => {
+
+                for (const uri of list) {
+                    const itemPath = uri.fsPath;
+                    const workspacePath = workspace.workspaceRoot(itemPath);
+
+                    if (workspacePath) {
+                        await this.favorites.addPathToGroup(group_id, itemPath);
+                    } else {
+                        await this.favorites.addExternalPathToGroup(group_id, itemPath);
+                    }
+                }
+            };
+
+            this.favorites.generateGroupQuickPickList()
+                .then((result) => {
+
+                    if (result.length === 0) {
+                        vscode.window.showWarningMessage("No group definition found. Create group first.");
+                        return;
+                    }
+                    vscode.window.showQuickPick(result)
+                        .then((pickedItem) => {
+                            if (pickedItem == null) {
+                                // canceled
+                                return;
+                            }
+                            run(pickedItem.id);
+                        });
+
+                })
+                .catch((e) => {
+                    console.log(e);
+                });
+
+        });
+    }
+
+    addFileToFavorites = () => {
+        // Note implementation is duplicated verbatim from addToFavorites. TODO: figure out how to call same code to prevent needless code duplication.
+        return vscode.commands.registerCommand("favorites.addFileToFavorites", (fileUri: vscode.Uri, list: any[]) => {
+
+            const isList = Array.isArray(list);
+            const isFile = (fileUri && fileUri.fsPath) != null ? true : false;
+            const isActiveEditor = vscode.window.activeTextEditor != null ? true : false;
+
+            if (!isList && isFile) {
+                list = [fileUri];
+            }
+            if (!isList && !isFile && isActiveEditor) {
+                list = [vscode.window.activeTextEditor.document.uri];
+            }
+
+            const run = async () => {
+
+                for (const uri of list) {
+                    const itemPath = uri.fsPath;
+                    const workspacePath = workspace.workspaceRoot(itemPath);
+                    if (workspacePath) {
+                        await this.favorites.addPathToGroup(null, itemPath);
+                    } else {
+                        await this.favorites.addExternalPathToGroup(null, itemPath);
+                    }
+                }
+            };
+
+            run();
+
+        });
+    }
+    addFileToFavoritesGroup = () => {
+        // Note implementation is duplicated verbatim from addToFavoritesGroup. TODO: figure out how to call same code to prevent needless code duplication.
+        return vscode.commands.registerCommand("favorites.addFileToFavoritesGroup", (fileUri: vscode.Uri, list: any[]) => {
+            
             const isList = Array.isArray(list);
             const isFile = (fileUri && fileUri.fsPath) != null ? true : false;
             const isActiveEditor = vscode.window.activeTextEditor != null ? true : false;
